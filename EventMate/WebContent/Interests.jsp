@@ -28,7 +28,7 @@
 		<div align="center">
 		<br> <br> <br> <span class="blueFont" ><b>Please Enter Your Bio Information</b></span> <br></div>
 		<br>
-		<div class="styleform" align="center">
+		<div c align="center">
 		<span class="fontCheck"><b>Interests: (Pick Up to 5)</b></span><br><br>
 			<form>
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Reading">Reading</span> 
@@ -38,10 +38,10 @@
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Video Games">Video Games</span>
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Outdoors">Outdoors</span>
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Watching TV">Watching TV</span><br><br>
-			
+
 			<br><br>
 			<span class="fontCheck"><b>Sports: (Pick Up to 5)</b></span><br><br>
-			
+
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Running">Running</span> 
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Cycling">Cycling</span>
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Tennis">Tennis</span>
@@ -50,9 +50,9 @@
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Swimming">Swimming</span>
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Ultimate">Ultimate Frisbee</span><br><br>
 			<br><br>
-			
+
 			<span class="fontCheck"><b>Music: (Pick Up to 5)</b></span><br><br>
-			
+
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Pop">Pop</span> 
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Rock">Rock</span>
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Indie">Indie</span>
@@ -63,13 +63,13 @@
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Dubstep">Dubstep</span>
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Garage">Garage</span>
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Grunge">Grunge</span><br><br>
-				
+
 				<div style="text-align: center">
 					<input type="button" class="button" name="buttonSignUp"
 						value="Sign Up">
 				</div>
 				<br><br>
-				
+
 			</form>
 		</div>
 	</div>

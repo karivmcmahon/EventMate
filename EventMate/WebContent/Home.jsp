@@ -29,7 +29,7 @@
 <input type="text"  name="username" class="buttonMargin"><br>
 <span class="font">Password</span>
 <input type="text"  name="password" >
-<input type="button" class="button" name="login" value="Login"style="float: right;">
+<input type="button" class="button" name="login" value="Login">
 </form>
 </div>
 

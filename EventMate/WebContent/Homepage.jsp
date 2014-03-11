@@ -24,7 +24,16 @@
 	<span class="blueFont" style="margin-left:30%;">Popular Events Suggested For You:</span>
 	
 	<div class="event">
+		<img src="images/martini.jpg" width="60px" height="120px" style="float:left;margin-top:1%;" class="userimgBorder">
+		<img src="images/cross2.png" width="60px" height="60px" style="float:right;margin-top:3%;">
+		<img src="images/tick2.png" width="60px" height="60px" style="float:right;margin-top:3%;">
 		<p class="blueFont">Beyonce Live - Tue 18th March - 9:00pm</p>
+		<span class="blackFont" style="margin-left:2%;">Beyonce's back on her Mrs Carter World Tour at Glasgow Hydro</span><br>
+		<span class="blueFont2" style="margin-left:2%;">Attendee amount: <span class="blackFont" >200</span></span><br>
+		<span class="blueFont2" style="margin-left:2%;">Event Requirements: <span class="blackFont" > Over 14's</span></span><br>
+		<span class="blueFont2" style="margin-left:2%;">Venue: <span class="blackFont" >Hydro</span></span><br>
+		<span class="blueFont2" style="margin-left:2%;">Location: <span class="blackFont" >Glasgow</span></span><br>
+		
 		
 	</div>
 	
