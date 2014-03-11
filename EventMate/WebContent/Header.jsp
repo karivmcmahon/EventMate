@@ -18,6 +18,7 @@
 	<li><img src="images/ic_chat_1.png" width="40px" height="40px"></li>
 	<li><img src="images/ic_arrow_round_change.png" width="40px" height="40px"></li>
 	<li><img src="images/ic_mech_wheel.png" width="40px" height="40px"></li>
+	<li><img src="images/ic_power.png" width="40px" height="40px"></li>
 </ul>
 </body>
 </html>

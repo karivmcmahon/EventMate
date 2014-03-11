@@ -29,7 +29,7 @@
 <input type="text"  name="username" class="buttonMargin"><br>
 <span class="font">Password</span>
 <input type="text"  name="password" >
-<input type="button" class="button" name="login" value="Login">
+<input type="button" class="button" name="login" value="Login"style="float: right;">
 </form>
 </div>
 
@@ -57,8 +57,9 @@ Message each other and arrange going to events  </span> <span class="smallGreyFo
 <input type="text"  name="usernameSignUp" class="buttonMargin"><br>
 <span class="font">Password:</span>
 <input type="text"  name="PasswordSignUp" >
-
-<input type="button" class="button" name="buttonSignUp" value="Sign Up">
+<span class="font">Email:</span>
+<input type="text"  name="EmailSignUp" >
+<input type="button" class="button" name="buttonSignUp" value="Sign Up"style="float: right;">
 </form>
 </div>
 

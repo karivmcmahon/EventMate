@@ -141,6 +141,18 @@ background-color:#E6E6E6;
 	
 }
 
+.fontCheck
+{
+    font-family: 'Glegoo', serif;
+	font-size:110%;
+/* 	color:rgb(203,202,204); */
+/*	color:rgb(184,182,186); */
+	/*color:#E6E6E6;*/
+	color:rgb(51,181,229);
+	margin-left:2%;
+	
+}
+
 .blueFont
 {
 	font-family: 'Glegoo', serif;
@@ -323,3 +335,5 @@ html,body
 	margin:0;
 	padding:0;
 }
+
+
