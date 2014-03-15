@@ -1,13 +1,19 @@
 package com.example.stores;
 
+import java.util.Date;
+
+
+
 public class eventStore {
 	
 	String event;
 	String desc;
-	String date;
+	String datess;
 	int attendeeAmount;
 	String eventReq;
 	String location;
+	String venue;
+
 	
 	public String getEvent()
 	{
@@ -29,16 +35,17 @@ public class eventStore {
 		desc = description;
 	}
 	
-	public String getDate()
-	{
-		return date;
-	}
+	
 	
 	public void setDate(String dte)
 	{
-		date = dte;
+		datess = dte;
 	}
 	
+	public String getDatess()
+	{
+		return datess;
+	}
 	public int getAttendee()
 	{
 		return attendeeAmount;
@@ -68,6 +75,17 @@ public class eventStore {
 	{
 		location = loc;
 	}
+	
+	public String getVenue()
+	{
+		return venue;
+	}
+	
+	public void setVenue(String ven)
+	{
+		venue = ven;
+	}
+
 
 
 }

@@ -7,11 +7,18 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.UUID;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.sql.Timestamp;
 
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
@@ -19,6 +26,7 @@ import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
+import com.example.stores.UserStore;
 import com.example.stores.eventStore;
 
 
@@ -34,44 +42,65 @@ public class EventModel {
 		}
 
 		
-		public LinkedList<eventStore> getEvents() {
-			
+		public LinkedList<eventStore> getEvents(UserStore us) {
+		
 			LinkedList<eventStore> eventList = new LinkedList<eventStore>();
 			Session session = cluster.connect("eventmate");
-
+			
 			PreparedStatement statement = session.prepare("SELECT * from events");
 			BoundStatement boundStatement = new BoundStatement(statement);
 			ResultSet rs = session.execute(boundStatement);
 			if (rs.isExhausted()) {
-				parseURL();
+			
 				System.out.println("No Tweets returned");
 			} else {
 				for (Row row : rs) {
-					parseURL();
+				
 					eventStore ts = new eventStore();
 					ts.setEvent(row.getString("name"));
 					ts.setDesc(row.getString("description"));
-					ts.setDate(row.getString("date"));
-					ts.setAttendee(row.getInt("attendeeAmount"));
+					Calendar c =  Calendar.getInstance();
+					//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
+					c.setTime(row.getDate("eventdate"));
+					//Create a new date format
+					SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+					//Formats the calendar time into a date format
+					String date = dateFormat.format(c.getTime());
+					System.out.println(date);
+					ts.setDate(date);
+					String postcode = row.getString("postcode");
+					int distance = parseURL(postcode,us.getPostcode()) / 1000;
+					System.out.println(distance);
+					int attendeeAmount = row.getInt("attendeeAmount");
+					ts.setAttendee(attendeeAmount);
 					ts.setEventReq(row.getString("eventRequirements"));
 					ts.setLocation(row.getString("location"));
-					eventList.add(ts);
+					ts.setVenue(row.getString("venue"));
+					if(distance <= us.getDistance() && attendeeAmount > 10000)
+					{
+						eventList.add(ts);
+					}
 				}
 			}
 			session.shutdown();
 			return eventList;
 		}
 
-
-public void parseURL()
+public String convertTime(long time){
+		    Date date = new Date(time);
+		    Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
+		    return format.format(date).toString();
+		}
+public int  parseURL(String ePostcode,String uPostcode)
 {
 	// Create JSON and Finance objects (used to convert one data type to another on request)
 			JSONObject jObject = null;
 			String distance = "";
 			JSONArray json = null;
-			String userPostcode = "KA36BG";
-			String eventPostcode = "DD15DL";
+			String userPostcode = uPostcode;
+			String eventPostcode = ePostcode;
 			String mode = "walking";
+			int eventDistance = 0;
 			// Generate URL from which to read the stock details
 			
 			URL feedUrl = null;
@@ -124,10 +153,10 @@ public void parseURL()
 
 			                for(int j=0; j < elements.length(); j++) { // Iterate each element in the elements array
 			                    JSONObject element =  elements.getJSONObject(j); // Get the element object
-			                    JSONObject duration = element.getJSONObject("duration"); // Get duration sub object
+			                    
 			                    JSONObject distances = element.getJSONObject("distance"); // Get distance sub object
-
-			                    System.out.println("Duration: " + duration.getInt("value")); // Print int value
+			                    eventDistance = distances.getInt("value");
+			                  
 			                    System.out.println("Distance: " + distances.getInt("value")); // Print int value
 			                }
 			            }
@@ -166,6 +195,7 @@ public void parseURL()
 ////					//Set that value is na
 ////					toPopulate.setNA("vna");
 //		}
+return eventDistance;
 }
 }
 

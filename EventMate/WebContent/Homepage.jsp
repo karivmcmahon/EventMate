@@ -57,14 +57,14 @@ while (iterator.hasNext()){
 
 	%>
 	<div class="event">
-		 <img src="images/martini.jpg" width="60px" height="110px" style="float:left;margin-top:1%;" class="userimgBorder"> 
+		 <img src="images/martini.jpg" width="60px" height="120px" style="float:left;margin-top:1%;" class="userimgBorder"> 
 		<img src="images/cross2.png" width="60px" height="60px" style="float:right;margin-top:3%;">
 		<img src="images/tick2.png" width="60px" height="60px" style="float:right;margin-top:3%">
-		<p class="blueFont"><%=ts.getEvent() %> - <%=ts.getDate() %></p>
+		<p class="blueFont"><%=ts.getEvent() %> - <%=ts.getDatess() %> </p>
 		<span class="blackFont" style="margin-left:2%;"><%= ts.getDescription() %></span><br>
 		<span class="blueFont2" style="margin-left:2%;">Attendee amount: <span class="blackFont" ><%= ts.getAttendee() %></span></span><br>
 		<span class="blueFont2" style="margin-left:2%;">Event Requirements: <span class="blackFont" ><%= ts.getEventReq() %></span></span><br>
-		<!-- 		<span class="blueFont2" style="margin-left:2%;">Venue: <span class="blackFont" >Hydro</span></span><br> -->
+	    <span class="blueFont2" style="margin-left:2%;">Venue: <span class="blackFont" ><%= ts.getVenue() %></span></span><br>
      	<span class="blueFont2" style="margin-left:2%;">Location: <span class="blackFont" ><%= ts.getLocation() %></span></span><br>
 	</div>
 <%

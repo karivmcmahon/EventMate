@@ -24,12 +24,12 @@
 
 <div class="divRight">
 <span class="eventMate2">Login</span><br>
-<form action="" method="post">
-<span class="font">Username</span>
-<input type="text"  name="username" class="buttonMargin"><br>
-<span class="font">Password</span>
-<input type="text"  name="password" >
-<input type="button" class="button" name="login" value="Login">
+<form action="${pageContent.request.contextPath}/EventMate/Login" method="post">
+	<span class="font">Username</span>
+	<input type="text"  name="username" class="buttonMargin"><br>
+	<span class="font">Password</span>
+	<input type="password"  name="password" >
+	<input type="submit" class="button" name="login" value="Login">
 </form>
 </div>
 
