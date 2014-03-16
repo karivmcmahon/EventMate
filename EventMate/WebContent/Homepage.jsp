@@ -10,7 +10,7 @@
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Codystar' rel='stylesheet' type='text/css'>
-<link rel="shortcut icon" href="/images/Red-Solo-Cup3.jpg" type="image/jpg">
+<link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
 <title>Event-Mate</title>
 </head>
 <body>
@@ -26,15 +26,6 @@
 	<span class="blueFont" style="margin-left:30%;">Popular Events Suggested For You:</span>
 	
 	
-<!-- 		<img src="images/martini.jpg" width="60px" height="120px" style="float:left;margin-top:1%;" class="userimgBorder"> -->
-<!-- 		<img src="images/cross2.png" width="60px" height="60px" style="float:right;margin-top:3%;"> -->
-<!-- 		<img src="images/tick2.png" width="60px" height="60px" style="float:right;margin-top:3%;"> -->
-<!-- 		<p class="blueFont">Beyonce Live - Tue 18th March - 9:00pm</p> -->
-<!-- 		<span class="blackFont" style="margin-left:2%;">Beyonce's back on her Mrs Carter World Tour at Glasgow Hydro</span><br> -->
-<!-- 		<span class="blueFont2" style="margin-left:2%;">Attendee amount: <span class="blackFont" >200</span></span><br> -->
-<!-- 		<span class="blueFont2" style="margin-left:2%;">Event Requirements: <span class="blackFont" > Over 14's</span></span><br> -->
-<!-- 		<span class="blueFont2" style="margin-left:2%;">Venue: <span class="blackFont" >Hydro</span></span><br> -->
-<!-- 		<span class="blueFont2" style="margin-left:2%;">Location: <span class="blackFont" >Glasgow</span></span><br> -->
 		
 		<%
 System.out.println("In render");
@@ -57,9 +48,13 @@ while (iterator.hasNext()){
 
 	%>
 	<div class="event">
-		 <img src="images/martini.jpg" width="60px" height="120px" style="float:left;margin-top:1%;" class="userimgBorder"> 
-		<img src="images/cross2.png" width="60px" height="60px" style="float:right;margin-top:3%;">
-		<img src="images/tick2.png" width="60px" height="60px" style="float:right;margin-top:3%">
+		 <img src="images/martini.jpg" width="60px" height="120px" style="float:left;margin-top:1%;" class="userimgBorder">
+		 <form action="${pageContent.request.contextPath}/EventMate/NotAttending" method="post"> 
+			<input type="image" src="images/cross2.png" width="60px" height="60px" style="float:right;margin-top:3%;" value="<%=ts.getEvent() %>" name="cross">
+		</form>
+		 <form action="${pageContent.request.contextPath}/EventMate/Attending" method="post"> 
+			<input type="image" src="images/tick2.png" width="60px" height="60px" style="float:right;margin-top:3%"  name="tick" value="<%= ts.getEvent()%>">
+		</form>
 		<p class="blueFont"><%=ts.getEvent() %> - <%=ts.getDatess() %> </p>
 		<span class="blackFont" style="margin-left:2%;"><%= ts.getDescription() %></span><br>
 		<span class="blueFont2" style="margin-left:2%;">Attendee amount: <span class="blackFont" ><%= ts.getAttendee() %></span></span><br>

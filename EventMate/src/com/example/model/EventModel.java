@@ -57,7 +57,8 @@ public class EventModel {
 				for (Row row : rs) {
 				
 					eventStore ts = new eventStore();
-					ts.setEvent(row.getString("name"));
+					String name = row.getString("name");
+					ts.setEvent(name);
 					ts.setDesc(row.getString("description"));
 					Calendar c =  Calendar.getInstance();
 					//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
@@ -76,15 +77,46 @@ public class EventModel {
 					ts.setEventReq(row.getString("eventRequirements"));
 					ts.setLocation(row.getString("location"));
 					ts.setVenue(row.getString("venue"));
-					if(distance <= us.getDistance() && attendeeAmount > 10000)
+					if(distance <= us.getDistance() && attendeeAmount > 2000)
 					{
-						eventList.add(ts);
+						PreparedStatement statement2 = session.prepare("SELECT * from userattending WHERE username = ? AND eventname = ?;");
+						BoundStatement boundStatement2 = new BoundStatement(statement2);
+						ResultSet rs2 = session.execute(boundStatement2.bind(us.getUsername(),name));
+						PreparedStatement statement3 = session.prepare("SELECT * from usernotattending WHERE username = ? AND eventname = ?;");
+						BoundStatement boundStatement3 = new BoundStatement(statement3);
+						ResultSet rs3 = session.execute(boundStatement3.bind(us.getUsername(),name));
+						System.out.println(name);
+						if(rs2.isExhausted() && rs3.isExhausted())
+						{
+							eventList.add(ts);
+						}
+						else
+						{
+							System.out.println("nothing");
+						}
 					}
 				}
 			}
 			session.shutdown();
 			return eventList;
 		}
+		
+public void setAttending(UserStore us, String event)
+{
+	Session session = cluster.connect("eventmate");
+	PreparedStatement statement = session.prepare("INSERT INTO userattending(username,eventname) VALUES(?,?);");
+	BoundStatement boundStatement = new BoundStatement(statement);
+    session.execute(boundStatement.bind(us.getUsername(),event));
+	
+}
+
+public void setNotAttending(UserStore us,String event)
+{
+	Session session = cluster.connect("eventmate");
+	PreparedStatement statement = session.prepare("INSERT INTO usernotattending(username,eventname) VALUES(?,?);");
+	BoundStatement boundStatement = new BoundStatement(statement);
+    session.execute(boundStatement.bind(us.getUsername(),event));
+}
 
 public String convertTime(long time){
 		    Date date = new Date(time);

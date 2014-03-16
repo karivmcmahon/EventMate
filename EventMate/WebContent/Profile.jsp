@@ -11,8 +11,7 @@
 	rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Codystar'
 	rel='stylesheet' type='text/css'>
-<link rel="shortcut icon" href="/images/Red-Solo-Cup3.jpg"
-	type="image/jpg">
+<link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
 <title>Event-Mate</title>
 </head>
 <body>

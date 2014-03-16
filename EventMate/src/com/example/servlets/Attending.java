@@ -1,9 +1,7 @@
 package com.example.servlets;
 
 import java.io.IOException;
-import java.util.LinkedList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,43 +12,34 @@ import javax.servlet.http.HttpServletResponse;
 import com.datastax.driver.core.Cluster;
 import com.example.libs.CassandraHosts;
 import com.example.model.EventModel;
-import com.example.stores.eventStore;
+import com.example.stores.UserStore;
 
 /**
- * Servlet implementation class Event
+ * Servlet implementation class Attending
  */
-@WebServlet(urlPatterns = { "/Event", "/Event/*" })
-public class Event extends HttpServlet {
+@WebServlet(urlPatterns = { "/Attending", "/Attending/*" })
+public class Attending extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Cluster cluster;
-
+	Cluster cluster;
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public Event() {
+    public Attending() {
+        super();
         // TODO Auto-generated constructor stub
-    	super();
     }
-
-    public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
-		cluster = CassandraHosts.getCluster();
-	}
     
+    public void init(ServletConfig config) throws ServletException {
+  		// TODO Auto-generated method stub
+  		cluster = CassandraHosts.getCluster();
+  	}
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//String args[]=Convertors.SplitRequestPath(request);
-		EventModel tm= new EventModel();
-	
-		tm.setCluster(cluster);
-		LinkedList<eventStore> eventList = tm.getEvents();
-		request.setAttribute("Events", eventList); //Set a bean with the list in it
-		RequestDispatcher rd = request.getRequestDispatcher("/Homepage.jsp"); 
-
-		rd.forward(request, response);
 	}
 
 	/**
@@ -58,6 +47,14 @@ public class Event extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		EventModel em = new EventModel();
+		UserStore us = new UserStore();
+	    us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+	    String event = request.getParameter("tick");
+	    em.setCluster(cluster);
+	    em.setAttending(us,event);
+	    response.sendRedirect("/EventMate/Event");
+
 	}
 
 }

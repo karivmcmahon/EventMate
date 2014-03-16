@@ -17,11 +17,13 @@ public class eventStore {
 	
 	public String getEvent()
 	{
+		System.out.println("e " + event);
 		return event;
 	}
 	
 	public void setEvent(String events)
-	{
+	{ 
+		System.out.println("e " + events);
 		event = events;
 	}
 	
