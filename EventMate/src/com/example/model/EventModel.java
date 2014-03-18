@@ -88,6 +88,7 @@ public class EventModel {
 						System.out.println(name);
 						if(rs2.isExhausted() && rs3.isExhausted())
 						{
+							System.out.println("added");
 							eventList.add(ts);
 						}
 						else
@@ -107,6 +108,9 @@ public void setAttending(UserStore us, String event)
 	PreparedStatement statement = session.prepare("INSERT INTO userattending(username,eventname) VALUES(?,?);");
 	BoundStatement boundStatement = new BoundStatement(statement);
     session.execute(boundStatement.bind(us.getUsername(),event));
+    FriendModel fm = new FriendModel();
+    fm.setCluster(cluster);
+    fm.getAttending(us,event);
 	
 }
 
