@@ -50,10 +50,11 @@ while (iterator.hasNext()){
 	<div class="event">
 		 <img src="images/martini.jpg" width="60px" height="120px" style="float:left;margin-top:1%;" class="userimgBorder">
 		 <form action="${pageContent.request.contextPath}/EventMate/NotAttending" method="post"> 
-			<input type="image" src="images/cross2.png" width="60px" height="60px" style="float:right;margin-top:3%;" value="<%=ts.getEvent() %>" name="cross">
+		
+		<button  type="submit" value="<%=ts.getEvent() %>" name="cross" style="float:right;margin-top:3%;"><img src="images/cross2.png" width="60px" height="60px" ></button>
 		</form>
 		 <form action="${pageContent.request.contextPath}/EventMate/Attending" method="post"> 
-			<input type="image" src="images/tick2.png" width="60px" height="60px" style="float:right;margin-top:3%"  name="tick" value="<%= ts.getEvent()%>">
+		 	<button  type="submit" value="<%=ts.getEvent() %>" name="tick" style="float:right;margin-top:3%;"><img src="images/tick2.png" width="60px" height="60px" ></button>
 		</form>
 		<p class="blueFont"><%=ts.getEvent() %> - <%=ts.getDatess() %> </p>
 		<span class="blackFont" style="margin-left:2%;"><%= ts.getDescription() %></span><br>
