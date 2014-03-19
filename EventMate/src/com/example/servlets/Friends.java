@@ -49,7 +49,7 @@ public class Friends extends HttpServlet {
 		//Get session for user currently logged in
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		fm.setCluster(cluster);
-		LinkedList<UserStore> friendList = fm.getFriends(us);
+		LinkedList<UserStore> friendList = fm.displayFriends(us);
 		request.setAttribute("Friends", friendList); //Set a bean with the list in it
 		RequestDispatcher rd = request.getRequestDispatcher("/Friends.jsp"); 
 

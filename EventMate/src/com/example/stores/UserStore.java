@@ -14,6 +14,10 @@ public class UserStore {
 	int age;
 	String location;
 	String postcode = "";
+	String gender;
+	String genderpref;
+	int agemaxrange;
+	int ageminrange;
 	Set<String> interests;
 	ArrayList<String> eventList = new ArrayList<String>();
 	
@@ -144,6 +148,44 @@ public class UserStore {
 		
 	}
 	
+	public void setGender(String g)
+	{
+		gender=g;
+	}
 	
+	public String getGender()
+	{
+		return gender;
+	}
+	
+	public void setGenderPref(String gp)
+	{
+		genderpref=gp;
+	}
+	
+	public String getGenderPref()
+	{
+		return genderpref;
+	}
+	
+	public void setAgeMax(int a)
+	{
+		agemaxrange = a;
+	}
+	
+	public int getAgeMax()
+	{
+		return agemaxrange;
+	}
+	
+	public void setAgeMin(int as)
+	{
+		ageminrange = as;
+	}
+	
+	public int getAgeMin()
+	{
+		return ageminrange;
+	}
 
 }

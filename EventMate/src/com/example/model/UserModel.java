@@ -2,6 +2,7 @@ package com.example.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 import com.datastax.driver.core.BoundStatement;
@@ -41,6 +42,15 @@ public class UserModel {
 				user.setPassword(row.getString("password"));
 				user.setDistancePref(row.getInt("distanceAmount"));
 				user.setPostcode(row.getString("postcode"));
+				user.setInterests(row.getSet("interests", String.class));
+				user.setGenderPref(row.getString("genderPref"));
+				user.setGender(row.getString("gender"));
+				user.setAgeMax(row.getInt("ageMaxRange"));
+				user.setAgeMin(row.getInt("ageMinRange"));
+				Date dob = row.getDate("dob");
+				FriendModel f = new FriendModel();
+				int age = f.getDate(dob);
+				user.setAge(age);
 				user.setValid(true);
 			}
 		}
