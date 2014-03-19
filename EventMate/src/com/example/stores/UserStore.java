@@ -19,6 +19,8 @@ public class UserStore {
 	int agemaxrange;
 	int ageminrange;
 	Set<String> interests;
+	Set<String> sports;
+	Set<String> music;
 	ArrayList<String> eventList = new ArrayList<String>();
 	
 	public UserStore()
@@ -186,6 +188,26 @@ public class UserStore {
 	public int getAgeMin()
 	{
 		return ageminrange;
+	}
+	
+	public void setSports(Set<String> sport)
+	{
+		sports = sport;
+	}
+	
+	public Set<String> getSports()
+	{
+		return sports;
+	}
+	
+	public void setMusic(Set<String> m)
+	{
+		music = m;
+	}
+	
+	public Set<String> getMusic()
+	{
+		return music;
 	}
 
 }

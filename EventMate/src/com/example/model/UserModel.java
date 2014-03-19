@@ -47,6 +47,8 @@ public class UserModel {
 				user.setGender(row.getString("gender"));
 				user.setAgeMax(row.getInt("ageMaxRange"));
 				user.setAgeMin(row.getInt("ageMinRange"));
+				user.setSports(row.getSet("sports", String.class));
+				user.setMusic(row.getSet("music", String.class));
 				Date dob = row.getDate("dob");
 				FriendModel f = new FriendModel();
 				int age = f.getDate(dob);

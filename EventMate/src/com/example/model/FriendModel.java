@@ -1,13 +1,22 @@
 package com.example.model;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+
+
+
+
 
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
@@ -170,6 +179,7 @@ public class FriendModel {
 	
 public void getAttending(UserStore us,String event)
 {
+	Map<String,Integer> map = new HashMap<String,Integer>();
 	UserStore userstore = new UserStore();
 	Session session = cluster.connect("eventmate");
 	int counter = 0;
@@ -196,7 +206,7 @@ public void getAttending(UserStore us,String event)
 			{
 				if(!name.equals(us.getUsername()))
 				{
-				
+					
 					PreparedStatement statement5 = session.prepare("SELECT * from users WHERE username=?;");
 					BoundStatement boundStatement5 = new BoundStatement(statement5);
 					ResultSet rs5 = session.execute(boundStatement5.bind(name));
@@ -205,19 +215,48 @@ public void getAttending(UserStore us,String event)
 						Date dob = row2.getDate("dob");
 						int age = getDate(dob);
 						if((us.getGenderPref().equals("both") || us.getGenderPref().equals(row2.getString("gender")))  && (age >= us.getAgeMin() && age <= us.getAgeMax())  && (us.getAge() >= row2.getInt("ageMinRange")  && us.getAge() <= row2.getInt("ageMaxRange")))
-						{
-							if(counter <= 3)
-							{
-							PreparedStatement statement4 = session.prepare("INSERT INTO userfriends(usersname,friendsname) VALUES(?,?);");
-							BoundStatement boundStatement4 = new BoundStatement(statement4);
-							ResultSet rs4 = session.execute(boundStatement4.bind(us.getUsername(),name));
-							System.out.println("added");
-							counter++;
-							}
-						}
+					{
+						
+						Set<String> interests = new HashSet<String>(us.getInterests());
+						Set<String> sportsInterests = new HashSet<String>(us.getSports());
+						Set<String> musicInterests = new HashSet<String>(us.getMusic());// use the copy constructor
+						System.out.println("sports 1 " + sportsInterests);
+						System.out.println("sports 2 " + row2.getSet("sports", String.class));
+						interests.retainAll(row2.getSet("interests", String.class));
+						sportsInterests.retainAll(row2.getSet("sports", String.class));
+						musicInterests.retainAll(row2.getSet("music", String.class));
+						int totalCommonInterests = interests.size() + sportsInterests.size() + musicInterests.size();
+						System.out.println("Total comm interests" + totalCommonInterests);
 					
+						map.put(name,totalCommonInterests);
+						map = MapUtil.sortByValue(map);
+						System.out.println("mappy " + map);
+						
+						
+						
+						}
 						
 				
+					}
+					Iterator entries = map.entrySet().iterator();
+					while (entries.hasNext()) {
+						if(counter > 5)
+						{
+							System.out.println("breaked" + counter);
+							break;
+						}
+						else
+						{
+					    Map.Entry entry = (Map.Entry) entries.next();
+					    String key = (String)entry.getKey();
+					    Integer value = (Integer)entry.getValue();
+					    System.out.println("Key = " + key + ", Value = " + value);
+					    PreparedStatement statement4 = session.prepare("INSERT INTO userfriends(usersname,friendsname) VALUES(?,?);");
+					    BoundStatement boundStatement4 = new BoundStatement(statement4);
+					    ResultSet rs4 = session.execute(boundStatement4.bind(us.getUsername(),key));
+					    counter++;
+						}
+					}
 					}
 				}
 				
@@ -226,7 +265,7 @@ public void getAttending(UserStore us,String event)
 		}
 	}
 	
-}
+
 
 public int getDate(Date dateOfBirth)
 {
