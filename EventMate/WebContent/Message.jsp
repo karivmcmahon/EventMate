@@ -23,8 +23,8 @@
 <div class="divMain2" style="min-height:100%;">
 	<jsp:include page="Header.jsp" />
 	<br><br><br>
-	<center>
-		<span class="blueFont" >Messages From ....</span>
+	<center><%UserStore friendName = (UserStore)request.getAttribute("Friend");%>
+		<span class="blueFont" >Messages From <%= friendName.getName() %></span>
 	</center>
 	<div class="message">
 	
@@ -100,9 +100,12 @@ while (iterator.hasNext()){
 	
 	 
 	 </div>
-
-	<textarea  name="postTweet" rows="6" cols="70" class="textarea" ></textarea>
+	<form action=""${pageContent.request.contextPath}/EventMate/Messages" method="post">
+	<textarea  name="postMessage" rows="6" cols="70" class="textarea" ></textarea>
+	<input type="hidden"  value="<%= friendName.getName() %>" name="name">
+	<input type="hidden"  value="<%= friendName.getUsername() %>" name="sendingTo">
 	<input type="submit" value="Send" class="button" >
+	</form>
 	
 
 	

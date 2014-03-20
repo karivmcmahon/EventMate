@@ -48,9 +48,11 @@ public class Messages extends HttpServlet {
 		MessageModel mm = new MessageModel();
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		friendMessaged.setUsername(request.getParameter("username"));
+		friendMessaged.setName(request.getParameter("name"));
 		mm.setCluster(cluster);
 		LinkedList<MessageStore> messageList = mm.getMessages(us,friendMessaged);
 		request.setAttribute("Messages", messageList); //Set a bean with the list in it
+		request.setAttribute("Friend",friendMessaged);
 		RequestDispatcher rd = request.getRequestDispatcher("/Message.jsp"); 
 
 		rd.forward(request, response);
@@ -61,6 +63,21 @@ public class Messages extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		UserStore us = new UserStore();
+		UserStore friendMessaged = new UserStore();
+		MessageModel mm = new MessageModel();
+		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		friendMessaged.setUsername(request.getParameter("sendingTo"));
+		friendMessaged.setName(request.getParameter("name"));
+		String message = request.getParameter("postMessage");
+		mm.setCluster(cluster);
+		mm.insertMessage(us, friendMessaged, message);
+		LinkedList<MessageStore> messageList = mm.getMessages(us,friendMessaged);
+		request.setAttribute("Messages", messageList); //Set a bean with the list in it
+		request.setAttribute("Friend",friendMessaged);
+		RequestDispatcher rd = request.getRequestDispatcher("/Message.jsp"); 
+
+		rd.forward(request, response);
 	}
 
 }

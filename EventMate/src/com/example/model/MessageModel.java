@@ -1,5 +1,8 @@
 package com.example.model;
 
+
+
+import java.sql.Timestamp;
 import java.util.LinkedList;
 
 import com.datastax.driver.core.BoundStatement;
@@ -51,6 +54,17 @@ public class MessageModel {
 			}
 		session.shutdown();
 		return messageList;
+	}
+	
+	public void insertMessage(UserStore us,UserStore friendMessaged,String message)
+	{
+Session session = cluster.connect("eventmate");
+java.util.Date date= new java.util.Date();
+Timestamp times = new Timestamp(date.getTime());
+
+		PreparedStatement statement = session.prepare("INSERT INTO messages(userto,userfrom,message,time) VALUES(?,?,?,?);");
+		BoundStatement boundStatement = new BoundStatement(statement);
+		ResultSet rs = session.execute(boundStatement.bind(friendMessaged.getUsername(),us.getUsername(),message,times));
 	}
 
 }

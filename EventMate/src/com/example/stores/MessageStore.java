@@ -8,6 +8,7 @@ public class MessageStore {
 	String to;
 	String from;
 	String message;
+	String friendMessaging;
 	Date time;
 	
 	public void setMessage(String m)
@@ -19,6 +20,17 @@ public class MessageStore {
 	{
 		return message;
 	}
+	
+	public void setFriendMessaging(String f)
+	{
+		friendMessaging = f;
+	}
+	
+	public String getFriendMessaging()
+	{
+		return friendMessaging;
+	}
+	
 	public void setTo(String t)
 	{
 		to = t;
