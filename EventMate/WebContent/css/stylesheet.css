@@ -4,6 +4,15 @@ li
 {
 	display:inline;
 	margin-left:9%;
+	padding: 0;
+border: none;
+background: none;
+}
+
+a img
+{
+	border: none;
+	outline:none;
 }
 
 ul.header2

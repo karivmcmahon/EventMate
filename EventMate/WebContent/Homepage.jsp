@@ -51,10 +51,14 @@ while (iterator.hasNext()){
 		 <img src="images/martini.jpg" width="60px" height="120px" style="float:left;margin-top:1%;" class="userimgBorder">
 		 <form action="${pageContent.request.contextPath}/EventMate/NotAttending" method="post"> 
 		
-		<button  type="submit" value="<%=ts.getEvent() %>" name="cross" style="float:right;margin-top:3%;"><img src="images/cross2.png" width="60px" height="60px" ></button>
+		<button  type="submit" value="<%=ts.getEvent() %>" name="cross" style="float:right;margin-top:3%;padding: 0;
+border: none;
+background: none;"><img src="images/cross2.png" width="60px" height="60px" ></button>
 		</form>
 		 <form action="${pageContent.request.contextPath}/EventMate/Attending" method="post"> 
-		 	<button  type="submit" value="<%=ts.getEvent() %>" name="tick" style="float:right;margin-top:3%;"><img src="images/tick2.png" width="60px" height="60px" ></button>
+		 	<button  type="submit" value="<%=ts.getEvent() %>" name="tick" style="float:right;margin-top:3%;padding: 0;
+border: none;
+background: none;"><img src="images/tick2.png" width="60px" height="60px" ></button>
 		</form>
 		<p class="blueFont"><%=ts.getEvent() %> - <%=ts.getDatess() %> </p>
 		<span class="blackFont" style="margin-left:2%;"><%= ts.getDescription() %></span><br>
