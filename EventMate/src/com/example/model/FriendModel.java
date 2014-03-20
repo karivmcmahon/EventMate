@@ -67,7 +67,7 @@ public class FriendModel {
 				ResultSet rs2 = session.execute(boundStatement2.bind(friend));
 				for(Row row2 : rs2)
 				{
-				
+					fus.setUsername(row2.getString("username"));
 					fus.setName(row2.getString("name"));
 					fus.setBio(row2.getString("bio"));
 					int age = getDate(row2.getDate("dob"));

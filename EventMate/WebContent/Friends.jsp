@@ -50,7 +50,7 @@ while (iterator.hasNext()){
 	<div class="event">
 	<img src="images/ryan.jpg" width="80px" height="130px" style="float:left;margin-top:1%;" class="userimgBorder">
 	<form action="${pageContent.request.contextPath}/EventMate/Messages" method="get">
-	<button type="submit" value="<%= us.getUsername() %> name="username" style="float:right;margin-top:2%;padding: 0;
+	<button type="submit" value="<%= us.getUsername() %>" name="username" style="float:right;margin-top:2%;padding: 0;
 border: none;
 background: none;"><img src="images/ic_chat_simple.png"  width="60px" height="60px"></button>
 	</form>
