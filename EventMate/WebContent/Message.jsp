@@ -12,8 +12,21 @@
 <link href='http://fonts.googleapis.com/css?family=Codystar' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
 <title>Event-Mate</title>
+  
+   <script type="text/javascript">
+   window.onload = initAll;
+   function initAll() {
+    var box = document.getElementById('m');
+    box.scrollTop = box.scrollHeight;
+   }
+  
+ 
+    </script>
+
+
 </head>
 <body>
+   
 <ul class="header2">
 <center>
 	<span class="eventMate">Event-Mate</span><img src="images/martini2.jpg" width="40px" height="50px" >
@@ -26,7 +39,7 @@
 	<center><%UserStore friendName = (UserStore)request.getAttribute("Friend");%>
 		<span class="blueFont" >Messages From <%= friendName.getName() %></span>
 	</center>
-	<div class="message">
+	<div  id="m">
 	
 	<%
 System.out.println("In render");
@@ -69,7 +82,7 @@ while (iterator.hasNext()){
 		<img src="images/ryan.jpg" width="60px" height="60px" style="float:right;" class="userimgBorder">
 		<div class="bubble" style="float:right;">
 		
-	  		<div class="senderPost"><%= ts.getMessage()%></div>
+	  		<div class="smallBlackFont"><%= ts.getMessage()%></div>
 	 	</div>
 	 	</div>
 	 	<%}
@@ -79,7 +92,7 @@ while (iterator.hasNext()){
 		  <div class="beforeBubble2">
 		   <center>
 		   
-		   <span class="smallBlueFont" ><%=ts.getDate()%></span>
+		   <span class="smallBlackFont" ><%=ts.getDate()%></span>
 		   </center>
 		   <img src="images/ryan.jpg" width="60px" height="60px" style="float:left;" class="userimgBorder">
 		  <div class="bubble2" style="float:left;">
