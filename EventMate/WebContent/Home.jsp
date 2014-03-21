@@ -52,14 +52,14 @@ Message each other and arrange going to events  </span> <span class="smallGreyFo
 
 <div class="divRight2">
 <span class="eventMate2">Sign Up</span><br>
-<form action="" method="post">
+<form action="${pageContent.request.contextPath}/EventMate/SignUp" method="post">
 <span class="font">Username:</span>
 <input type="text"  name="usernameSignUp" class="buttonMargin"><br>
 <span class="font">Password:</span>
-<input type="text"  name="PasswordSignUp" >
+<input type="password"  name="passwordSignUp" >
 <span class="font">Email:</span>
-<input type="text"  name="EmailSignUp" >
-<input type="button" class="button" name="buttonSignUp" value="Sign Up"style="float: right;">
+<input type="text"  name="emailSignUp" >
+<input type="submit" class="button" name="buttonSignUp" value="Sign Up"style="float: right;">
 </form>
 </div>
 

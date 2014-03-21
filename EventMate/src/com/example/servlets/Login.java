@@ -41,6 +41,28 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		UserStore us = new UserStore();
+		UserModel um = new UserModel();
+		um.setCluster(cluster);
+		us = (UserStore) request.getSession().getAttribute("possibleUser");
+		try {
+			us = um.getUser(us);
+		} catch (Exception e) {
+
+		}
+
+		if (us.getValid()) {
+			us.setLoggedIn(true);
+			HttpSession session = request.getSession(true);
+			session.setAttribute("currentSeshUser", us);
+			// Direct to home.jsp once session true
+			response.sendRedirect("/EventMate/Event");
+		} else {
+			System.out.println("not valid");
+			us.setLoggedIn(false);
+			RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
+			rd.forward(request, response);
+		}
 	}
 
 	/**

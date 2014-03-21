@@ -1,9 +1,11 @@
 package com.example.model;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Set;
 
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
@@ -58,6 +60,36 @@ public class UserModel {
 		}
 		session.shutdown();
 		return user;
+	}
+	
+	public void addUser(UserStore us)
+	{
+		Session session = cluster.connect("eventmate");
+		String name = us.getName();
+		String un = us.getUsername();
+		String pw = us.getPassword();
+		String email = us.getEmail();
+		String bio = us.getBio();
+		int distance = us.getDistance();
+		String gender = us.getGender();
+		String genderPref = us.getGenderPref();
+		Set<String> interests = us.getInterests();
+		String location = us.getLocation();
+		Set<String> music = us.getMusic();
+		String postcode = us.getPostcode();
+		String relationship = us.getRelationship();
+		Set<String> sports = us.getSports();
+		int ageMin = us.getAgeMin();
+		int ageMax = us.getAgeMax();
+		Date dob = us.getDob();
+		java.util.Date date= new java.util.Date();
+		Timestamp times = new Timestamp(date.getTime());
+		PreparedStatement statement = session.prepare("INSERT INTO users(name, username, password, email, bio, gender, interests, location, music, postcode, sports, \"distanceAmount\", \"genderPref\", \"relationshipStatus\", \"ageMaxRange\", \"ageMinRange\", dob, \"dateJoined\") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+		System.out.println("Statement prepared");
+		BoundStatement boundStatement = new BoundStatement(statement);
+		session.execute(boundStatement.bind(name, un, pw, email, bio, gender, interests, location, music, postcode, sports, distance, genderPref, relationship, ageMax, ageMin, dob, times));
+		System.out.println("execute");
+		session.shutdown();
 	}
 
 }

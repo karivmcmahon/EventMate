@@ -1,6 +1,7 @@
 package com.example.stores;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Set;
 
 public class UserStore {
@@ -12,6 +13,8 @@ public class UserStore {
 	String name;
 	String bio;
 	int age;
+	Date dob;
+	Date dateJoined;
 	String location;
 	String postcode = "";
 	String gender;
@@ -21,6 +24,9 @@ public class UserStore {
 	Set<String> interests;
 	Set<String> sports;
 	Set<String> music;
+	String email;
+	String relationship;
+	String interestedIn;
 	ArrayList<String> eventList = new ArrayList<String>();
 	
 	public UserStore()
@@ -66,6 +72,40 @@ public class UserStore {
 	{
 		return valid;
 	}
+	
+	
+	public Date getDateJoined() {
+		return dateJoined;
+	}
+
+	public void setDateJoined(Date dateJoined) {
+		this.dateJoined = dateJoined;
+	}
+
+	public Date getDob() {
+		return dob;
+	}
+
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+	
+	public String getRelationship() {
+		return relationship;
+	}
+
+	public void setRelationship(String relationship) {
+		this.relationship = relationship;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	
 	public void setLoggedIn(boolean log)
 	{

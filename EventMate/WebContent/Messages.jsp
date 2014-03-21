@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+ <%@ page import="java.util.*" %>
+      <%@ page import="com.example.stores.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,13 +24,38 @@
 	<jsp:include page="Header.jsp" />
 	<br><br><br>
 	<span class="blueFont" style="margin-left:30%;">Your Messages:</span>
+	<%
+System.out.println("In render");
+List<MessagerStore> messages = (List<MessagerStore>)request.getAttribute("Messsages");
+if (messages==null){
+ %>
+	<p class="blueFont">No event's found</p>
+	<% 
+}else{
+%>
+
+
+<% 
+Iterator<MessagerStore> iterator;
+
+
+iterator = messages.iterator();     
+while (iterator.hasNext()){
+	MessagerStore ms = (MessagerStore)iterator.next();
+
+	%>
 	<div class="event">
 	<img src="images/ic_arrow_circle_right.png" width="60px" height="60px" style="float:right;">
 		<center>
-			<span class="blueFont">Ryan Dawson</span>
+			<span class="blueFont"><%= ms.getMessager() %></span>
 			<br><br><br>
 		</center>
 	</div>
+<%
+
+}
+}
+%>
 	
 
 	
