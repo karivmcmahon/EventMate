@@ -23,13 +23,16 @@
 <div class="divMain2" style="min-height:100%;">
 	<jsp:include page="Header.jsp" />
 	<br><br><br>
-	<span class="blueFont" style="margin-left:30%;">Your Messages:</span>
-	<%
+	<center>
+	<span class="blueFont" >Your Messages:</span>
+	</center>
+	
+			<%
 System.out.println("In render");
-List<MessagerStore> messages = (List<MessagerStore>)request.getAttribute("Messsages");
+List<MessagerStore> messages = (List<MessagerStore>)request.getAttribute("Message");
 if (messages==null){
  %>
-	<p class="blueFont">No event's found</p>
+	<p class="blueFont">No message's found</p>
 	<% 
 }else{
 %>
@@ -41,15 +44,22 @@ Iterator<MessagerStore> iterator;
 
 iterator = messages.iterator();     
 while (iterator.hasNext()){
-	MessagerStore ms = (MessagerStore)iterator.next();
+	MessagerStore ts = (MessagerStore)iterator.next();
 
 	%>
 	<div class="event">
-	<img src="images/ic_arrow_circle_right.png" width="60px" height="60px" style="float:right;">
-		<center>
-			<span class="blueFont"><%= ms.getMessager() %></span>
+	<form action="${pageContent.request.contextPath}/EventMate/Messages" method="get">
+	<input type="hidden" name="name" value="<%= ts.getName() %>">
+	<button type="submit" value="<%= ts.getMessager() %>" name="username" style="float:right;padding: 0;
+border: none;
+background: none;"><img src="images/ic_post.png"  width="60px" height="60px"></button>
+	</form>
+
+		
+		<img src="images/ryan.jpg" width="60px" height="60px" style="float:left;" class="userimgBorder">
+			<span class="blueFont"><%= ts.getName() %></span>
 			<br><br><br>
-		</center>
+		
 	</div>
 <%
 

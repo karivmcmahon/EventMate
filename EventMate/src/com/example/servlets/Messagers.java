@@ -50,7 +50,7 @@ public class Messagers extends HttpServlet {
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		fm.setCluster(cluster);
 		LinkedList<MessagerStore> messageList = fm.messagerList(us);
-		request.setAttribute("Messages", messageList); //Set a bean with the list in it
+		request.setAttribute("Message", messageList); //Set a bean with the list in it
 		RequestDispatcher rd = request.getRequestDispatcher("/Messages.jsp"); 
 
 		rd.forward(request, response);
