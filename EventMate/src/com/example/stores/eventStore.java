@@ -14,6 +14,17 @@ public class eventStore {
 	String location;
 	String venue;
 	String category;
+	boolean attending;
+	
+	public void setAttending(boolean attend)
+	{
+		attending = attend;
+	}
+	
+	public boolean getAttending()
+	{
+		return attending;
+	}
 	
 	public String getCategory()
 	{

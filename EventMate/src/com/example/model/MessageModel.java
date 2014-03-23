@@ -230,6 +230,155 @@ public class MessageModel {
 
 		
 	}
+	
+	
+	
+	public LinkedList<MessagerStore> messagerListByUsername(UserStore us,String username)
+	{
+		Session session = cluster.connect("eventmate");
+		LinkedList<MessagerStore> messagerList = new LinkedList<MessagerStore>();
+		Set<String> list = new HashSet<String>();
+		
+		PreparedStatement statement = session.prepare("SELECT * FROM userfriends where usersname = ? AND friendsname=?;");
+		BoundStatement boundStatement = new BoundStatement(statement);
+		ResultSet rs = session.execute(boundStatement.bind(us.getUsername(),username));
+		
+		for(Row row : rs)
+		{
+			MessagerStore m = new MessagerStore();
+			String friendName = row.getString("friendsname");
+			System.out.println("Friend " + friendName);
+			PreparedStatement statement2 = session.prepare("SELECT * FROM messages WHERE userto in (?,?);");
+			BoundStatement boundStatement2 = new BoundStatement(statement2);
+			ResultSet rs2 = session.execute(boundStatement2.bind(us.getUsername(),friendName));
+			for(Row row2 : rs2)
+			{
+				if(row2.getString("userto").equals(us.getUsername()) || row2.getString("userfrom").equals(us.getUsername()))
+				{
+					System.out.println("Username exists" + friendName);
+					if(row2.getString("userto").equals(us.getUsername()) && row2.getString("userfrom").equals(friendName))
+					{
+						if(list.contains(row2.getString("userfrom")))
+						{
+							System.out.print("Contained In List" + friendName);
+						}
+						else
+						{
+							System.out.print("Add to list " + friendName);
+							m.setMessager(row2.getString("userfrom"));
+							list.add(row2.getString("userfrom"));
+							messagerList.add(m);
+							PreparedStatement statement3 = session.prepare("SELECT * FROM users WHERE username=?");
+							BoundStatement boundStatement3 = new BoundStatement(statement3);
+							ResultSet rs3 = session.execute(boundStatement3.bind(friendName));
+							for(Row row3 : rs3)
+							{
+								 m.setName(row3.getString("name"));
+							}
+						}
+					}
+					else if(row2.getString("userfrom").equals(us.getUsername()) && row2.getString("userto").equals(friendName))
+					{
+						if(list.contains(row2.getString("userto")))
+						{
+							System.out.print("Contained In List" + friendName);
+						}
+						else
+						{
+							System.out.print("Add to list " + friendName);
+							m.setMessager(row2.getString("userto"));
+							list.add(row2.getString("userto"));
+							messagerList.add(m);
+							PreparedStatement statement3 = session.prepare("SELECT * FROM users WHERE username=?");
+							BoundStatement boundStatement3 = new BoundStatement(statement3);
+							ResultSet rs3 = session.execute(boundStatement3.bind(friendName));
+							for(Row row3 : rs3)
+							{
+								 m.setName(row3.getString("name"));
+							}
+						}
+					}
+				}
+				
+			}
+			
+		}
+			PreparedStatement statement3 = session.prepare("SELECT * FROM userfriends where friendsname = ? AND usersname = ? LIMIT 1000 ALLOW FILTERING;");
+			BoundStatement boundStatement3 = new BoundStatement(statement3);
+			ResultSet rs3 = session.execute(boundStatement3.bind(us.getUsername(),username));
+			
+			for(Row row3 : rs3)
+			{
+				MessagerStore m2 = new MessagerStore();
+				String friendsName = row3.getString("usersname");
+				System.out.println("Friend " + friendsName);
+				PreparedStatement statement4 = session.prepare("SELECT * FROM messages WHERE userto in (?,?);");
+				BoundStatement boundStatement4 = new BoundStatement(statement4);
+				ResultSet rs4 = session.execute(boundStatement4.bind(us.getUsername(),friendsName));
+				for(Row row4 : rs4)
+				{
+					if(row4.getString("userto").equals(us.getUsername()) || row4.getString("userfrom").equals(us.getUsername()))
+					{
+						System.out.println("Username exists" + friendsName);
+						if(row4.getString("userto").equals(us.getUsername()) && row4.getString("userfrom").equals(friendsName))
+						{
+							if(list.contains(row4.getString("userfrom")))
+							{
+								System.out.print("Contained In List" + friendsName);
+							}
+							else
+							{
+								System.out.print("Add to list " + friendsName);
+								m2.setMessager(row4.getString("userfrom"));
+								list.add(row4.getString("userfrom"));
+								messagerList.add(m2);
+								PreparedStatement statement5 = session.prepare("SELECT * FROM users WHERE username=?");
+								BoundStatement boundStatement5 = new BoundStatement(statement5);
+								ResultSet rs5 = session.execute(boundStatement5.bind(friendsName));
+								for(Row row5 : rs5)
+								{
+									 m2.setName(row5.getString("name"));
+								}
+							}
+						}
+						else if(row4.getString("userfrom").equals(us.getUsername()) && row4.getString("userto").equals(friendsName))
+						{
+							if(list.contains(row4.getString("userto")))
+							{
+								System.out.print("Contained In List" + friendsName);
+							}
+							else
+							{
+								System.out.print("Add to list " + friendsName);
+								m2.setMessager(row4.getString("userto"));
+								list.add(row4.getString("userto"));
+								messagerList.add(m2);
+								PreparedStatement statement5 = session.prepare("SELECT * FROM users WHERE username=?");
+								BoundStatement boundStatement5 = new BoundStatement(statement5);
+								ResultSet rs5 = session.execute(boundStatement5.bind(friendsName));
+								for(Row row5 : rs5)
+								{
+									 m2.setName(row5.getString("name"));
+								}
+							}
+							
+						}
+				
+					}
+		
+			
+				}
+				
+				
+				
+				
+		}
+			session.shutdown();	
+			return messagerList;
+		
+
+		
+	}
 	}
 
 

@@ -29,13 +29,23 @@
 
 <%
 System.out.println("In render");
-eventStore lTweet = (eventStore)request.getAttribute("Event");
+List<eventStore> lTweet = (List<eventStore>)request.getAttribute("Events");
 if (lTweet==null){
  %>
 	<p class="blueFont">No event's found</p>
 	<% 
 }else{
 %>
+
+<% 
+Iterator<eventStore> iterator;
+
+
+iterator = lTweet.iterator();     
+while (iterator.hasNext()){
+	eventStore ts = (eventStore)iterator.next();
+
+	%>
 
 
 
@@ -47,31 +57,31 @@ if (lTweet==null){
 				</center>		
 			</div>
 			
-			<br> <br> <span class="blueFont" style="margin-left:12%;"><%=lTweet.getEvent() %></span> <span
-				class="blueFont2"><%=lTweet.getDatess() %></span> <br> <br>
-			<span class="blackFont" style="margin-left:12%;"><%=lTweet.getDescription() %></span> <br> <span class="blueFont2" style="margin-left:12%;">Attending:
-			</span> <span class="blackFont"><%= lTweet.getAttendee() %></span> <br>
-			 <span class="blueFont2" style="margin-left:12%;">Venue: </span> <span class="blackFont"><%= lTweet.getVenue() %></span> <br>
-			  <span class="blueFont2" style="margin-left:12%;">Location: </span> <span class="blackFont"><%= lTweet.getLocation() %></span>
+			<br> <br> <span class="blueFont" style="margin-left:12%;"><%=ts.getEvent() %></span> <span
+				class="blueFont2"><%=ts.getDatess() %></span> <br> <br>
+			<span class="blackFont" style="margin-left:12%;"><%=ts.getDescription() %></span> <br> <span class="blueFont2" style="margin-left:12%;">Attending:
+			</span> <span class="blackFont"><%= ts.getAttendee() %></span> <br>
+			 <span class="blueFont2" style="margin-left:12%;">Venue: </span> <span class="blackFont"><%= ts.getVenue() %></span> <br>
+			  <span class="blueFont2" style="margin-left:12%;">Location: </span> <span class="blackFont"><%= ts.getLocation() %></span>
 			 <br> <span
 			 
 				class="blueFont2" style="margin-left:12%;">Event Requirements: </span> <span
 
-				class="blackFont"><%=lTweet.getEventReq() %></span> <br>
+				class="blackFont"><%=ts.getEventReq() %></span> <br>
 				 <span
 			 
 				class="blueFont2" style="margin-left:12%;">Event Type: </span> <span
 
-				class="blackFont"><%=lTweet.getCategory() %></span> <br>
+				class="blackFont"><%=ts.getCategory() %></span> <br>
 	
 	 <form action="${pageContent.request.contextPath}/EventMate/NotAttending2" method="post"> 
 		
-		<button  type="submit" value="<%=lTweet.getEvent() %>" name="cross" style="margin-top:2%;padding: 0;
+		<button  type="submit" value="<%=ts.getEvent() %>" name="cross" style="margin-top:2%;padding: 0;
 border: none;
 background: none;"><img src="${pageContent.request.contextPath}/images/cross2.png" width="100px" height="100px" ></button>
 		</form>
 		 <form action="${pageContent.request.contextPath}/EventMate/Attending2" method="post"> 
-		 	<button  type="submit" value="<%=lTweet.getEvent() %>" name="tick" style="margin-top:2%;padding: 0;
+		 	<button  type="submit" value="<%=ts.getEvent() %>" name="tick" style="margin-top:2%;padding: 0;
 border: none;
 background: none;"><img src="${pageContent.request.contextPath}/images/tick2.png" width="100px" height="100px" ></button>
 		</form>
@@ -79,6 +89,7 @@ background: none;"><img src="${pageContent.request.contextPath}/images/tick2.png
 		
 	</div>
 	<%
+	}
 	}
 	%>
 

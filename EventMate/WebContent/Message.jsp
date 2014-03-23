@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<link href="${pageContent.request.contextPath}/EventMate/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Codystar' rel='stylesheet' type='text/css'>
@@ -90,7 +90,7 @@ while (iterator.hasNext()){
 		<center>
 		<span class="smallBlueFont"><%=ts.getDate()%></span>
 		</center>
-		<img src="images/ryan.jpg" width="60px" height="60px" style="float:right;" class="userimgBorder">
+		<img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="60px" height="60px" style="float:right;" class="userimgBorder">
 		<div class="bubble" style="float:right;">
 		
 	  		<div class="smallBlackFont"><%= ts.getMessage()%></div>
@@ -105,7 +105,7 @@ while (iterator.hasNext()){
 		   
 		   <span class="smallBlackFont" ><%=ts.getDate()%></span>
 		   </center>
-		   <img src="images/ryan.jpg" width="60px" height="60px" style="float:left;" class="userimgBorder">
+		   <img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="60px" height="60px" style="float:left;" class="userimgBorder">
 		  <div class="bubble2" style="float:left;">
 	 
 	  <div class="senderPost"><%= ts.getMessage() %></div>
@@ -124,7 +124,7 @@ while (iterator.hasNext()){
 	
 	 
 	 </div>
-	<form action=""${pageContent.request.contextPath}/EventMate/Messages" method="post">
+	<form action="${pageContent.request.contextPath}/EventMate/Messages" method="POST">
 	<textarea  name="postMessage" rows="6" cols="70" class="textarea" ></textarea>
 	<input type="hidden"  value="<%= friendName.getName() %>" name="name">
 	<input type="hidden"  value="<%= friendName.getUsername() %>" name="sendingTo">

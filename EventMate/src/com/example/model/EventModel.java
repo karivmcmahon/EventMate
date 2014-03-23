@@ -117,6 +117,76 @@ public class EventModel {
 			return eventList;
 		}
 		
+		public LinkedList<eventStore> getEventByName(UserStore us,String eventname) {
+			
+			LinkedList<eventStore> eventList = new LinkedList<eventStore>();
+			Session session = cluster.connect("eventmate");
+			
+			PreparedStatement statement = session.prepare("SELECT * from events WHERE name=?;");
+			BoundStatement boundStatement = new BoundStatement(statement);
+			ResultSet rs = session.execute(boundStatement.bind(eventname));
+			if (rs.isExhausted()) {
+			
+				System.out.println("No Tweets returned");
+			} else {
+				for (Row row : rs) {
+				
+					eventStore ts = new eventStore();
+					String name = row.getString("name");
+					ts.setEvent(name);
+					ts.setDesc(row.getString("description"));
+					ts.setCategory(row.getString("category"));
+					Calendar c =  Calendar.getInstance();
+					//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
+					c.setTime(row.getDate("eventdate"));
+					//Create a new date format
+					SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+					//Formats the calendar time into a date format
+					String date = dateFormat.format(c.getTime());
+					System.out.println(date);
+					Date eventDate = row.getDate("eventdate");
+				
+					Calendar eventCal = Calendar.getInstance();   
+					eventCal.setTime(eventDate);
+					Calendar today = Calendar.getInstance();
+			        boolean eventPassed = eventCal.get(Calendar.YEAR) <= today.get(Calendar.YEAR) &&
+			                  eventCal.get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR);
+					ts.setDate(date);
+					String postcode = row.getString("postcode");
+					int distance = parseURL(postcode,us.getPostcode()) / 1000;
+					System.out.println(distance);
+					int attendeeAmount = row.getInt("attendeeAmount");
+					ts.setAttendee(attendeeAmount);
+					ts.setEventReq(row.getString("eventRequirements"));
+					ts.setLocation(row.getString("location"));
+					ts.setVenue(row.getString("venue"));
+					
+						PreparedStatement statement2 = session.prepare("SELECT * from userattending WHERE username = ? AND eventname = ?;");
+						BoundStatement boundStatement2 = new BoundStatement(statement2);
+						ResultSet rs2 = session.execute(boundStatement2.bind(us.getUsername(),name));
+						PreparedStatement statement3 = session.prepare("SELECT * from usernotattending WHERE username = ? AND eventname = ?;");
+						BoundStatement boundStatement3 = new BoundStatement(statement3);
+						ResultSet rs3 = session.execute(boundStatement3.bind(us.getUsername(),name));
+						System.out.println(name);
+						if(rs2.isExhausted() && rs3.isExhausted())
+						{
+							System.out.println("added");
+							ts.setAttending(false);
+							
+						}
+						else
+						{
+							System.out.println("nothing");
+							ts.setAttending(true);
+						}
+						eventList.add(ts);	
+				}
+			}
+			session.shutdown();
+			return eventList;
+		}
+		
+		
 		public eventStore count(UserStore us)
 		{
 			count = 0;

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<link href="${pageContent.request.contextPath}/EventMate/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Codystar' rel='stylesheet' type='text/css'>
@@ -26,7 +26,7 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate
 <body>
 <ul class="header2">
 <center>
-	<span class="eventMate">Event-Mate</span><img src="images/martini2.jpg" width="40px" height="50px" >
+	<span class="eventMate">Event-Mate</span><img src="${pageContent.request.contextPath}/EventMate/images/martini2.jpg" width="40px" height="50px" >
 </center>
 </ul>
 
@@ -44,7 +44,7 @@ System.out.println("In render");
 List<MessagerStore> messages = (List<MessagerStore>)request.getAttribute("Message");
 if (messages==null){
  %>
-	<p class="blueFont">No message's found</p>
+	<p class="blueFont" style="margin-top:30%;">Could not find any messages</p>
 	<% 
 }else{
 %>
@@ -54,21 +54,28 @@ if (messages==null){
 Iterator<MessagerStore> iterator;
 
 
-iterator = messages.iterator();     
+iterator = messages.iterator();    
+if(!iterator.hasNext())
+{ %>
+	<center>
+	<p class="blueFont" style="margin-top:30%;">Could not find any messages</p>
+	</center>
+<%
+}
 while (iterator.hasNext()){
 	MessagerStore ts = (MessagerStore)iterator.next();
 
 	%>
 	<div class="event">
-	<form action="${pageContent.request.contextPath}/EventMate/Messages" method="get">
+	<form action="${pageContent.request.contextPath}/EventMate/DisplayMessages" method="post">
 	<input type="hidden" name="name" value="<%= ts.getName() %>">
 	<button type="submit" value="<%= ts.getMessager() %>" name="username" style="float:right;padding: 0;
 border: none;
-background: none;"><img src="images/ic_post.png"  width="60px" height="60px"></button>
+background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/ic_post.png"  width="60px" height="60px"></button>
 	</form>
 
 		
-		<img src="images/ryan.jpg" width="60px" height="60px" style="float:left;" class="userimgBorder">
+		<img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="60px" height="60px" style="float:left;" class="userimgBorder">
 			<span class="blueFont"><%= ts.getName() %></span>
 			<br><br><br>
 		

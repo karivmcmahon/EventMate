@@ -46,6 +46,8 @@ public class Event extends HttpServlet {
 		//String args[]=Convertors.SplitRequestPath(request);
 		UserStore us = new UserStore();
 		EventModel tm= new EventModel();
+		if(request.getRequestURI().equals(request.getContextPath() + "/Event"))
+		{
 		//Get session for user currently logged in
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		tm.setCluster(cluster);
@@ -54,6 +56,16 @@ public class Event extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/Homepage.jsp"); 
 
 		rd.forward(request, response);
+		}
+		else
+		{
+			int lastSlash = request.getRequestURI().lastIndexOf('/');
+			String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+			String eventname = endOfUrl.toString();
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/PageNotFound.jsp"); 
+			rd.forward(request, response);
+		}
 	}
 
 	/**

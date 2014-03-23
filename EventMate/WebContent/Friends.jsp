@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<link href="${pageContent.request.contextPath}/EventMate/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Codystar' rel='stylesheet' type='text/css'>
@@ -27,7 +27,7 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate
 <body>
 <ul class="header2">
 <center>
-	<span class="eventMate">Event-Mate</span><img src="images/martini2.jpg" width="40px" height="50px" >
+	<span class="eventMate">Event-Mate</span><img src="<${pageContext.request.contextPath}/EventMate/images/martini2.jpg" width="40px" height="50px" >
 </center>
 </ul>
 
@@ -35,7 +35,9 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate
 	<jsp:include page="Header.jsp" />
 	<br><br><br>
 	<div id="loaddiv">
-	<span class="blueFont" style="margin-left:30%;">Your Friends</span>
+	<center>
+	<span class="blueFont">Your Friends</span>
+	</center>
 	
 	
 		<%
@@ -43,7 +45,7 @@ System.out.println("In render");
 List<UserStore> friends = (List<UserStore>)request.getAttribute("Friends");
 if (friends==null){
  %>
-	<p class="blueFont">No event's found</p>
+	<p class="blueFont">Could not find any of your friends</p>
 	<% 
 }else{
 %>
@@ -54,17 +56,24 @@ Iterator<UserStore> iterator;
 
 
 iterator = friends.iterator();     
+if(!iterator.hasNext())
+{ %>
+	<center>
+	<p class="blueFont" style="margin-top:30%;">Could not find any of your friends</p>
+	</center>
+<%
+}
 while (iterator.hasNext()){
 	UserStore us = (UserStore)iterator.next();
 
 	%>
 	<div class="event">
-	<img src="images/ryan.jpg" width="80px" height="130px" style="float:left;margin-top:1%;" class="userimgBorder">
+	<img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="80px" height="130px" style="float:left;margin-top:1%;" class="userimgBorder">
 	<form action="${pageContent.request.contextPath}/EventMate/Messages" method="get">
 	<input type="hidden" name="name" value="<%= us.getName() %>">
 	<button type="submit" value="<%= us.getUsername() %>" name="username" style="float:right;margin-top:2%;padding: 0;
 border: none;
-background: none;"><img src="images/ic_chat_simple.png"  width="60px" height="60px"></button>
+background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/ic_chat_simple.png"  width="60px" height="60px"></button>
 	</form>
 	<span class="blueFont3" style="margin-left:2%;"><%= us.getName() %></span><br>
 	<span class="blackFont" style="margin-left:2%;"><%= us.getBio() %></span><br>

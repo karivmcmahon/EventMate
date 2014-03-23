@@ -12,13 +12,13 @@
 </head>
 <body>
 <ul class="header">
-	<li><a href="${pageContent.request.contextPath}/EventMate/Event"><img src="images/ic_home.png" width="40px" height="40px"></a></li>
-	<li><a href="Profile.jsp"><img src="images/userBlue.png" width="40px" height="40px"></a></li>
-	<li><a href="${pageContent.request.contextPath}/EventMate/Friends"><img src="images/ic_contact_group.png" width="40px" height="40px"></a></li>
-	<li><a href="${pageContent.request.contextPath}/EventMate/Messagers"><img src="images/ic_chat_1.png" width="40px" height="40px"></a></li>
-	<li><a href="${pageContent.request.contextPath}/EventMate/RandomEvent"><img src="images/ic_arrow_round_change.png" width="40px" height="40px"></a></li>
-	<li><a href="Settings.jsp"><img src="images/ic_mech_wheel.png" width="40px" height="40px"></a></li>
-	<li><a href="${pageContent.request.contextPath}/EventMate/Logout"><img src="images/ic_power.png" width="40px" height="40px"></a></li>
+	<li><a href="${pageContent.request.contextPath}/EventMate/Event"><img src="${pageContent.request.contextPath}/EventMate/images/ic_home.png" width="40px" height="40px"></a></li>
+	<li><a href="Profile.jsp"><img src="${pageContent.request.contextPath}/EventMate/images/userBlue.png" width="40px" height="40px"></a></li>
+	<li><a href="${pageContent.request.contextPath}/EventMate/Friends"><img src="${pageContent.request.contextPath}/EventMate/images/ic_contact_group.png" width="40px" height="40px"></a></li>
+	<li><a href="${pageContent.request.contextPath}/EventMate/Messagers"><img src="${pageContent.request.contextPath}/EventMate/images/ic_chat_1.png" width="40px" height="40px"></a></li>
+	<li><a href="${pageContent.request.contextPath}/EventMate/RandomEvent"><img src="${pageContent.request.contextPath}/EventMate/images/ic_arrow_round_change.png" width="40px" height="40px"></a></li>
+	<li><a href="Settings.jsp"><img src="${pageContent.request.contextPath}/EventMate/images/ic_mech_wheel.png" width="40px" height="40px"></a></li>
+	<li><a href="${pageContent.request.contextPath}/EventMate/Logout"><img src="${pageContent.request.contextPath}/EventMate/images/ic_power.png" width="40px" height="40px"></a></li>
 </ul>
 </body>
 </html>

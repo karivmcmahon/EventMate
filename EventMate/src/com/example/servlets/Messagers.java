@@ -46,6 +46,8 @@ public class Messagers extends HttpServlet {
 		// TODO Auto-generated method stub
 		UserStore us = new UserStore();
 		MessageModel fm= new MessageModel();
+		if(request.getRequestURI().equals(request.getContextPath() + "/Messagers"))
+		{
 		//Get session for user currently logged in
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		fm.setCluster(cluster);
@@ -54,6 +56,19 @@ public class Messagers extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/Messages.jsp"); 
 
 		rd.forward(request, response);
+		}
+		else
+		{
+			int lastSlash = request.getRequestURI().lastIndexOf('/');
+			String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+			String usernames = endOfUrl.toString();
+			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+			fm.setCluster(cluster);
+			LinkedList<MessagerStore> messageList = fm.messagerListByUsername(us,usernames);
+			request.setAttribute("Message", messageList); //Set a bean with the list in it
+			RequestDispatcher rd = request.getRequestDispatcher("/Messages.jsp"); 
+			rd.forward(request, response);
+		}
 	}
 
 	/**

@@ -18,35 +18,50 @@ import com.example.stores.MessageStore;
 import com.example.stores.UserStore;
 
 /**
- * Servlet implementation class Messages
+ * Servlet implementation class DisplayMessages
  */
-@WebServlet(urlPatterns = { "/Messages", "/Messages/*" })
-public class Messages extends HttpServlet {
+@WebServlet("/DisplayMessages")
+public class DisplayMessages extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Cluster cluster;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Messages() {
+    public DisplayMessages() {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    
     public void init(ServletConfig config) throws ServletException {
   		// TODO Auto-generated method stub
   		cluster = CassandraHosts.getCluster();
   	}
     
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		int lastSlash = request.getRequestURI().lastIndexOf('/');
+		String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+		String eventname = endOfUrl.toString();
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/PageNotFound.jsp"); 
+		rd.forward(request, response);
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		UserStore us = new UserStore();
 		UserStore friendMessaged = new UserStore();
 		MessageModel mm = new MessageModel();
-		if(request.getRequestURI().equals(request.getContextPath() + "/Messages"))
+		if(request.getRequestURI().equals(request.getContextPath() + "/DisplayMessages"))
 		{
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		friendMessaged.setUsername(request.getParameter("username"));
@@ -68,28 +83,6 @@ public class Messages extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/PageNotFound.jsp"); 
 			rd.forward(request, response);
 		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		UserStore us = new UserStore();
-		UserStore friendMessaged = new UserStore();
-		MessageModel mm = new MessageModel();
-		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
-		friendMessaged.setUsername(request.getParameter("sendingTo"));
-		friendMessaged.setName(request.getParameter("name"));
-		String message = request.getParameter("postMessage");
-		mm.setCluster(cluster);
-		mm.insertMessage(us, friendMessaged, message);
-		LinkedList<MessageStore> messageList = mm.getMessages(us,friendMessaged);
-		request.setAttribute("Messages", messageList); //Set a bean with the list in it
-		request.setAttribute("Friend",friendMessaged);
-		RequestDispatcher rd = request.getRequestDispatcher("/Message.jsp"); 
-
-		rd.forward(request, response);
 	}
 
 }
