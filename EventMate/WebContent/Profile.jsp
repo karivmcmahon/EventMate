@@ -1,17 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.example.stores.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<link href="${pageContent.request.contextPath}/EventMate/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur'
 	rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo'
 	rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Codystar'
 	rel='stylesheet' type='text/css'>
-<link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
+<link rel="shortcut icon"
+	href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png"
+	type="image/png">
 <title>Event-Mate</title>
 </head>
 <body>
@@ -19,39 +23,64 @@
 	<ul class="header2">
 		<center>
 			<span class="eventMate">EventMate</span><img
-				src="images/martini2.jpg" width="40px" height="50px">
+				src="${pageContent.request.contextPath}/EventMate/images/martini2.jpg" width="40px" height="50px">
 		</center>
 	</ul>
 	<div class="divMain2" style="min-height: 100%;">
 		<jsp:include page="Header.jsp" />
+		<%
+			System.out.println("In render");
+			List<ProfileStore> lTweet = (List<ProfileStore>) request
+					.getAttribute("Profile");
+			if (lTweet == null) {
+		%>
+		<p class="blueFont">Your profile wasn't found!</p>
+		<%
+			} else {
+		%>
+
+
+		<%
+			Iterator<ProfileStore> iterator;
+
+				iterator = lTweet.iterator();
+				while (iterator.hasNext()) {
+					ProfileStore ts = (ProfileStore) iterator.next();
+		%>
 		<div class="profile">
 			<div class="profilePicture">
-				<img src="images/ryan.jpg" class=imgBorder width="250px"
+				<img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" class=imgBorder width="250px"
 					height="300px">
 			</div>
 			<div class="profileRight">
-				<p class="blueFont">Ryan Dawson</p>
+				<p class="blueFont"><%=ts.getName()%></p>
+
 				<br /> <br />
-				<p class="blueFont2">Hi there, I'm a 26 year old call center
-					worker. I'm a fun-loving lad who loves a good night out.</p>
-				<br /> <span class="blueFont2"> <b>Location: </b>
-				</span> <span class="blackFont">Dundee</span> <br /> <br /> <span
-					class="blueFont2"> <b>Relationship Status: </b>
-				</span> <span class="blackFont">Taken</span>
+				<p class="blueFont2"><%=ts.getBio()%></p>
+				<!-- NEED TO DO DOB!!!! -->
+				<br> <br /> <span class="blueFont2"> <b>Location: </b>
+				</span> <span class="blackFont"><%=ts.getLocation()%></span> <br> <br>
+				<span class="blueFont2"> <b>Relationship
+						Status: </b>
+				</span> <span class="blackFont"><%=ts.getStatus()%></span> <br> <br>
+				
+				<span class="blueFont2"> <b>Age: </b>
+				</span> <span class="blackFont"><%=ts.getAge()%></span>
 			</div>
 			<div class="profileMore">
 				<span class="blueFont2"> <b>Music: </b>
-				</span> <span class="blackFont"> Pop, Indie, Grunge </span> <br /> <br />
-				<span class="blueFont2"> <b>Interests: </b>
-				</span> <span class="blackFont"> Poetry, Outdoors </span> <br /> <br /> <span
-					class="blueFont2"> <b>Sports: </b>
-				</span> <span class="blackFont"> N/A </span>
+				</span> <span class="blackFont"><%=ts.getMusic()%> </span> <br /> <br /> <span class="blueFont2"> <b>Interests: </b>
+				</span> <span class="blackFont"><%=ts.getInterests() %> </span> <br /> <br /> <span class="blueFont2"> <b>Sports: </b>
+				</span> <span class="blackFont"><%=ts.getSports() %> </span>
 			</div>
 			<div class="profileEvents">
-				<span class="blueFont2"> <b>Past Events: </b>
-				</span> <span class="blackFont"> Lady Gaga </span>
+				<span class="blueFont2"> <b>Past Events: </b></span> <span class="blackFont"><%=ts.getEventList() %> </span>
 			</div>
 		</div>
+		<%
+			}
+			}
+		%>
 	</div>
 </body>
 </html>
