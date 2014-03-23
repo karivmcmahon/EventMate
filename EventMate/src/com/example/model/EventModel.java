@@ -54,7 +54,7 @@ public class EventModel {
 			LinkedList<eventStore> eventList = new LinkedList<eventStore>();
 			Session session = cluster.connect("eventmate");
 			
-			PreparedStatement statement = session.prepare("SELECT * from events");
+			PreparedStatement statement = session.prepare("SELECT * from events;");
 			BoundStatement boundStatement = new BoundStatement(statement);
 			ResultSet rs = session.execute(boundStatement);
 			if (rs.isExhausted()) {
@@ -67,6 +67,7 @@ public class EventModel {
 					String name = row.getString("name");
 					ts.setEvent(name);
 					ts.setDesc(row.getString("description"));
+					ts.setCategory(row.getString("category"));
 					Calendar c =  Calendar.getInstance();
 					//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
 					c.setTime(row.getDate("eventdate"));
@@ -75,6 +76,13 @@ public class EventModel {
 					//Formats the calendar time into a date format
 					String date = dateFormat.format(c.getTime());
 					System.out.println(date);
+					Date eventDate = row.getDate("eventdate");
+				
+					Calendar eventCal = Calendar.getInstance();   
+					eventCal.setTime(eventDate);
+					Calendar today = Calendar.getInstance();
+			        boolean eventPassed = eventCal.get(Calendar.YEAR) <= today.get(Calendar.YEAR) &&
+			                  eventCal.get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR);
 					ts.setDate(date);
 					String postcode = row.getString("postcode");
 					int distance = parseURL(postcode,us.getPostcode()) / 1000;
@@ -84,7 +92,7 @@ public class EventModel {
 					ts.setEventReq(row.getString("eventRequirements"));
 					ts.setLocation(row.getString("location"));
 					ts.setVenue(row.getString("venue"));
-					if(distance <= us.getDistance() && attendeeAmount > 2000)
+					if(distance <= us.getDistance() && attendeeAmount > 2000 && eventPassed == false)
 					{
 						PreparedStatement statement2 = session.prepare("SELECT * from userattending WHERE username = ? AND eventname = ?;");
 						BoundStatement boundStatement2 = new BoundStatement(statement2);
@@ -180,6 +188,7 @@ public class EventModel {
 						
 						ts.setEvent(name);
 						ts.setDesc(row2.getString("description"));
+						ts.setCategory(row2.getString("category"));
 						Calendar c =  Calendar.getInstance();
 						//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
 						c.setTime(row2.getDate("eventdate"));
@@ -188,7 +197,19 @@ public class EventModel {
 						//Formats the calendar time into a date format
 						String date = dateFormat.format(c.getTime());
 						System.out.println(date);
-						ts.setDate(date);
+						Date eventDate = row2.getDate("eventdate");
+						Calendar eventCal = Calendar.getInstance();
+						eventCal.setTime(eventDate);
+						Calendar today = Calendar.getInstance();
+				        boolean eventPassed = eventCal.get(Calendar.YEAR) <= today.get(Calendar.YEAR) &&
+				                  eventCal.get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR);
+						if(eventPassed == false)
+						{
+							count--;
+							events.add(name);
+							getRandomEvent(us);
+						}
+				        ts.setDate(date);
 						String postcode = row2.getString("postcode");
 						int distance = parseURL(postcode,us.getPostcode()) / 1000;
 						System.out.println(distance);
@@ -197,7 +218,7 @@ public class EventModel {
 						ts.setEventReq(row2.getString("eventRequirements"));
 						ts.setLocation(row2.getString("location"));
 						ts.setVenue(row2.getString("venue")); 
-						if(distance <= us.getDistance())
+						if(distance <= us.getDistance() && eventPassed == false)
 						{
 							PreparedStatement statement3 = session.prepare("SELECT * from userattending WHERE username = ? AND eventname = ?;");
 							BoundStatement boundStatement3 = new BoundStatement(statement3);
@@ -209,12 +230,16 @@ public class EventModel {
 							System.out.println(" attending count " + attendingCount);
 							if(rs3.isExhausted() && rs4.isExhausted())
 							{
-								
-								if(attendingCount == count)
+								if(events.contains(name))
 								{
-									event = null;
-									return event;
+								
 								}
+								else
+								{
+									
+								events.add(name);
+								}
+							
 								System.out.println("hello" + name);
 							
 								System.out.println("added");
@@ -229,6 +254,7 @@ public class EventModel {
 									event = null;
 									return event;
 								}
+						
 								if(!rs3.isExhausted())
 								{
 									if(events.contains(name))
@@ -278,6 +304,7 @@ public class EventModel {
 								
 								
 								System.out.println(" attending count "+ attendingCount);
+								getRandomEvent(us);
 							}
 							
 								

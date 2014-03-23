@@ -9,7 +9,7 @@ public class MessageStore {
 	String from;
 	String message;
 	String friendMessaging;
-	Date time;
+	String time;
 	
 	public void setMessage(String m)
 	{
@@ -51,19 +51,15 @@ public class MessageStore {
 		return from;
 	}
 	
-	public void setDate(Date d)
+	public void setDate(String d)
 	{
 		time = d;
 	}
 	
 	public String getDate()
 	{
-		Calendar c =  Calendar.getInstance();
-		c.setTime(time);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yy hh:mm aa");
-		//Formats the calendar time into a date format
-		String date = dateFormat.format(c.getTime());
-		return date;
+	
+		return time;
 	}
 
 }

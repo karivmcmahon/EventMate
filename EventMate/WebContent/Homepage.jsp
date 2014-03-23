@@ -11,6 +11,18 @@
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Codystar' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<!-- Ajax script to refresh tweet timeline every 15 mins, fade out is fast to show refresh occuring -->
+<script>
+var auto_refresh = setInterval(
+function()
+{
+ $.ajaxSetup({ cache: false });
+$('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate/Event #loaddiv').fadeIn("slow");
+}, 900000);
+</script>
+
 <title>Event-Mate</title>
 </head>
 <body>
@@ -24,7 +36,7 @@
 	<jsp:include page="Header.jsp" />
 	<br><br><br>
 	<span class="blueFont" style="margin-left:30%;">Popular Events Suggested For You:</span>
-	
+	<div id="loaddiv">
 	
 		
 		<%
@@ -48,7 +60,7 @@ while (iterator.hasNext()){
 
 	%>
 	<div class="event">
-		 <img src="images/martini.jpg" width="60px" height="120px" style="float:left;margin-top:1%;" class="userimgBorder">
+		 <img src="images/martini.jpg" width="60px" height="140px" style="float:left;margin-top:1%;" class="userimgBorder">
 		 <form action="${pageContent.request.contextPath}/EventMate/NotAttending" method="post"> 
 		
 		<button  type="submit" value="<%=ts.getEvent() %>" name="cross" style="float:right;margin-top:3%;padding: 0;
@@ -66,13 +78,14 @@ background: none;"><img src="images/tick2.png" width="60px" height="60px" ></but
 		<span class="blueFont2" style="margin-left:2%;">Event Requirements: <span class="blackFont" ><%= ts.getEventReq() %></span></span><br>
 	    <span class="blueFont2" style="margin-left:2%;">Venue: <span class="blackFont" ><%= ts.getVenue() %></span></span><br>
      	<span class="blueFont2" style="margin-left:2%;">Location: <span class="blackFont" ><%= ts.getLocation() %></span></span><br>
+     	<span class="blueFont2" style="margin-left:2%;">Event type: <span class="blackFont" ><%= ts.getCategory() %></span></span><br>
 	</div>
 <%
 
 }
 }
 %>
-		
+</div>		
 		
 	
 	

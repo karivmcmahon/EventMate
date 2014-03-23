@@ -3,6 +3,8 @@ package com.example.model;
 
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -48,7 +50,15 @@ public class MessageModel {
 				String userfrom = row.getString("userfrom");
 				m.setFrom(userfrom);
 				m.setMessage(row.getString("message"));
-				m.setDate(row.getDate("time"));
+			
+				Calendar c =  Calendar.getInstance();
+				//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
+				c.setTime(row.getDate("time"));
+				//Create a new date format
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+				//Formats the calendar time into a date format
+				String date = dateFormat.format(c.getTime());
+				m.setDate(date);
 				if((userto.equals(us.getUsername()) || userto.equals(friendMessaged.getUsername())) && userfrom.equals(us.getUsername()) || userfrom.equals(friendMessaged.getUsername()))
 				{
 					messageList.add(m);

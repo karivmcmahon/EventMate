@@ -58,6 +58,11 @@ if (lTweet==null){
 				class="blueFont2" style="margin-left:12%;">Event Requirements: </span> <span
 
 				class="blackFont"><%=lTweet.getEventReq() %></span> <br>
+				 <span
+			 
+				class="blueFont2" style="margin-left:12%;">Event Type: </span> <span
+
+				class="blackFont"><%=lTweet.getCategory() %></span> <br>
 	
 	 <form action="${pageContent.request.contextPath}/EventMate/NotAttending2" method="post"> 
 		

@@ -11,7 +11,17 @@
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Codystar' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <title>Event-Mate</title>
+<!-- Ajax script to refresh tweet timeline every 15 mins, fade out is fast to show refresh occuring -->
+<script>
+var auto_refresh = setInterval(
+function()
+{
+ $.ajaxSetup({ cache: false });
+$('#m').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate/Messages #m').fadeIn("slow");
+}, 900000);
+</script>
   
    <script type="text/javascript">
    window.onload = initAll;
@@ -39,6 +49,7 @@
 	<center><%UserStore friendName = (UserStore)request.getAttribute("Friend");%>
 		<span class="blueFont" >Messages From <%= friendName.getName() %></span>
 	</center>
+	
 	<div  id="m">
 	
 	<%

@@ -11,6 +11,16 @@
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Codystar' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- Ajax script to refresh tweet timeline every 15 mins, fade out is fast to show refresh occuring -->
+<script>
+var auto_refresh = setInterval(
+function()
+{
+ $.ajaxSetup({ cache: false });
+$('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate/Messagers #loaddiv').fadeIn("slow");
+}, 900000);
+</script>
 <title>Event-Mate</title>
 </head>
 <body>
@@ -26,6 +36,8 @@
 	<center>
 	<span class="blueFont" >Your Messages:</span>
 	</center>
+	
+	<div id="loaddiv">
 	
 			<%
 System.out.println("In render");
@@ -68,7 +80,7 @@ background: none;"><img src="images/ic_post.png"  width="60px" height="60px"></b
 %>
 	
 
-	
+</div>	
 </div>
 </body>
 </html>

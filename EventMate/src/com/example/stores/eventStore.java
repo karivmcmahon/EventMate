@@ -13,6 +13,17 @@ public class eventStore {
 	String eventReq;
 	String location;
 	String venue;
+	String category;
+	
+	public String getCategory()
+	{
+		return category;
+	}
+	
+	public void setCategory(String c)
+	{
+		category = c;
+	}
 
 	
 	public String getEvent()
