@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+  <%@ page import="java.util.*" %>
+      <%@ page import="com.example.stores.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,6 +27,18 @@
 	<div class="divMain2" style="min-height: 100%;">
 		<jsp:include page="Header.jsp" />
 
+<%
+System.out.println("In render");
+eventStore lTweet = (eventStore)request.getAttribute("Event");
+if (lTweet==null){
+ %>
+	<p class="blueFont">No event's found</p>
+	<% 
+}else{
+%>
+
+
+
 		<div class="randomEvent">
 			<div class="eventPicture">
 				<center>
@@ -33,20 +47,36 @@
 				</center>		
 			</div>
 			
-			<br> <br> <span class="blueFont" style="margin-left:12%;">Beyonce Live</span> <span
-				class="blueFont2">Tuesday 18th March @ 9pm</span> <br> <br>
-			<span class="blackFont" style="margin-left:12%;">Beyonce's back on her Mrs Carter world
-				tour at Glasgow Hydro</span> <br> <span class="blueFont2" style="margin-left:12%;">Attending:
-			</span> <span class="blackFont">200</span> <br> <span class="blueFont2" style="margin-left:12%;">Venue:
-			</span> <span class="blackFont">Glasgow Hydro</span> <br> <span
+			<br> <br> <span class="blueFont" style="margin-left:12%;"><%=lTweet.getEvent() %></span> <span
+				class="blueFont2"><%=lTweet.getDatess() %></span> <br> <br>
+			<span class="blackFont" style="margin-left:12%;"><%=lTweet.getDescription() %></span> <br> <span class="blueFont2" style="margin-left:12%;">Attending:
+			</span> <span class="blackFont"><%= lTweet.getAttendee() %></span> <br>
+			 <span class="blueFont2" style="margin-left:12%;">Venue: </span> <span class="blackFont"><%= lTweet.getVenue() %></span> <br>
+			  <span class="blueFont2" style="margin-left:12%;">Location: </span> <span class="blackFont"><%= lTweet.getLocation() %></span>
+			 <br> <span
+			 
 				class="blueFont2" style="margin-left:12%;">Event Requirements: </span> <span
-				class="blackFont">Over 14s</span> <br>
-	<center>
-	<img src="images/tick2.png" width="100px" height="100px" style="margin-top:2%;" >
-	<img src="images/cross2.png" width="100px" height="100px" style="margin-top:2%;" >
+
+				class="blackFont"><%=lTweet.getEventReq() %></span> <br>
+	
+	 <form action="${pageContent.request.contextPath}/EventMate/NotAttending2" method="post"> 
 		
-	</center>
-		</div>
+		<button  type="submit" value="<%=lTweet.getEvent() %>" name="cross" style="margin-top:2%;padding: 0;
+border: none;
+background: none;"><img src="images/cross2.png" width="100px" height="100px" ></button>
+		</form>
+		 <form action="${pageContent.request.contextPath}/EventMate/Attending2" method="post"> 
+		 	<button  type="submit" value="<%=lTweet.getEvent() %>" name="tick" style="margin-top:2%;padding: 0;
+border: none;
+background: none;"><img src="images/tick2.png" width="100px" height="100px" ></button>
+		</form>
+
+		
+	</div>
+	<%
+	}
+	%>
+
 
 	</div>
 

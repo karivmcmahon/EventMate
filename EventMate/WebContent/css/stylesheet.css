@@ -519,7 +519,8 @@ body.signUp
 
 body
 {
-	background-color:rgb(51,181,229);
+	background-color:rgb(51,181,229); 
+		/*background-color:#A9E2F3; */
 	min-height:100%;
 	margin:0;
 	padding:0;
