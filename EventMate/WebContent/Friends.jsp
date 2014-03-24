@@ -68,14 +68,14 @@ while (iterator.hasNext()){
 
 	%>
 	<div class="event">
-	<img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="80px" height="130px" style="float:left;margin-top:1%;" class="userimgBorder">
+	<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=us.getUsername()%>"><img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="80px" height="130px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
 	<form action="${pageContent.request.contextPath}/EventMate/Messages" method="get">
 	<input type="hidden" name="name" value="<%= us.getName() %>">
 	<button type="submit" value="<%= us.getUsername() %>" name="username" style="float:right;margin-top:2%;padding: 0;
 border: none;
 background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/ic_chat_simple.png"  width="60px" height="60px"></button>
 	</form>
-	<span class="blueFont3" style="margin-left:2%;"><%= us.getName() %></span><br>
+			<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=us.getUsername()%>" class="blueFont3" style="margin-left:2%;"><%= us.getName() %></a><br>
 	<span class="blackFont" style="margin-left:2%;"><%= us.getBio() %></span><br>
 	<span class="blueFont2" style="margin-left:2%;">Age: <span class="blackFont" ><%= us.getAge() %></span></span><br>
 	<span class="blueFont2" style="margin-left:2%;">Location: <span class="blackFont" ><%= us.getLocation() %></span></span><br>

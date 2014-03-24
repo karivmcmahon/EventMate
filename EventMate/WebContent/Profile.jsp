@@ -58,23 +58,23 @@
 				<br /> <br />
 				<p class="blueFont2"><%=ts.getBio()%></p>
 				<!-- NEED TO DO DOB!!!! -->
-				<br> <br /> <span class="blueFont2"> <b>Location: </b>
+				<br> <br /> <span class="blueFont2"> Location: 
 				</span> <span class="blackFont"><%=ts.getLocation()%></span> <br> <br>
-				<span class="blueFont2"> <b>Relationship
-						Status: </b>
+				<span class="blueFont2"> Relationship
+						Status: 
 				</span> <span class="blackFont"><%=ts.getStatus()%></span> <br> <br>
 				
-				<span class="blueFont2"> <b>Age: </b>
+				<span class="blueFont2"> Age: 
 				</span> <span class="blackFont"><%=ts.getAge()%></span>
 			</div>
 			<div class="profileMore">
-				<span class="blueFont2"> <b>Music: </b>
-				</span> <span class="blackFont"><%=ts.getMusic()%> </span> <br /> <br /> <span class="blueFont2"> <b>Interests: </b>
-				</span> <span class="blackFont"><%=ts.getInterests() %> </span> <br /> <br /> <span class="blueFont2"> <b>Sports: </b>
+				<span class="blueFont2"> Music: 
+				</span> <span class="blackFont"><%=ts.getMusic()%> </span> <br /> <br /> <span class="blueFont2"> Interests: 
+				</span> <span class="blackFont"><%=ts.getInterests() %> </span> <br /> <br /> <span class="blueFont2"> Sports: 
 				</span> <span class="blackFont"><%=ts.getSports() %> </span>
 			</div>
 			<div class="profileEvents">
-				<span class="blueFont2"> <b>Past Events: </b></span> <span class="blackFont"><%=ts.getEventList() %> </span>
+				<span class="blueFont2"> Past Events: </span> <span class="blackFont"><%=ts.getEventList() %> </span>
 			</div>
 		</div>
 		<%

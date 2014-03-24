@@ -48,6 +48,8 @@ public class Profile extends HttpServlet {
 		//String args[]=Convertors.SplitRequestPath(request);
 				UserStore us = new UserStore();
 				ProfileModel pm = new ProfileModel();
+				if(request.getRequestURI().equals(request.getContextPath() + "/Profile"))
+				{
 				//Get session for user currently logged in
 				us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 				pm.setCluster(cluster);
@@ -56,6 +58,19 @@ public class Profile extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp"); 
 
 				rd.forward(request, response);
+				}
+				else
+				{
+					int lastSlash = request.getRequestURI().lastIndexOf('/');
+					String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+					String usernames = endOfUrl.toString();
+					us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+					pm.setCluster(cluster);
+					LinkedList<ProfileStore> profileList = pm.getProfileByUsername(usernames);
+					request.setAttribute("Profile", profileList); //Set a bean with the list in it
+					RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp"); 
+
+					rd.forward(request, response);				}
 	}
 
 	/**

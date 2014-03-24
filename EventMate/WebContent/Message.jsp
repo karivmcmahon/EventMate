@@ -90,7 +90,7 @@ while (iterator.hasNext()){
 		<center>
 		<span class="smallBlueFont"><%=ts.getDate()%></span>
 		</center>
-		<img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="60px" height="60px" style="float:right;" class="userimgBorder">
+		<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getFrom()%>"><img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="60px" height="60px" style="float:right;" class="userimgBorder"></a>
 		<div class="bubble" style="float:right;">
 		
 	  		<div class="smallBlackFont"><%= ts.getMessage()%></div>
@@ -105,7 +105,7 @@ while (iterator.hasNext()){
 		   
 		   <span class="smallBlackFont" ><%=ts.getDate()%></span>
 		   </center>
-		   <img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="60px" height="60px" style="float:left;" class="userimgBorder">
+		  <a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getFrom()%>"> <img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="60px" height="60px" style="float:left;" class="userimgBorder"></a>
 		  <div class="bubble2" style="float:left;">
 	 
 	  <div class="senderPost"><%= ts.getMessage() %></div>

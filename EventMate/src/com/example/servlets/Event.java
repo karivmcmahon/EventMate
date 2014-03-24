@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.datastax.driver.core.Cluster;
 import com.example.libs.CassandraHosts;
 import com.example.model.EventModel;
+import com.example.stores.MessagerStore;
 import com.example.stores.UserStore;
 import com.example.stores.eventStore;
 
@@ -61,9 +62,13 @@ public class Event extends HttpServlet {
 		{
 			int lastSlash = request.getRequestURI().lastIndexOf('/');
 			String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
-			String eventname = endOfUrl.toString();
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/PageNotFound.jsp"); 
+			String  eventname = endOfUrl.toString();
+			eventname = eventname.replaceAll("^"," ");
+			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+			tm.setCluster(cluster);
+			LinkedList<eventStore> eventList = tm.getEventByName(us,eventname);
+			request.setAttribute("Events", eventList); //Set a bean with the list in it
+			RequestDispatcher rd = request.getRequestDispatcher("/Event.jsp"); 
 			rd.forward(request, response);
 		}
 	}

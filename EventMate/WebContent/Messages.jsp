@@ -75,8 +75,8 @@ background: none;"><img src="${pageContent.request.contextPath}/EventMate/images
 	</form>
 
 		
-		<img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="60px" height="60px" style="float:left;" class="userimgBorder">
-			<span class="blueFont"><%= ts.getName() %></span>
+		<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getMessager()%>"><img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="60px" height="60px" style="float:left;" class="userimgBorder"></a>
+		<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getMessager()%>" class="blueFont">	<%= ts.getName() %></a>
 			<br><br><br>
 		
 	</div>

@@ -15,6 +15,19 @@ a img
 	outline:none;
 }
 
+a
+{
+	 border: none;
+	outline:none;
+	text-decoration:none;
+	color:rgb(51,181,229);
+}
+a:hover
+{ 
+ color:white;
+ border: none;
+	outline:none;
+}
 ul.header2
 {
 	list-style-type:none;
