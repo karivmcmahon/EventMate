@@ -11,7 +11,24 @@
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Codystar' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script>
+ $(function () {
+      
+      $('.dd').on('click', function(event){
+          event.stopPropagation();
+          $('.wrapper-dropdown-3').toggleClass('active');
+      });
+      
+      
+      $(document).click(function () {
+      // all dropdowns
+      $('.wrapper-dropdown-3').removeClass('active');
+    });
+
+  });
+ </script>
 <!-- Ajax script to refresh tweet timeline every 15 mins, fade out is fast to show refresh occuring -->
 <script>
 var auto_refresh = setInterval(
@@ -24,9 +41,22 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate
 <title>Event-Mate</title>
 </head>
 <body>
-<ul class="header2">
+<ul class="header2" style="clear:both;">
+	<div id="dd" class="wrapper-dropdown-3 dd">
+		<form class="search"  method="post" action="${pageContent.request.contextPath}/EventMate/Event" style="float:left;margin-left:24%;margin-top:1%;" >
+		 <input type="text" name="q" placeholder="Search For An Event"/>
+		 
+		 <ul class="results" >
+			 <li class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Sport" onclick="${pageContent.request.contextPath}/EventMate/Event/Sports">Sports<br /></a></li>
+			 <li class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Concert">Concerts<br /></a></li>
+	 		<li  class="searchList"><a  class="search" href="${pageContent.request.contextPath}/EventMate/Event/Food & Drink">Food & Drink<br /></li>
+         	<li  class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Social">Social</a></li>
+		 </ul>
+		
+	</form>
+	</div>
 <center>
-	<span class="eventMate">Event-Mate</span><img src="${pageContent.request.contextPath}/EventMate/images/martini2.jpg" width="40px" height="50px" >
+	<span class="eventMate">Event-Mate</span><img src="${pageContent.request.contextPath}/EventMate/images/martini2.jpg" width="40px" height="50px" style="margin-right:8%" >
 </center>
 </ul>
 
@@ -36,9 +66,9 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate
 	<center>
 	<span class="blueFont" >Your Messages:</span>
 	</center>
-	
+
 	<div id="loaddiv">
-	
+
 			<%
 System.out.println("In render");
 List<MessagerStore> messages = (List<MessagerStore>)request.getAttribute("Message");
@@ -74,18 +104,18 @@ border: none;
 background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/ic_post.png"  width="60px" height="60px"></button>
 	</form>
 
-		
+
 		<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getMessager()%>"><img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="60px" height="60px" style="float:left;" class="userimgBorder"></a>
 		<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getMessager()%>" class="blueFont">	<%= ts.getName() %></a>
 			<br><br><br>
-		
+
 	</div>
 <%
 
 }
 }
 %>
-	
+
 
 </div>	
 </div>

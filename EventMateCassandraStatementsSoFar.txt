@@ -16,17 +16,19 @@ category varchar,
 	PRIMARY KEY(name,eventdate)
 ) WITH CLUSTERING ORDER BY (eventdate ASC);
 
-INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue)
-VALUES('Beyonce - Mrs Carter World Tour',30000,'Beyonces back on her Mrs Carter World Tour','2014-03-11 21:00','2013-03-15 13:12','Glasgow','UK','G38YW','Over 14s','The Hydro');
+CREATE INDEX ON eventmate.events(category);
 
-INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue)
-VALUES('One Direction',15000,'Midnight Memories Tour','2014-06-01 20:00','2013-03-15 13:26','Edinburgh','UK','EH125PJ','Under 16s accompanied by adult','Murrayfield');
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Beyonce - Mrs Carter World Tour',30000,'Beyonces back on her Mrs Carter World Tour','2014-03-11 21:00','2013-03-15 13:12','Glasgow','UK','G38YW','Over 14s','The Hydro','Concert');
 
-INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue)
-VALUES('Katy Perry',10000,'Prism World Tour','2014-08-21 21:00','2013-03-15 13:49','Glasgow','UK','G38YW','Over 14s','The Hydro');
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('One Direction',15000,'Midnight Memories Tour','2014-06-01 20:00','2013-03-15 13:26','Edinburgh','UK','EH125PJ','Under 16s accompanied by adult','Murrayfield','Concert');
 
-INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue)
-VALUES('Vampire Weekend',2000,'Intimate gig','2014-07-22 22:00','2013-03-15 14:17','London','UK','NW18EH','Over 18s','Roundhouse');
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Katy Perry',10000,'Prism World Tour','2014-08-21 21:00','2013-03-15 13:49','Glasgow','UK','G38YW','Over 14s','The Hydro','Concert');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Vampire Weekend',2000,'Intimate gig','2014-07-22 22:00','2013-03-15 14:17','London','UK','NW18EH','Over 18s','Roundhouse','Concert');
 
 CREATE TABLE eventmate.users
 (

@@ -14,13 +14,44 @@
 <link href='http://fonts.googleapis.com/css?family=Codystar'
 	rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script>
+ $(function () {
+      
+      $('.dd').on('click', function(event){
+          event.stopPropagation();
+          $('.wrapper-dropdown-3').toggleClass('active');
+      });
+      
+      
+      $(document).click(function () {
+      // all dropdowns
+      $('.wrapper-dropdown-3').removeClass('active');
+    });
+
+  });
+ </script>
 <title>Event-Mate</title>
 </head>
 <body>
-	<ul class="header2">
+	<ul class="header2" style="clear:both;">
+	<div id="dd" class="wrapper-dropdown-3 dd">
+		<form class="search"  method="post" action="${pageContent.request.contextPath}/EventMate/Event" style="float:left;margin-left:24%;margin-top:1%;" >
+		 <input type="text" name="q" placeholder="Search For An Event"/>
+		 
+		 <ul class="results" >
+			 <li class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Sport" onclick="${pageContent.request.contextPath}/EventMate/Event/Sports">Sports<br /></a></li>
+			 <li class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Concert">Concerts<br /></a></li>
+	 		<li  class="searchList"><a  class="search" href="${pageContent.request.contextPath}/EventMate/Event/Food & Drink">Food & Drink<br /></li>
+         	<li  class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Social">Social</a></li>
+		 </ul>
+		
+	</form>
+	</div>
 		<center>
 			<span class="eventMate">EventMate</span><img
-				src="${pageContent.request.contextPath}/EventMate//images/martini2.jpg" width="40px" height="50px">
+				src="${pageContent.request.contextPath}/EventMate//images/martini2.jpg" width="40px" height="50px" style="margin-right:8%">
 		</center>
 	</ul>
 
@@ -39,6 +70,14 @@ if (lTweet==null){
 
 <% 
 Iterator<eventStore> iterator;
+iterator = lTweet.iterator(); 
+if(!iterator.hasNext())
+{ %>
+	<center>
+	<p class="blueFont" style="margin-top:30%;">No event's found</p>
+	</center>
+<%
+}
 
 
 iterator = lTweet.iterator();     
@@ -72,8 +111,18 @@ while (iterator.hasNext()){
 			 
 				class="blueFont2" style="margin-left:12%;">Event Type: </span> <span
 
-				class="blackFont"><%=ts.getCategory() %></span> <br>
+				class="blackFont"><%=ts.getCategory() %></span> <br><br><br>
+				
+				<%if(ts.getCorrectDistance() == false)
+					{%>
+					 <span
+			 
+				class="blueFont2" style="margin-left:12%;">This event is not within your distance preferences</span><br><br><br>
+				<%} %>
+				
 	
+	<% if(ts.getAttending() == false && ts.getNotAttending() == false)
+	{%>
 	 <form action="${pageContent.request.contextPath}/EventMate/NotAttending2" method="post"> 
 		
 		<button  type="submit" value="<%=ts.getEvent() %>" name="cross" style="margin-top:2%;padding: 0;
@@ -85,8 +134,20 @@ background: none;"><img src="${pageContent.request.contextPath}/EventMate/images
 border: none;
 background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/tick2.png" width="100px" height="100px" ></button>
 		</form>
-
-		
+		<%
+		}
+		else if(ts.getAttending() == true)
+		{%>
+			<span class="blueFont2" style="margin-left:12%;">You are attending this event</span>
+		<%} 
+		else if(ts.getNotAttending() == true)
+		{%>
+			<span class="blueFont2" style="margin-left:12%;">You are not attending this event</span>
+		<%} 
+	     else if(ts.getEventPassed() == true)
+		 { %>
+			<span class="blueFont2" style="margin-left:12%;">Event has passed</span>
+		<%} %>
 	</div>
 	<%
 	}

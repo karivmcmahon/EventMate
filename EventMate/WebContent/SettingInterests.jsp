@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<link href="${pageContent.request.contextPath}/EventMate/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur'
 	rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo'
@@ -14,23 +14,55 @@
 <link href='http://fonts.googleapis.com/css?family=Codystar'
 	rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script>
+ $(function () {
+      
+      $('.dd').on('click', function(event){
+          event.stopPropagation();
+          $('.wrapper-dropdown-3').toggleClass('active');
+      });
+      
+      
+      $(document).click(function () {
+      // all dropdowns
+      $('.wrapper-dropdown-3').removeClass('active');
+    });
+
+  });
+ </script>
 <title>Event-Mate</title>
 </head>
 <body>
-	<ul class="header2">
+	<ul class="header2" style="clear:both;">
+	<div id="dd" class="wrapper-dropdown-3 dd">
+		<form class="search"  method="post" action="${pageContent.request.contextPath}/EventMate/Event" style="float:left;margin-left:24%;margin-top:1%;" >
+		 <input type="text" name="q" placeholder="Search For An Event"/>
+		 
+		 <ul class="results" >
+			 <li class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Sport" onclick="${pageContent.request.contextPath}/EventMate/Event/Sports">Sports<br /></a></li>
+			 <li class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Concert">Concerts<br /></a></li>
+	 		<li  class="searchList"><a  class="search" href="${pageContent.request.contextPath}/EventMate/Event/Food & Drink">Food & Drink<br /></li>
+         	<li  class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Social">Social</a></li>
+		 </ul>
+		
+	</form>
+	</div>
+
 		<center>
 			<span class="eventMate">Event-Mate</span><img
-				src="images/martini2.jpg" width="40px" height="50px">
+				src="${pageContent.request.contextPath}/EventMate/images/martini2.jpg" width="40px" height="50px" style="margin-right:8%">
 		</center>
 	</ul>
 
 	<div class="divMain2" style="min-height: 100%;">
 		<jsp:include page="${pageContent.request.contextPath}/Header.jsp" />
 		<div align="center">
-		<br> <br> <br> <span class="blueFont" ><b>Edit Your Interest Settings</b></span> <br></div>
+		<br> <br> <br> <span class="blueFont" >Edit Your Interest Settings</span> <br></div>
 		<br>
 		<div c align="center">
-		<span class="fontCheck"><b>Interests: (Edit Up to 5)</b></span><br><br>
+		<span class="fontCheck">Interests:</span><br><br>
 			<form action = "${pageContent.request.contextPath}/EventMate/SettingInterests" method = "post">
 				<span class="fontCheck"><input type="checkbox" name="interest" value="Reading" <c:forEach items="${user.getInterests()}" var="interests">
 ${interests == 'Reading' ? 'checked' : ''}
@@ -55,7 +87,7 @@ ${interests == 'Watching TV' ? 'checked' : ''}
 </c:forEach>>Watching TV</span><br><br>
 
 <br><br>
-<span class="fontCheck"><b>Sports: (Edit Up to 5)</b></span><br><br>
+<span class="fontCheck">Sports:</span><br><br>
 
 <span class="fontCheck"><input type="checkbox" name="sport" value="Running" <c:forEach items="${user.getSports()}" var="sports">
 ${sports == 'Running' ? 'checked' : ''}
@@ -80,7 +112,7 @@ ${sports == 'Ultimate' ? 'checked' : ''}
 </c:forEach>>Ultimate Frisbee</span><br><br>
 <br><br>
 
-<span class="fontCheck"><b>Music: (Edit Up to 5)</b></span><br><br>
+<span class="fontCheck">Music:</span><br><br>
 
 <span class="fontCheck"><input type="checkbox" name="music" value="Pop" <c:forEach items="${user.getMusic()}" var="music">
 ${music == 'Pop' ? 'checked' : ''}

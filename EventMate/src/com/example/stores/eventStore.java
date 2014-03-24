@@ -14,7 +14,20 @@ public class eventStore {
 	String location;
 	String venue;
 	String category;
-	boolean attending;
+	boolean attending = false;
+	boolean notattending = false;
+	boolean isdistance = false;
+	boolean eventPassed = false;
+	
+	public void setEventPassed(boolean eventpass)
+	{
+		eventPassed = eventpass;
+	}
+	
+	public boolean getEventPassed()
+	{
+		return eventPassed;
+	}
 	
 	public void setAttending(boolean attend)
 	{
@@ -24,6 +37,26 @@ public class eventStore {
 	public boolean getAttending()
 	{
 		return attending;
+	}
+	
+	public void setNotAttending(boolean attend)
+	{
+		notattending = attend;
+	}
+	
+	public boolean getNotAttending()
+	{
+		return notattending;
+	}
+	
+	public void setCorrectDistance(boolean dist)
+	{
+		isdistance = dist;
+	}
+	
+	public boolean getCorrectDistance()
+	{
+		return isdistance;
 	}
 	
 	public String getCategory()

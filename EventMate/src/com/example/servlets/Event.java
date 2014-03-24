@@ -68,8 +68,27 @@ public class Event extends HttpServlet {
 			tm.setCluster(cluster);
 			LinkedList<eventStore> eventList = tm.getEventByName(us,eventname);
 			request.setAttribute("Events", eventList); //Set a bean with the list in it
-			RequestDispatcher rd = request.getRequestDispatcher("/Event.jsp"); 
-			rd.forward(request, response);
+			if(eventname.equals("Sports") || eventname.equals("Concert") || eventname.equals("Food & Drink") || eventname.equals("Social"))
+			{
+				LinkedList<eventStore> eventsList = tm.getEventByCategory(us,eventname);
+				request.setAttribute("Events", eventsList); //Set a bean with the list in it
+				RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp"); 
+				rd.forward(request, response);
+			}
+			else if(eventList.size() > 1)
+			{
+				
+				RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp"); 
+				rd.forward(request, response);
+			}
+			else
+			{
+				
+				RequestDispatcher rd = request.getRequestDispatcher("/Event.jsp"); 
+				rd.forward(request, response);
+			}
+			
+			
 		}
 	}
 
@@ -78,6 +97,16 @@ public class Event extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		UserStore us = new UserStore();
+		EventModel tm= new EventModel();
+		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		String eventname = request.getParameter("q");
+		tm.setCluster(cluster);
+		LinkedList<eventStore> eventList = tm.getEventByName(us,eventname);
+		request.setAttribute("Events", eventList); //Set a bean with the list in it
+		RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp"); 
+		rd.forward(request, response);
+		
 	}
 
 }
