@@ -121,7 +121,7 @@ public class EventModel {
 			
 			LinkedList<eventStore> eventList = new LinkedList<eventStore>();
 			Session session = cluster.connect("eventmate");
-			
+			eventname = eventname.replaceAll("%20"," ");
 			PreparedStatement statement = session.prepare("SELECT * from events WHERE name=?;");
 			BoundStatement boundStatement = new BoundStatement(statement);
 			ResultSet rs = session.execute(boundStatement.bind(eventname));

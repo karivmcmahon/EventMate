@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href=""${pageContent.request.contextPath}/EventMate/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<link href="${pageContent.request.contextPath}/EventMate/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Codystar' rel='stylesheet' type='text/css'>
@@ -28,7 +28,7 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate
 <body>
 <ul class="header2">
 <center>
-	<span class="eventMate">Event-Mate</span><img src="images/martini2.jpg" width="40px" height="50px" >
+	<span class="eventMate">Event-Mate</span><img src="${pageContent.request.contextPath}/EventMate/images/martini2.jpg" width="40px" height="50px" >
 </center>
 </ul>
 
@@ -60,7 +60,7 @@ while (iterator.hasNext()){
 
 	%>
 	<div class="event">
-		 <a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent().replaceAll(" ","^")%>" class="blueFont"><img src="${pageContent.request.contextPath}/EventMate/images/martini.jpg" width="60px" height="140px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
+		 <a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent()%>" class="blueFont"><img src="${pageContent.request.contextPath}/EventMate/images/martini.jpg" width="60px" height="140px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
 		 <form action="${pageContent.request.contextPath}/EventMate/NotAttending" method="post"> 
 		
 		<button  type="submit" value="<%=ts.getEvent() %>" name="cross" style="float:right;margin-top:3%;padding: 0;
@@ -72,7 +72,7 @@ background: none;"><img src="${pageContent.request.contextPath}/EventMate/images
 border: none;
 background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/tick2.png" width="60px" height="60px" ></button>
 		</form>
-				<a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent().replaceAll(" ","")%>" class="blueFont"><%=ts.getEvent() %> - <%=ts.getDatess() %> </a>
+		<a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent()%>" class="blueFont3" style="margin-left:2%"><%=ts.getEvent() %></a> <span class="blueFont3">- <%=ts.getDatess() %></span><br>
 		<span class="blackFont" style="margin-left:2%;"><%= ts.getDescription() %></span><br>
 		<span class="blueFont2" style="margin-left:2%;">Attendee amount: <span class="blackFont" ><%= ts.getAttendee() %></span></span><br>
 		<span class="blueFont2" style="margin-left:2%;">Event Requirements: <span class="blackFont" ><%= ts.getEventReq() %></span></span><br>

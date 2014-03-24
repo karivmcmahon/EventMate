@@ -63,7 +63,7 @@ public class Event extends HttpServlet {
 			int lastSlash = request.getRequestURI().lastIndexOf('/');
 			String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
 			String  eventname = endOfUrl.toString();
-			eventname = eventname.replaceAll("^"," ");
+		//	eventname = eventname.replaceAll("+"," ");
 			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 			tm.setCluster(cluster);
 			LinkedList<eventStore> eventList = tm.getEventByName(us,eventname);

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="${pageContent.request.contextPath}/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<link href="${pageContent.request.contextPath}/EventMate/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur'
 	rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo'
@@ -20,7 +20,7 @@
 	<ul class="header2">
 		<center>
 			<span class="eventMate">EventMate</span><img
-				src="${pageContent.request.contextPath}/images/martini2.jpg" width="40px" height="50px">
+				src="${pageContent.request.contextPath}/EventMate/images/martini2.jpg" width="40px" height="50px">
 		</center>
 	</ul>
 
@@ -42,7 +42,7 @@ if (lTweet==null){
 		<div class="randomEvent">
 			<div class="eventPicture">
 				<center>
-					<img src="${pageContent.request.contextPath}/images/beyonce.jpg" class=imgBorder width="636px"
+					<img src="${pageContent.request.contextPath}/EventMate/images/beyonce.jpg" class=imgBorder width="636px"
 						height="322px">
 				</center>		
 			</div>
@@ -68,12 +68,12 @@ if (lTweet==null){
 		
 		<button  type="submit" value="<%=lTweet.getEvent() %>" name="cross" style="margin-top:2%;padding: 0;
 border: none;
-background: none;"><img src="${pageContent.request.contextPath}/images/cross2.png" width="100px" height="100px" ></button>
+background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/cross2.png" width="100px" height="100px" ></button>
 		</form>
 		 <form action="${pageContent.request.contextPath}/EventMate/Attending2" method="post"> 
 		 	<button  type="submit" value="<%=lTweet.getEvent() %>" name="tick" style="margin-top:2%;padding: 0;
 border: none;
-background: none;"><img src="${pageContent.request.contextPath}/images/tick2.png" width="100px" height="100px" ></button>
+background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/tick2.png" width="100px" height="100px" ></button>
 		</form>
 
 		
