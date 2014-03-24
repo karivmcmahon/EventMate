@@ -29,6 +29,7 @@ public class UserStore {
 	String interestedIn;
 	ArrayList<String> eventList = new ArrayList<String>();
 	
+	
 	public UserStore()
 	{
 		

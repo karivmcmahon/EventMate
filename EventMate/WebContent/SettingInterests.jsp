@@ -29,7 +29,7 @@
 		<br>
 		<div c align="center">
 		<span class="fontCheck"><b>Interests: (Edit Up to 5)</b></span><br><br>
-			<form>
+			<form action = "${pageContent.request.contextPath}/EventMate/SettingInterests" method = "post">
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Reading">Reading</span> 
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Poetry">Poetry</span>
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Drawing">Drawing</span>
@@ -64,7 +64,7 @@
 				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Grunge">Grunge</span><br><br>
 
 				<div style="text-align: center">
-					<input type="button" class="button" name="buttonFinishEdit"
+					<input type="submit" class="button" name="buttonFinishEdit"
 						value="Finished">
 				</div>
 				<br><br>

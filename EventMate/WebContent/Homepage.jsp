@@ -26,6 +26,8 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate
 <title>Event-Mate</title>
 </head>
 <body>
+
+<div class="background"></div>
 <ul class="header2">
 <center>
 	<span class="eventMate">Event-Mate</span><img src="${pageContent.request.contextPath}/EventMate/images/martini2.jpg" width="40px" height="50px" >

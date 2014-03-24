@@ -42,6 +42,11 @@ public class UserModel {
 				System.out.println("fail2");
 				user.setUsername(row.getString("username"));
 				user.setPassword(row.getString("password"));
+				user.setName(row.getString("name"));
+				user.setBio(row.getString("bio"));
+				user.setEmail(row.getString("email"));
+				user.setLocation(row.getString("location"));
+				user.setRelationship(row.getString("relationshipStatus"));
 				user.setDistancePref(row.getInt("distanceAmount"));
 				user.setPostcode(row.getString("postcode"));
 				user.setInterests(row.getSet("interests", String.class));
@@ -52,6 +57,7 @@ public class UserModel {
 				user.setSports(row.getSet("sports", String.class));
 				user.setMusic(row.getSet("music", String.class));
 				Date dob = row.getDate("dob");
+				user.setDateJoined(row.getDate("dateJoined"));
 				FriendModel f = new FriendModel();
 				int age = f.getDate(dob);
 				user.setAge(age);
@@ -60,6 +66,41 @@ public class UserModel {
 		}
 		session.shutdown();
 		return user;
+	}
+	
+	public void editUser(UserStore us)
+	{
+		System.out.println("Edit user");
+		Session session = cluster.connect("eventmate");
+		String name = us.getName();
+		String un = us.getUsername();
+		String pw = us.getPassword();
+		String email = us.getEmail();
+		String bio = us.getBio();
+		int distance = us.getDistance();
+		String gender = us.getGender();
+		String genderPref = us.getGenderPref();
+		Set<String> interests = us.getInterests();
+		String location = us.getLocation();
+		Set<String> music = us.getMusic();
+		String postcode = us.getPostcode();
+		String relationship = us.getRelationship();
+		Set<String> sports = us.getSports();
+		int ageMin = us.getAgeMin();
+		int ageMax = us.getAgeMax();
+		//Date dob = us.getDob();
+		
+		//Timestamp times = new Timestamp(dob.getTime());
+	//	System.out.println("Times" + times);
+		//Date dateJoined = us.getDateJoined();
+		//Timestamp times2 = new Timestamp(dateJoined.getTime());
+		//System.out.println("Times 2" + times2);
+		PreparedStatement statement = session.prepare("UPDATE users SET name = ?, email = ?, bio = ?, gender = ?, interests = ?, location = ?, music = ?, postcode = ?, sports = ?, \"distanceAmount\" = ?, \"genderPref\" = ?, \"relationshipStatus\" = ?, \"ageMaxRange\" = ?, \"ageMinRange\" = ? WHERE username = ? AND password = ?;");
+		System.out.println("Statement prepared");
+		BoundStatement boundStatement = new BoundStatement(statement);
+		session.execute(boundStatement.bind(name, email, bio, gender, interests, location, music, postcode, sports, distance, genderPref, relationship, ageMax, ageMin,  un, pw));
+		System.out.println("execute");
+		session.shutdown();
 	}
 	
 	public void addUser(UserStore us)
