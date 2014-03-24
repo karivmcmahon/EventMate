@@ -12,6 +12,7 @@ CREATE TABLE eventmate.events
 	postcode varchar,
 	"eventRequirements" varchar,
 	venue varchar,
+category varchar,
 	PRIMARY KEY(name,eventdate)
 ) WITH CLUSTERING ORDER BY (eventdate ASC);
 
@@ -91,6 +92,13 @@ CREATE TABLE eventmate.usernotattending
 	PRIMARY KEY(username,eventname)
 );
 
+
+CREATE TABLE eventmate.userfriends
+(
+	usersname varchar,
+	friendsname varchar,
+	PRIMARY KEY(usersname,friendsname)
+);
 
 CREATE TABLE eventmate.messages
 (
