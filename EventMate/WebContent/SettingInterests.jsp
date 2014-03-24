@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="com.example.stores.*"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -30,39 +32,86 @@
 		<div c align="center">
 		<span class="fontCheck"><b>Interests: (Edit Up to 5)</b></span><br><br>
 			<form action = "${pageContent.request.contextPath}/EventMate/SettingInterests" method = "post">
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Reading">Reading</span> 
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Poetry">Poetry</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Drawing">Drawing</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Tech">Tech</span><br>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Video Games">Video Games</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Outdoors">Outdoors</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Watching TV">Watching TV</span><br><br>
+				<span class="fontCheck"><input type="checkbox" name="interest" value="Reading" <c:forEach items="${user.getInterests()}" var="interests">
+${interests == 'Reading' ? 'checked' : ''}
+</c:forEach>>Reading</span> 
+<span class="fontCheck"><input type="checkbox" name="interest" value="Poetry" <c:forEach items="${user.getInterests()}" var="interests">
+${interests == 'Poetry' ? 'checked' : ''}
+</c:forEach>>Poetry</span>
+<span class="fontCheck"><input type="checkbox" name="interest" value="Drawing" <c:forEach items="${user.getInterests()}" var="interests">
+${interests == 'Drawing' ? 'checked' : ''}
+</c:forEach>>Drawing</span>
+<span class="fontCheck"><input type="checkbox" name="interest" value="Tech" <c:forEach items="${user.getInterests()}" var="interests">
+${interests == 'Tech' ? 'checked' : ''}
+</c:forEach>>Tech</span><br>
+<span class="fontCheck"><input type="checkbox" name="interest" value="Video Games" <c:forEach items="${user.getInterests()}" var="interests">
+${interests == 'Video Games' ? 'checked' : ''}
+</c:forEach>>Video Games</span>
+<span class="fontCheck"><input type="checkbox" name="interest" value="Outdoors" <c:forEach items="${user.getInterests()}" var="interests">
+${interests == 'Outdoors' ? 'checked' : ''}
+</c:forEach>>Outdoors</span>
+<span class="fontCheck"><input type="checkbox" name="interest" value="Watching TV" <c:forEach items="${user.getInterests()}" var="interests">
+${interests == 'Watching TV' ? 'checked' : ''}
+</c:forEach>>Watching TV</span><br><br>
 
-			<br><br>
-			<span class="fontCheck"><b>Sports: (Edit Up to 5)</b></span><br><br>
+<br><br>
+<span class="fontCheck"><b>Sports: (Edit Up to 5)</b></span><br><br>
 
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Running">Running</span> 
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Cycling">Cycling</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Tennis">Tennis</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Football">Football</span><br>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Rugby">Rugby</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Swimming">Swimming</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Ultimate">Ultimate Frisbee</span><br><br>
-			<br><br>
+<span class="fontCheck"><input type="checkbox" name="sport" value="Running" <c:forEach items="${user.getSports()}" var="sports">
+${sports == 'Running' ? 'checked' : ''}
+</c:forEach>>Running</span> 
+<span class="fontCheck"><input type="checkbox" name="sport" value="Cycling" <c:forEach items="${user.getSports()}" var="sports">
+${sports == 'Cycling' ? 'checked' : ''}
+</c:forEach>>Cycling</span>
+<span class="fontCheck"><input type="checkbox" name="sport" value="Tennis" <c:forEach items="${user.getSports()}" var="sports">
+${sports == 'Tennis' ? 'checked' : ''}
+</c:forEach>>Tennis</span>
+<span class="fontCheck"><input type="checkbox" name="sport" value="Football" <c:forEach items="${user.getSports()}" var="sports">
+${sports == 'Football' ? 'checked' : ''}
+</c:forEach>>Football</span><br>
+<span class="fontCheck"><input type="checkbox" name="sport" value="Rugby" <c:forEach items="${user.getSports()}" var="sports">
+${sports == 'Rugby' ? 'checked' : ''}
+</c:forEach>>Rugby</span>
+<span class="fontCheck"><input type="checkbox" name="sport" value="Swimming" <c:forEach items="${user.getSports()}" var="sports">
+${sports == 'Swimming' ? 'checked' : ''}
+</c:forEach>>Swimming</span>
+<span class="fontCheck"><input type="checkbox" name="sport" value="Ultimate" <c:forEach items="${user.getSports()}" var="sports">
+${sports == 'Ultimate' ? 'checked' : ''}
+</c:forEach>>Ultimate Frisbee</span><br><br>
+<br><br>
 
-			<span class="fontCheck"><b>Music: (Edit Up to 5)</b></span><br><br>
+<span class="fontCheck"><b>Music: (Edit Up to 5)</b></span><br><br>
 
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Pop">Pop</span> 
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Rock">Rock</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Indie">Indie</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Metal">Metal</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Jazz">Jazz</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="J-Pop">J-Pop</span><br>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Classical">Classical</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Dubstep">Dubstep</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Garage">Garage</span>
-				<span class="fontCheck"><input type="checkbox" name="vehicle" value="Grunge">Grunge</span><br><br>
-
+<span class="fontCheck"><input type="checkbox" name="music" value="Pop" <c:forEach items="${user.getMusic()}" var="music">
+${music == 'Pop' ? 'checked' : ''}
+</c:forEach>>Pop</span> 
+<span class="fontCheck"><input type="checkbox" name="music" value="Rock" <c:forEach items="${user.getMusic()}" var="music">
+${music == 'Rock' ? 'checked' : ''}
+</c:forEach>>Rock</span>
+<span class="fontCheck"><input type="checkbox" name="music" value="Indie" <c:forEach items="${user.getMusic()}" var="music">
+${music == 'Indie' ? 'checked' : ''}
+</c:forEach>>Indie</span>
+<span class="fontCheck"><input type="checkbox" name="music" value="Metal" <c:forEach items="${user.getMusic()}" var="music">
+${music == 'Metal' ? 'checked' : ''}
+</c:forEach>>Metal</span>
+<span class="fontCheck"><input type="checkbox" name="music" value="Jazz" <c:forEach items="${user.getMusic()}" var="music">
+${music == 'Jazz' ? 'checked' : ''}
+</c:forEach>>Jazz</span>
+<span class="fontCheck"><input type="checkbox" name="music" value="J-Pop" <c:forEach items="${user.getMusic()}" var="music">
+${music == 'J-Pop' ? 'checked' : ''}
+</c:forEach>>J-Pop</span><br>
+<span class="fontCheck"><input type="checkbox" name="music" value="Classical" <c:forEach items="${user.getMusic()}" var="music">
+${music == 'Classic' ? 'checked' : ''}
+</c:forEach>>Classical</span>
+<span class="fontCheck"><input type="checkbox" name="music" value="Dubstep" <c:forEach items="${user.getMusic()}" var="music">
+${music == 'Dubstep' ? 'checked' : ''}
+</c:forEach>>Dubstep</span>
+<span class="fontCheck"><input type="checkbox" name="music" value="Garage" <c:forEach items="${user.getMusic()}" var="music">
+${music == 'Garage' ? 'checked' : ''}
+</c:forEach>>Garage</span>
+<span class="fontCheck"><input type="checkbox" name="music" value="Grunge" <c:forEach items="${user.getMusic()}" var="music">
+${music == 'Grunge' ? 'checked' : ''}
+</c:forEach>>Grunge</span><br><br>
 				<div style="text-align: center">
 					<input type="submit" class="button" name="buttonFinishEdit"
 						value="Finished">

@@ -133,6 +133,16 @@ public class UserStore {
 		name = n;
 	}
 	
+	public String getInterestedIn()
+	{
+		return interestedIn;
+	}
+	
+	public void setInterestedIn(String interested)
+	{
+		interestedIn = interested;
+	}
+	
 	public String getName()
 	{
 		return name;

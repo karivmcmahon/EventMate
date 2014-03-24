@@ -70,7 +70,7 @@ public class Settings extends HttpServlet {
 		us.setPostcode(request.getParameter("postcode"));
 		us.setDistancePref(Integer.parseInt(request.getParameter("distance")));
 		us.setRelationship(request.getParameter("relationshipStat"));
-		
+		us.setInterestedIn(request.getParameter("editGender"));
 		response.sendRedirect("/EventMate/SettingInterests");
 	}
 

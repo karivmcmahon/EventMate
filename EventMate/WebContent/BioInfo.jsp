@@ -89,6 +89,7 @@
 					name="editGender">
 					<option value="male">Male</option>
 					<option value="female">Female</option>
+					<option value="both">Both</option>
 				</select> <br>
 				<br>
 				<div class="divMain2" style="min-height: 100%;">

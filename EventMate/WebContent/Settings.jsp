@@ -72,6 +72,11 @@
 					<option value="engaged">Engaged</option>
 					<option value="it's complicated">It's Complicated</option>
 					<option value="not interested">Not Interested</option>
+				</select> <br> <br> <span class="font">Interested In:</span> <select
+					name="editGender">
+					<option value="male"  ${user.getGenderPref() == 'male' ? 'selected' : ''}>Male</option>
+					<option value="female"  ${user.getGenderPref() == 'female' ? 'selected' : ''}>Female</option>
+						<option value="both"  ${user.getGenderPref() == 'both' ? 'selected' : ''}>Both</option>
 				</select><br>
 				<br>
 				<br>

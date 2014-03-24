@@ -65,7 +65,10 @@
 				</span> <span class="blackFont"><%=ts.getStatus()%></span> <br> <br>
 				
 				<span class="blueFont2"> Age: 
-				</span> <span class="blackFont"><%=ts.getAge()%></span>
+				</span> <span class="blackFont"><%=ts.getAge()%></span><br><br>
+				
+				<span class="blueFont2"> Interested in: 
+				</span> <span class="blackFont"><%=ts.getInterestedIn()%></span>
 			</div>
 			<div class="profileMore">
 				<span class="blueFont2"> Music: 

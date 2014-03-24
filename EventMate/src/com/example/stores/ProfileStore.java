@@ -18,11 +18,22 @@ public class ProfileStore {
 	Set<String> interests;
 	Set<String> music;
 	Set<String> sports;
+	String interestedIn;
 	ArrayList<String> eventList = new ArrayList<String>();
 
 	public ProfileStore()
 	{
 
+	}
+	
+	public String getInterestedIn()
+	{
+		return interestedIn;
+	}
+	
+	public void setInterestedIn(String interested)
+	{
+		interestedIn = interested;
 	}
 
 	public void setUsername(String un)

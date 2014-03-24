@@ -73,6 +73,7 @@ public class Bio extends HttpServlet {
 		us.setPostcode(request.getParameter("postcode"));
 		us.setDistancePref(Integer.parseInt(request.getParameter("distance")));
 		us.setRelationship(request.getParameter("relationshipStat"));
+		us.setInterestedIn(request.getParameter("editGender"));
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 		String dob = request.getParameter("year")+"/"+request.getParameter("month")+"/"+request.getParameter("day");
 		System.out.println(dob);

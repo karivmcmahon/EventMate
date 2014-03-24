@@ -58,7 +58,7 @@ public class ProfileModel {
 				p.setMusic(row.getSet("music", String.class));
 				p.setInterests(row.getSet("interests", String.class));
 				p.setSports(row.getSet("sports", String.class));
-				
+				p.setInterestedIn(row.getString("interestedIn"));
 				Date dob = row.getDate("dob");
 				int age = getDate(dob);
 				p.setAge(age);
@@ -119,7 +119,7 @@ public class ProfileModel {
 				p.setMusic(row.getSet("music", String.class));
 				p.setInterests(row.getSet("interests", String.class));
 				p.setSports(row.getSet("sports", String.class));
-				
+				p.setInterestedIn(row.getString("interestedIn"));
 				Date dob = row.getDate("dob");
 				int age = getDate(dob);
 				p.setAge(age);

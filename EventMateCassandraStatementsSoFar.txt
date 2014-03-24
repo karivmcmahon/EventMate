@@ -47,32 +47,33 @@ CREATE TABLE eventmate.users
 	sports set<text>,
 	music set<text>,
 	interests set<text>,
+	interestedIn varchar,
 	
 	PRIMARY KEY(username,password)
 );
 
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
-VALUES('rdw92','2erty','Ryan Dawson','2014-03-15 14:44','1992-04-17','In A Relationship','Glasgow','G117DD','Studys at Glasgow Uni,Loves a good night out','rw92@aol.co.uk',18,25,'both',60,'male',{'Football,Rugby'},{'Indie','Dubstep'},{'Video Games','Tech'});
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,interestedIn)
+VALUES('rdw92','2erty','Ryan Dawson','2014-03-15 14:44','1992-04-17','In A Relationship','Glasgow','G117DD','Studys at Glasgow Uni,Loves a good night out','rw92@aol.co.uk',18,25,'both',60,'male',{'Football,Rugby'},{'Indie','Dubstep'},{'Video Games','Tech'},'female');
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
-VALUES('janeausten22','tswift22','Jane Austen','2014-03-18 11:22','1990-12-18','Single','Dundee','DD15DL','English Lit Student','ja@hotmail.co.uk',22,27,'both',35,'female',{'Ultimate'},{'Jazz'},{'Watching TV,Poetry'});
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,interestedIn)
+VALUES('janeausten22','tswift22','Jane Austen','2014-03-18 11:22','1990-12-18','Single','Dundee','DD15DL','English Lit Student','ja@hotmail.co.uk',22,27,'both',35,'female',{'Ultimate'},{'Jazz'},{'Watching TV,Poetry'},'male');
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
-VALUES('JoshCarter101','JC101','Josh Carter','2014-03-18 11:30','1994-01-21','In A Relationship','Glasgow','G513AF','Joiner Apprentice','jc202@hotmail.co.uk',20,25,'both',60,'male',{'Football'},{'Indie'},{'Outdoors'});
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,interestedIn)
+VALUES('JoshCarter101','JC101','Josh Carter','2014-03-18 11:30','1994-01-21','In A Relationship','Glasgow','G513AF','Joiner Apprentice','jc202@hotmail.co.uk',20,25,'both',60,'male',{'Football'},{'Indie'},{'Outdoors'},'female');
 
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
-VALUES('summerj','hola','Summer Jones','2014-03-19 13:14','1993-03-12','Single','Edinburgh','EH11DS','Waitress And Coffee Addict','summerj@hotmail.com',19,25,'both',120,'female',{'Football'},{'Indie'},{'Tech','Video Games','Watching TV'});
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,interestedIn)
+VALUES('summerj','hola','Summer Jones','2014-03-19 13:14','1993-03-12','Single','Edinburgh','EH11DS','Waitress And Coffee Addict','summerj@hotmail.com',19,25,'both',120,'female',{'Football'},{'Indie'},{'Tech','Video Games','Watching TV'},'female');
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
-VALUES('harrystyles','hstylesss','Harry Styles','2014-03-19 15:48','1997-03-12','Single','Edinburgh','EH12DS','Signer','harrys@hotmail.com',19,25,'both',160,'male',{'Swimming'},{'Indie','Pop','Rock'},{'Reading','Drawing'});
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,interestedIn)
+VALUES('harrystyles','hstylesss','Harry Styles','2014-03-19 15:48','1997-03-12','Single','Edinburgh','EH12DS','Signer','harrys@hotmail.com',19,25,'both',160,'male',{'Swimming'},{'Indie','Pop','Rock'},{'Reading','Drawing'},'male');
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
-VALUES('MariaVanderpump','oranges','Maria Vanderpump','2014-03-19 21:24','1991-05-16','In A Relationship','Edinburgh','EH12DS','Stay at home mum','mariav@yahoo.co.uk',19,25,'both',150,'female',{'Football'},{'Indie','Pop','Rock'},{'Tech','Watching TV'});
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,interestedIn)
+VALUES('MariaVanderpump','oranges','Maria Vanderpump','2014-03-19 21:24','1991-05-16','In A Relationship','Edinburgh','EH12DS','Stay at home mum','mariav@yahoo.co.uk',19,25,'both',150,'female',{'Football'},{'Indie','Pop','Rock'},{'Tech','Watching TV'},'female');
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
-VALUES('JamesVanderpump','oranges2','Maria Vanderpump','2014-03-19 21:24','1991-05-16','In A Relationship','Edinburgh','EH12DS','Stay at home mum','mariav@yahoo.co.uk',19,25,'both',150,'female',{'Football'},{'Indie','Pop','Rock'},{'Tech','Watching TV'});
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,interestedIn)
+VALUES('JamesVanderpump','oranges2','Maria Vanderpump','2014-03-19 21:24','1991-05-16','In A Relationship','Edinburgh','EH12DS','Stay at home mum','mariav@yahoo.co.uk',19,25,'both',150,'female',{'Football'},{'Indie','Pop','Rock'},{'Tech','Watching TV'},'male');
 
 CREATE INDEX ON eventmate.users(password); -- Not used anymore
 
@@ -104,7 +105,6 @@ INSERT INTO eventmate.messages(userto,userfrom,message,timesent) VALUES('rdw92',
 
 INSERT INTO eventmate.messages(userto,userfrom,message,timesent) VALUES('JoshCarter101','rdw92','Hello','2014-03-20 11:44');
 
-SELECT * FROM eventmate.messages WHERE userfrom in ('JoshCarter101','rdw92') AND userto in('JoshCarter101','rdw92') ORDER BY timesent ASC  LIMIT 1000 ALLOW FILTERING;
 
 
 
