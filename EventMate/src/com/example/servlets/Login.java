@@ -98,6 +98,7 @@ public class Login extends HttpServlet {
 			System.out.println("not valid");
 			us.setLoggedIn(false);
 			RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp"); 
+			request.setAttribute("invalidLogin", "incorrect username or password");
 		    rd.forward(request, response); 
 		}
 		}

@@ -51,10 +51,12 @@ CREATE TABLE eventmate.users
 	music set<text>,
 	interests set<text>,
 	interestedIn varchar,
-	
+	photo varchar,
 	PRIMARY KEY(username,password)
 );
 
+CREATE INDEX ON eventmate.users(name);
+CREATE INDEX ON eventmate.users(email);
 
 INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,interestedIn)
 VALUES('rdw92','2erty','Ryan Dawson','2014-03-15 14:44','1992-04-17','In A Relationship','Glasgow','G117DD','Studys at Glasgow Uni,Loves a good night out','rw92@aol.co.uk',18,25,'both',60,'male',{'Football,Rugby'},{'Indie','Dubstep'},{'Video Games','Tech'},'female');

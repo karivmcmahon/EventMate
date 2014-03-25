@@ -31,6 +31,7 @@
 	<span class="font">Password</span>
 	<input type="password"  name="password" >
 	<input type="submit" class="button" name="login" value="Login">
+	<span class="font" style="color:red;">${invalidLogin}</span>
 </form>
 </div>
 
@@ -61,6 +62,7 @@ Message each other and arrange going to events  </span> <span class="smallGreyFo
 <span class="font">Email:</span>
 <input type="text"  name="emailSignUp" >
 <input type="submit" class="button" name="buttonSignUp" value="Sign Up"style="float: right;">
+<span class="font" style="color:red;">${invalidSignUp}</span>
 </form>
 </div>
 

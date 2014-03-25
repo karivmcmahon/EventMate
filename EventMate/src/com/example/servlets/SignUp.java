@@ -53,15 +53,36 @@ public class SignUp extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		UserModel um = new UserModel();
+		um.setCluster(cluster);
 		UserStore us = new UserStore();
+		UserStore user = new UserStore();
+		if(request.getParameter("usernameSignUp").equals("") || request.getParameter("passwordSignUp").equals("") || request.getParameter("emailSignUp").equals(""))
+		{
+			RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
+			request.setAttribute("invalidSignUp", "Invalid");
+			rd.forward(request, response);
+		}
+		else
+		{
 		us.setUsername(request.getParameter("usernameSignUp"));
 		us.setPassword(request.getParameter("passwordSignUp"));
 		us.setEmail(request.getParameter("emailSignUp"));
+		if (um.checkUsername(us) != "") {
+		RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
+		request.setAttribute("invalidSignUp", "Username already in use!");
+		rd.forward(request, response);
+		}else if(um.checkEmail(us) != ""){
+		RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
+		request.setAttribute("invalidSignUp", "Email already in use!");
+		rd.forward(request, response);
+		}else{
 		HttpSession session = request.getSession(true);
 		session.setAttribute("possibleUser", us);
 		us = (UserStore) request.getSession().getAttribute("possibleUser");
 		// Direct to home.jsp once session true
 		response.sendRedirect("/EventMate/Bio");
+		}
+		}
 	}
 
 }

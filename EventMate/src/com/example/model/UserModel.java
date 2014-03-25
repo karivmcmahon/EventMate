@@ -70,6 +70,52 @@ public class UserModel {
 		return user;
 	}
 	
+	public String checkUsername(UserStore us)
+	{
+	UserStore user = new UserStore();
+	Session session = cluster.connect(eventmate);
+	String username = "";
+	String un = us.getUsername();
+	PreparedStatement statement = session.prepare("SELECT * from users WHERE username = ?;");
+	BoundStatement boundStatement = new BoundStatement(statement);
+	System.out.println("fail1");
+	ResultSet rs = session.execute(boundStatement.bind(un));
+	if (rs.isExhausted()) {
+	System.out.println("fail1");
+	user.setValid(false);
+	} else {
+	for (Row row : rs) {
+	System.out.println("fail2");
+	username = row.getString("username");
+	}
+	}
+	session.shutdown();
+	return username;
+	}
+
+	public String checkEmail(UserStore us)
+	{
+	UserStore user = new UserStore();
+	Session session = cluster.connect(eventmate);
+	String email = "";
+	String em = us.getEmail();
+	PreparedStatement statement = session.prepare("SELECT email from users WHERE email = ?;");
+	BoundStatement boundStatement = new BoundStatement(statement);
+	System.out.println("fail1");
+	ResultSet rs = session.execute(boundStatement.bind(em));
+	if (rs.isExhausted()) {
+	System.out.println("fail1");
+	user.setValid(false);
+	} else {
+	for (Row row : rs) {
+	System.out.println("fail2");
+	email = row.getString("email");
+	}
+	}
+	session.shutdown();
+	return email;
+	}
+	
 	public void editUser(UserStore us)
 	{
 		System.out.println("Edit user");

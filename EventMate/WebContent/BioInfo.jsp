@@ -66,6 +66,7 @@
 			<form action="${pageContent.request.contextPath}/EventMate/Bio"
 				method="post">
 				<span class="font">Name:</span> <input type="text" name="name"><br>
+				<span class="font" style="color:red;">${invalidName}</span>
 				<br> <span class="font">Date of Birth: <select
 					name="day">
 						<c:forEach begin="01" end="31" var="i">
@@ -102,7 +103,9 @@
 					type="text" name="location"> <br> <br> <span
 					class="font">Postcode: <input type="text" name="postcode">
 					(No Spaces)
-				</span> <br> <br> <span class="font">Distance Willing to
+				</span>
+				<span class="font" style="color:red;">${invalidPostcode}</span>
+				 <br> <br> <span class="font">Distance Willing to
 					Travel: <select name="distance">
 						<c:forEach begin="01" end="1000" var="i">
 							<option value="${i}">${i}</option>
