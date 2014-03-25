@@ -131,7 +131,7 @@ public class Bio extends HttpServlet {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 		}
-
+		
 		// Direct to home.jsp once session true
 		response.sendRedirect("/EventMate/Interests");
 
