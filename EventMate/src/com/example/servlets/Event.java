@@ -56,7 +56,7 @@ public class Event extends HttpServlet {
 		//Get session for user currently logged in
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		tm.setCluster(cluster);
-		LinkedList<eventStore> eventList = tm.getEvents(us);
+		LinkedList<eventStore> eventList = tm.getEvents(us,1,"");
 		request.setAttribute("Events", eventList); //Set a bean with the list in it
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/Homepage.jsp"); 
@@ -71,11 +71,11 @@ public class Event extends HttpServlet {
 		//	eventname = eventname.replaceAll("+"," ");
 			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 			tm.setCluster(cluster);
-			LinkedList<eventStore> eventList = tm.getEventByName(us,eventname);
+			LinkedList<eventStore> eventList = tm.getEvents(us,2,eventname);
 			request.setAttribute("Events", eventList); //Set a bean with the list in it
 			if(eventname.equals("Sports") || eventname.equals("Concert") || eventname.equals("Food & Drink") || eventname.equals("Social"))
 			{
-				LinkedList<eventStore> eventsList = tm.getEventByCategory(us,eventname);
+				LinkedList<eventStore> eventsList = tm.getEvents(us,3,eventname);
 				request.setAttribute("Events", eventsList); //Set a bean with the list in it
 			
 				RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp"); 
@@ -110,7 +110,7 @@ public class Event extends HttpServlet {
 		String eventname = request.getParameter("q");
 		tm.setCluster(cluster);
 		fm.setCluster(cluster);
-		LinkedList<eventStore> eventList = tm.getEventByName(us,eventname);
+		LinkedList<eventStore> eventList = tm.getEvents(us,2,eventname);
 		request.setAttribute("Events", eventList); //Set a bean with the list in it
 		LinkedList<UserStore> friendList = fm.displayUserssByName(us, eventname);
 		request.setAttribute("Friends", friendList);

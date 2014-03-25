@@ -34,15 +34,28 @@ public class ProfileModel {
 		this.cluster=cluster;
 	}
 	
-	public LinkedList<ProfileStore> getProfile(UserStore us)
+	public LinkedList<ProfileStore> getProfile(UserStore us,int num,String username)
 	{
 		LinkedList<ProfileStore> profile = new LinkedList<ProfileStore>();
 		Session session = cluster.connect(eventmate);
+		PreparedStatement statement;
+		BoundStatement boundStatement;
+		ResultSet rs = null;
 		
-		//do stuff to get the profile of user logged in
-		PreparedStatement statement = session.prepare("SELECT * FROM users WHERE username =?;");
-		BoundStatement boundStatement = new BoundStatement(statement);
-		ResultSet rs = session.execute(boundStatement.bind(us.getUsername()));
+		if(num == 1)
+		{
+			//do stuff to get the profile of user logged in
+		    statement = session.prepare("SELECT * FROM users WHERE username =?;");
+		    boundStatement = new BoundStatement(statement);
+		    rs = session.execute(boundStatement.bind(us.getUsername()));
+		}
+		if(num == 2)
+		{
+			//do stuff to get the profile of user logged in
+		    statement = session.prepare("SELECT * FROM users WHERE username =?;");
+		    boundStatement = new BoundStatement(statement);
+		    rs = session.execute(boundStatement.bind(username));
+		}
 		if (rs.isExhausted()) {
 
 			System.out.println("No profile returned");
@@ -87,87 +100,26 @@ public class ProfileModel {
 
 					}
 				}
-				
-				profile.add(p);
-			}
-		}
-		session.shutdown();
-		return profile;
-	}
-	
-	public LinkedList<ProfileStore> getProfileByUsername(String username,UserStore us)
-	{
-		LinkedList<ProfileStore> profile = new LinkedList<ProfileStore>();
-		Session session = cluster.connect(eventmate);
-		
-		//do stuff to get the profile of user logged in
-		PreparedStatement statement = session.prepare("SELECT * FROM users WHERE username =?;");
-		BoundStatement boundStatement = new BoundStatement(statement);
-		ResultSet rs = session.execute(boundStatement.bind(username));
-		if (rs.isExhausted()) {
-
-			System.out.println("No profile returned");
-		} else {
-			System.out.println("this could work");
-			for (Row row : rs) {
-				ProfileStore p = new ProfileStore();
-				p.setUsername(row.getString("username"));
-				p.setName(row.getString("name"));
-				p.setBio(row.getString("bio"));
-				p.setLocation(row.getString("location"));
-				p.setStatus(row.getString("relationshipStatus"));
-				p.setMusic(row.getSet("music", String.class));
-				p.setInterests(row.getSet("interests", String.class));
-				p.setSports(row.getSet("sports", String.class));
-				p.setInterestedIn(row.getString("interestedIn"));
-				Date dob = row.getDate("dob");
-				int age = getDate(dob);
-				p.setAge(age);
-			
-				PreparedStatement statement3 = session.prepare("SELECT * from userattending WHERE username=?;");
-				BoundStatement boundStatement3 = new BoundStatement(statement3);
-				ResultSet rs3 = session.execute(boundStatement3.bind(username));
-				for(Row row3 : rs3)
+				if(num == 2)
 				{
-					String event = row3.getString("eventname");
-					PreparedStatement statement4 = session.prepare("SELECT * from events WHERE name= ?;");
-					BoundStatement boundStatement4 = new BoundStatement(statement4);
-					ResultSet rs4 = session.execute(boundStatement4.bind(event));
-					for(Row row4 : rs4)
-					{
-						Date eventDate = row4.getDate("eventdate");
-						Calendar events = Calendar.getInstance();  
-						events.setTime(eventDate);  
-						Calendar today = Calendar.getInstance();
-				        boolean sameDayOrGreater = events.get(Calendar.YEAR) <= today.get(Calendar.YEAR) &&
-				                  events.get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR);
-						if(sameDayOrGreater == true)
-						{
-							p.setEventList(row4.getString("name"));
-						}
-
-					}
+					FriendModel fm = new FriendModel();
+					fm.setCluster(cluster);
+					boolean friends = fm.getUsersFriends(us.getUsername(),username);
+					boolean friends2 = fm.getUsersFriends(username,us.getUsername());
 					
-					PreparedStatement statement5 = session.prepare("SELECT * from userfriends WHERE usersname= ? AND friendsname= ? LIMIT 1000 ALLOW FILTERING;");
-					BoundStatement boundStatement5 = new BoundStatement(statement5);
-					ResultSet rs5 = session.execute(boundStatement5.bind(us.getUsername(),username));
-					PreparedStatement statement6 = session.prepare("SELECT * from userfriends WHERE usersname=? AND friendsname=? LIMIT 1000 ALLOW FILTERING;");
-					BoundStatement boundStatement6 = new BoundStatement(statement6);
-					ResultSet rs6 = session.execute(boundStatement6.bind(username,us.getUsername()));
 					
-					if(rs6.isExhausted() && rs5.isExhausted())
+					if(friends == false && friends2 == false)
 					{
-						System.out.println("nFriends");
 						p.setUserFriends(false);
 					}
-					else if(!rs6.isExhausted())
+					else if(friends == true)
 					{
-						System.out.println("Friends");
+						
 						p.setUserFriends(true);
 					}
-					else if(!rs5.isExhausted())
+					else if(friends2 == true)
 					{
-						System.out.println("Friends");
+					
 						p.setUserFriends(true);
 					}
 				}
@@ -178,6 +130,8 @@ public class ProfileModel {
 		session.shutdown();
 		return profile;
 	}
+	
+
 	
 	public int getDate(Date dateOfBirth)
 	{

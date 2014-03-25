@@ -100,7 +100,7 @@ while (iterator.hasNext()){
 
 	%>
 	<div class="event">
-	  	<% if(ts.getAttending() == false && ts.getNotAttending() == false)
+	  	<% if(ts.getAttending() == false && ts.getNotAttending() == false && ts.getEventPassed() == false)
 	{%>
 	 <form action="${pageContent.request.contextPath}/EventMate/NotAttending" method="post"> 
 		

@@ -53,14 +53,34 @@ public class EventModel {
 
 	}
 
-	public LinkedList<eventStore> getEvents(UserStore us) {
+	public LinkedList<eventStore> getEvents(UserStore us,int num,String event) {
 
 		LinkedList<eventStore> eventList = new LinkedList<eventStore>();
 		Session session = cluster.connect(eventmate);
-
-		PreparedStatement statement = session.prepare("SELECT * from events;");
-		BoundStatement boundStatement = new BoundStatement(statement);
-		ResultSet rs = session.execute(boundStatement);
+		PreparedStatement statement;
+		BoundStatement boundStatement;
+		ResultSet rs = null;
+		event = event.replaceAll("%20", " ");
+		if(num == 1)
+		{
+			statement = session.prepare("SELECT * from events;");
+		    boundStatement = new BoundStatement(statement);
+			rs = session.execute(boundStatement);
+		}
+		else if(num == 2)
+		{
+			statement = session
+					.prepare("SELECT * from events WHERE name=?;");
+			boundStatement = new BoundStatement(statement);
+			rs = session.execute(boundStatement.bind(event));
+		}
+		else if(num == 3)
+		{
+			statement = session
+					.prepare("SELECT * from events WHERE category=?;");
+		    boundStatement = new BoundStatement(statement);
+			 rs = session.execute(boundStatement.bind(event));
+		}
 		if (rs.isExhausted()) {
 
 			System.out.println("No Tweets returned");
@@ -82,6 +102,7 @@ public class EventModel {
 				System.out.println(date);
 				ts.setDate(date);
 				boolean eventPassed = getEventPassed(c);
+				ts.setEventPassed(eventPassed);
 				String postcode = row.getString("postcode");
 				int distance = parseURL(postcode, us.getPostcode()) / 1000;
 				System.out.println(distance);
@@ -90,11 +111,54 @@ public class EventModel {
 				ts.setEventReq(row.getString("eventRequirements"));
 				ts.setLocation(row.getString("location"));
 				ts.setVenue(row.getString("venue"));
-				if (distance <= us.getDistance() && attendeeAmount > 2000
-						&& eventPassed == false) {
+				if(num == 1)
+				{
+					if (distance <= us.getDistance() && attendeeAmount > 2000
+							&& eventPassed == false) {
+						boolean attending1 = getAttending(us.getUsername(), name);
+						boolean attending2 = getNotAttending(us.getUsername(), name);
+						if (attending1 == false && attending2 == false) {
+							eventList.add(ts);
+						}
+					}
+				}
+				if(num == 2)
+				{
+					if (distance <= us.getDistance()) {
+						ts.setCorrectDistance(true);
+					}
 					boolean attending1 = getAttending(us.getUsername(), name);
-					boolean attending2 = getNotAttending(us.getUsername(), name);
+					boolean attending2 = getNotAttending(name, us.getUsername());
 					if (attending1 == false && attending2 == false) {
+
+						ts.setAttending(false);
+						ts.setNotAttending(false);
+					} else if (attending1 == true) {
+						ts.setAttending(true);
+					} else if (attending2 == true) {
+						ts.setNotAttending(true);
+					}
+					
+					
+
+					eventList.add(ts);
+				}
+				if(num == 3)
+				{
+					boolean attending1 = getAttending(us.getUsername(), name);
+					boolean attending2 = getNotAttending(name, us.getUsername());
+					if (attending1 == false && attending2 == false) {
+
+						ts.setAttending(false);
+						ts.setNotAttending(false);
+					} else if (attending1 == true) {
+						ts.setAttending(true);
+					} else if (attending2 == true) {
+						ts.setNotAttending(true);
+					}
+
+					if (distance <= us.getDistance()) {
+						ts.setCorrectDistance(true);
 						eventList.add(ts);
 					}
 				}
@@ -145,134 +209,6 @@ public class EventModel {
 
 	}
 
-	public LinkedList<eventStore> getEventByName(UserStore us, String eventname) {
-
-		LinkedList<eventStore> eventList = new LinkedList<eventStore>();
-		Session session = cluster.connect(eventmate);
-		eventname = eventname.replaceAll("%20", " ");
-		PreparedStatement statement = session
-				.prepare("SELECT * from events WHERE name=?;");
-		BoundStatement boundStatement = new BoundStatement(statement);
-		ResultSet rs = session.execute(boundStatement.bind(eventname));
-		if (rs.isExhausted()) {
-
-			System.out.println("No Tweets returned");
-		} else {
-			for (Row row : rs) {
-
-				eventStore ts = new eventStore();
-				String name = row.getString("name");
-				ts.setEvent(name);
-				ts.setDesc(row.getString("description"));
-				ts.setCategory(row.getString("category"));
-				Calendar c = Calendar.getInstance();
-				// long timestamp =
-				// TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
-				c.setTime(row.getDate("eventdate"));
-				// Create a new date format
-				SimpleDateFormat dateFormat = new SimpleDateFormat(
-						"dd/MM/yyyy hh:mm aa");
-				// Formats the calendar time into a date format
-				String date = dateFormat.format(c.getTime());
-				System.out.println(date);
-				boolean eventPassed = getEventPassed(c);
-				ts.setDate(date);
-				ts.setEventPassed(eventPassed);
-				String postcode = row.getString("postcode");
-				int distance = parseURL(postcode, us.getPostcode()) / 1000;
-				System.out.println(distance);
-				int attendeeAmount = row.getInt("attendeeAmount");
-				ts.setAttendee(attendeeAmount);
-				ts.setEventReq(row.getString("eventRequirements"));
-				ts.setLocation(row.getString("location"));
-				ts.setVenue(row.getString("venue"));
-
-				if (distance <= us.getDistance()) {
-					ts.setCorrectDistance(true);
-				}
-				boolean attending1 = getAttending(us.getUsername(), name);
-				boolean attending2 = getNotAttending(name, us.getUsername());
-				if (attending1 == false && attending2 == false) {
-
-					ts.setAttending(false);
-					ts.setNotAttending(false);
-				} else if (attending1 == true) {
-					ts.setAttending(true);
-				} else if (attending2 == true) {
-					ts.setNotAttending(true);
-				}
-
-				eventList.add(ts);
-			}
-		}
-		session.shutdown();
-		return eventList;
-	}
-
-	public LinkedList<eventStore> getEventByCategory(UserStore us,
-			String eventname) {
-
-		LinkedList<eventStore> eventList = new LinkedList<eventStore>();
-		Session session = cluster.connect(eventmate);
-		eventname = eventname.replaceAll("%20", " ");
-		PreparedStatement statement = session
-				.prepare("SELECT * from events WHERE category=?;");
-		BoundStatement boundStatement = new BoundStatement(statement);
-		ResultSet rs = session.execute(boundStatement.bind(eventname));
-		if (rs.isExhausted()) {
-
-			System.out.println("No Tweets returned");
-		} else {
-			for (Row row : rs) {
-
-				eventStore ts = new eventStore();
-				String name = row.getString("name");
-				ts.setEvent(name);
-				ts.setDesc(row.getString("description"));
-				ts.setCategory(row.getString("category"));
-				Calendar c = Calendar.getInstance();
-				// long timestamp =
-				// TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
-				c.setTime(row.getDate("eventdate"));
-				// Create a new date format
-				SimpleDateFormat dateFormat = new SimpleDateFormat(
-						"dd/MM/yyyy hh:mm aa");
-				// Formats the calendar time into a date format
-				String date = dateFormat.format(c.getTime());
-				System.out.println(date);
-
-				boolean eventPassed = getEventPassed(c);
-				ts.setDate(date);
-				ts.setEventPassed(eventPassed);
-				String postcode = row.getString("postcode");
-				int distance = parseURL(postcode, us.getPostcode()) / 1000;
-				System.out.println(distance);
-				int attendeeAmount = row.getInt("attendeeAmount");
-				ts.setAttendee(attendeeAmount);
-				ts.setEventReq(row.getString("eventRequirements"));
-				ts.setLocation(row.getString("location"));
-				ts.setVenue(row.getString("venue"));
-				boolean attending1 = getAttending(us.getUsername(), name);
-				boolean attending2 = getNotAttending(name, us.getUsername());
-				if (attending1 == false && attending2 == false) {
-
-					ts.setAttending(false);
-					ts.setNotAttending(false);
-				} else if (attending1 == true) {
-					ts.setAttending(true);
-				} else if (attending2 == true) {
-					ts.setNotAttending(true);
-				}
-
-				if (distance <= us.getDistance()) {
-					ts.setCorrectDistance(true);
-					eventList.add(ts);
-				}
-			}
-		}
-		session.shutdown();
-		return eventList;
-	}
 
 	public eventStore count(UserStore us) {
 		count = 0;
