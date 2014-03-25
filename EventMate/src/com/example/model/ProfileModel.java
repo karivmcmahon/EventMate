@@ -29,7 +29,7 @@ import com.example.stores.ProfileStore;
 public class ProfileModel {
 	
 	Cluster cluster;
-	
+	String eventmate = "eventmate2";
 	public void setCluster(Cluster cluster){
 		this.cluster=cluster;
 	}
@@ -37,7 +37,7 @@ public class ProfileModel {
 	public LinkedList<ProfileStore> getProfile(UserStore us)
 	{
 		LinkedList<ProfileStore> profile = new LinkedList<ProfileStore>();
-		Session session = cluster.connect("eventmate");
+		Session session = cluster.connect(eventmate);
 		
 		//do stuff to get the profile of user logged in
 		PreparedStatement statement = session.prepare("SELECT * FROM users WHERE username =?;");
@@ -98,7 +98,7 @@ public class ProfileModel {
 	public LinkedList<ProfileStore> getProfileByUsername(String username)
 	{
 		LinkedList<ProfileStore> profile = new LinkedList<ProfileStore>();
-		Session session = cluster.connect("eventmate");
+		Session session = cluster.connect(eventmate);
 		
 		//do stuff to get the profile of user logged in
 		PreparedStatement statement = session.prepare("SELECT * FROM users WHERE username =?;");

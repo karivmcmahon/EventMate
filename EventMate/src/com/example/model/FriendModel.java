@@ -30,6 +30,7 @@ import com.example.stores.eventStore;
 public class FriendModel {
 	
 	Cluster cluster;
+	String eventmate = "eventmate2";
 	
 	public FriendModel()
 	{
@@ -43,7 +44,7 @@ public class FriendModel {
 	public LinkedList<UserStore> displayFriends(UserStore us)
 	{
 		LinkedList<UserStore> friendList = new LinkedList<UserStore>();
-		Session session = cluster.connect("eventmate");
+		Session session = cluster.connect(eventmate);
 		
 		PreparedStatement statement = session.prepare("SELECT * from userfriends WHERE usersname=?;");
 		BoundStatement boundStatement = new BoundStatement(statement);
@@ -180,7 +181,7 @@ public class FriendModel {
 	public LinkedList<UserStore> displayFriendsByUsername(UserStore us,String username)
 	{
 		LinkedList<UserStore> friendList = new LinkedList<UserStore>();
-		Session session = cluster.connect("eventmate");
+		Session session = cluster.connect(eventmate);
 		
 		PreparedStatement statement = session.prepare("SELECT * from userfriends WHERE usersname=? AND friendsname=?;");
 		BoundStatement boundStatement = new BoundStatement(statement);
@@ -242,6 +243,7 @@ public class FriendModel {
 							}
 							
 						}
+						
 					}
 					
 				}
@@ -301,6 +303,7 @@ public class FriendModel {
 								System.out.println("nello");
 							
 							}
+
 							
 						}
 					}
@@ -313,12 +316,94 @@ public class FriendModel {
 		return friendList;
 	}
 	
+	public LinkedList<UserStore> displayUserssByName(UserStore us,String username)
+	{
+		LinkedList<UserStore> friendList = new LinkedList<UserStore>();
+		Session session = cluster.connect(eventmate);
+		
+		PreparedStatement statement = session.prepare("SELECT * from users WHERE name=?;");
+		BoundStatement boundStatement = new BoundStatement(statement);
+		ResultSet rs = session.execute(boundStatement.bind(username));
+		if (rs.isExhausted()) 
+		{
+			
+	
+		} 
+		else 
+		{
+			for (Row row : rs) 
+			{
+					UserStore fus = new UserStore();
+					fus.setUsername(row.getString("username"));
+					fus.setName(row.getString("name"));
+					fus.setBio(row.getString("bio"));
+					int age = getDate(row.getDate("dob"));
+					fus.setAge(age);
+					fus.setLocation(row.getString("location"));
+					fus.setInterests(row.getSet("interests", String.class));
+					Set<String> intersection = new HashSet<String>(us.getInterests()); // use the copy constructor
+					intersection.retainAll(fus.getInterests());
+					System.out.println("intersection amount " + intersection.size());
+					PreparedStatement statement3 = session.prepare("SELECT * from userattending WHERE username=?;");
+					BoundStatement boundStatement3 = new BoundStatement(statement3);
+					ResultSet rs3 = session.execute(boundStatement3.bind(username));
+					for(Row row3 : rs3)
+					{
+						String event = row3.getString("eventname");
+						PreparedStatement statement4 = session.prepare("SELECT * from events WHERE name= ?;");
+						BoundStatement boundStatement4 = new BoundStatement(statement4);
+						ResultSet rs4 = session.execute(boundStatement4.bind(event));
+						for(Row row4 : rs4)
+						{
+							Date eventDate = row4.getDate("eventdate");
+							Calendar events = Calendar.getInstance();  
+							events.setTime(eventDate);  
+							Calendar today = Calendar.getInstance();
+					        boolean sameDayOrGreater = events.get(Calendar.YEAR) >= today.get(Calendar.YEAR) &&
+					                  events.get(Calendar.DAY_OF_YEAR) >= today.get(Calendar.DAY_OF_YEAR);
+							if(sameDayOrGreater == true)
+							{
+							
+								System.out.println("Array list add");
+								fus.setEventList(row4.getString("name"));
+							
+								System.out.println("nello");
+							
+							}
+							PreparedStatement statement5 = session.prepare("SELECT * from userfriends WHERE usersname= ? AND friendsname= ? LIMIT 1000 ALLOW FILTERING;");
+							BoundStatement boundStatement5 = new BoundStatement(statement5);
+							ResultSet rs5 = session.execute(boundStatement5.bind(us.getUsername(),username));
+							PreparedStatement statement6 = session.prepare("SELECT * from userfriends WHERE usersname=? AND friendsname=? LIMIT 1000 ALLOW FILTERING;");
+							BoundStatement boundStatement6 = new BoundStatement(statement6);
+							ResultSet rs6 = session.execute(boundStatement6.bind(username,us.getUsername()));
+							if(rs6.isExhausted() && rs5.isExhausted())
+							{
+								System.out.println("nFriends");
+								fus.setUserFriends(false);
+							}
+							else
+							{
+								System.out.println("Friends");
+								fus.setUserFriends(true);
+							}
+							
+						}
+					}
+					friendList.add(fus);
+				}
+				
+			}
+		
+		session.shutdown();
+		return friendList;
+	}
+	
 	
 public void getAttending(UserStore us,String event)
 {
 	Map<String,Integer> map = new HashMap<String,Integer>();
 	UserStore userstore = new UserStore();
-	Session session = cluster.connect("eventmate");
+	Session session = cluster.connect(eventmate);
 	int counter = 0;
 	PreparedStatement statement = session.prepare("SELECT * from userattending WHERE eventname=? LIMIT 1000 ALLOW FILTERING;");
 	BoundStatement boundStatement = new BoundStatement(statement);

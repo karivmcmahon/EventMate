@@ -53,7 +53,7 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate
 		 <ul class="results" >
 			 <li class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Sport" onclick="${pageContent.request.contextPath}/EventMate/Event/Sports">Sports<br /></a></li>
 			 <li class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Concert">Concerts<br /></a></li>
-	 		<li  class="searchList"><a  class="search" href="${pageContent.request.contextPath}/EventMate/Event/Food & Drink">Food & Drink<br /></li>
+	 		<li  class="searchList"><a  class="search" href="${pageContent.request.contextPath}/EventMate/Event/Food & Drink">Food & Drink<br /></a></li>
          	<li  class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Social">Social</a></li>
 		 </ul>
 		
@@ -100,6 +100,33 @@ while (iterator.hasNext()){
 
 	%>
 	<div class="event">
+		<% if(ts.getAttending() == false && ts.getNotAttending() == false)
+	{%>
+	 <form action="${pageContent.request.contextPath}/EventMate/NotAttending" method="post"> 
+		
+		<button  type="submit" value="<%=ts.getEvent() %>" name="cross" style="float:right;margin-top:3%;padding: 0;
+border: none;
+background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/cross2.png" width="60px" height="60px" ></button>
+		</form>
+		 <form action="${pageContent.request.contextPath}/EventMate/Attending" method="post"> 
+		 	<button  type="submit" value="<%=ts.getEvent() %>" name="tick" style="float:right;margin-top:3%;padding: 0;
+border: none;
+background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/tick2.png" width="60px" height="60px" ></button>
+		</form>
+		<%
+		}
+		else if(ts.getAttending() == true)
+		{%>
+			<span class="blueFont2" style="float:right">You are attending this event</span>
+		<%} 
+		else if(ts.getNotAttending() == true)
+		{%>
+			<span class="blueFont2" style="float:right">You are not attending this event</span>
+		<%} 
+		else if(ts.getEventPassed() == true)
+		{%>
+			<span class="blueFont2" style="float:right">This event has passed.</span>
+		<%} %>
 		 <a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent()%>" class="blueFont3"><img src="${pageContent.request.contextPath}/EventMate/images/martini.jpg" width="60px" height="160px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
 		
 		
@@ -116,33 +143,7 @@ while (iterator.hasNext()){
 			 
 				class="blueFont2" style="margin-left:2%;">This event is not within your distance preferences</span>
 				<%} %>
-		<% if(ts.getAttending() == false && ts.getNotAttending() == false)
-	{%>
-	 <form action="${pageContent.request.contextPath}/EventMate/NotAttending" method="post"> 
 		
-		<button  type="submit" value="<%=ts.getEvent() %>" name="cross" style="float:right;margin-top:3%;padding: 0;
-border: none;
-background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/cross2.png" width="100px" height="100px" ></button>
-		</form>
-		 <form action="${pageContent.request.contextPath}/EventMate/Attending" method="post"> 
-		 	<button  type="submit" value="<%=ts.getEvent() %>" name="tick" style="float:right;margin-top:3%;padding: 0;
-border: none;
-background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/tick2.png" width="100px" height="100px" ></button>
-		</form>
-		<%
-		}
-		else if(ts.getAttending() == true)
-		{%>
-			<span class="blueFont2" style="float:right">You are attending this event</span>
-		<%} 
-		else if(ts.getNotAttending() == true)
-		{%>
-			<span class="blueFont2" style="float:right">You are not attending this event</span>
-		<%} 
-		else if(ts.getEventPassed() == true)
-		{%>
-			<span class="blueFont2" style="float:right">This event has passed.</span>
-		<%} %>
 	</div>
 <%
 

@@ -14,9 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.datastax.driver.core.Cluster;
 import com.example.libs.CassandraHosts;
 import com.example.model.EventModel;
+import com.example.model.FriendModel;
 import com.example.stores.MessagerStore;
 import com.example.stores.UserStore;
 import com.example.stores.eventStore;
+import com.example.stores.eventStore;
+import com.example.stores.UserStore;
 
 /**
  * Servlet implementation class Event
@@ -47,6 +50,7 @@ public class Event extends HttpServlet {
 		//String args[]=Convertors.SplitRequestPath(request);
 		UserStore us = new UserStore();
 		EventModel tm= new EventModel();
+		FriendModel fm = new FriendModel();
 		if(request.getRequestURI().equals(request.getContextPath() + "/Event"))
 		{
 		//Get session for user currently logged in
@@ -54,6 +58,7 @@ public class Event extends HttpServlet {
 		tm.setCluster(cluster);
 		LinkedList<eventStore> eventList = tm.getEvents(us);
 		request.setAttribute("Events", eventList); //Set a bean with the list in it
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/Homepage.jsp"); 
 
 		rd.forward(request, response);
@@ -72,6 +77,7 @@ public class Event extends HttpServlet {
 			{
 				LinkedList<eventStore> eventsList = tm.getEventByCategory(us,eventname);
 				request.setAttribute("Events", eventsList); //Set a bean with the list in it
+			
 				RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp"); 
 				rd.forward(request, response);
 			}
@@ -99,11 +105,15 @@ public class Event extends HttpServlet {
 		// TODO Auto-generated method stub
 		UserStore us = new UserStore();
 		EventModel tm= new EventModel();
+		FriendModel fm = new FriendModel();
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		String eventname = request.getParameter("q");
 		tm.setCluster(cluster);
+		fm.setCluster(cluster);
 		LinkedList<eventStore> eventList = tm.getEventByName(us,eventname);
 		request.setAttribute("Events", eventList); //Set a bean with the list in it
+		LinkedList<UserStore> friendList = fm.displayUserssByName(us, eventname);
+		request.setAttribute("Friends", friendList);
 		RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp"); 
 		rd.forward(request, response);
 		

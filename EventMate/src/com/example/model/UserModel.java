@@ -19,6 +19,7 @@ import com.example.stores.eventStore;
 public class UserModel {
 	
 	Cluster cluster;
+	String eventmate = "eventmate2";
 	
 	public void setCluster(Cluster cluster){
 		this.cluster=cluster;
@@ -27,7 +28,7 @@ public class UserModel {
 	public UserStore getUser(UserStore us)
 	{
 		UserStore user = new UserStore();
-		Session session = cluster.connect("eventmate");
+		Session session = cluster.connect(eventmate);
 		String un = us.getUsername();
 		String pw = us.getPassword();
 		PreparedStatement statement = session.prepare("SELECT * from users WHERE username = ? AND password = ?;");
@@ -72,7 +73,7 @@ public class UserModel {
 	public void editUser(UserStore us)
 	{
 		System.out.println("Edit user");
-		Session session = cluster.connect("eventmate");
+		Session session = cluster.connect(eventmate);
 		String name = us.getName();
 		String un = us.getUsername();
 		String pw = us.getPassword();
@@ -107,7 +108,7 @@ public class UserModel {
 	
 	public void addUser(UserStore us)
 	{
-		Session session = cluster.connect("eventmate");
+		Session session = cluster.connect(eventmate);
 		String name = us.getName();
 		String un = us.getUsername();
 		String pw = us.getPassword();

@@ -28,11 +28,22 @@ public class UserStore {
 	String relationship;
 	String interestedIn;
 	ArrayList<String> eventList = new ArrayList<String>();
+	boolean userFriends = false;
 	
 	
 	public UserStore()
 	{
 		
+	}
+	
+	public void setUserFriends(boolean userf)
+	{
+		userFriends = userf;
+	}
+	
+	public boolean getUserFriends()
+	{
+		return userFriends;
 	}
 	
 	public void setUsername(String un)

@@ -23,6 +23,7 @@ import com.example.stores.eventStore;
 public class MessageModel {
 	
 	Cluster cluster;
+	String eventmate = "eventmate2";
 	public MessageModel(){
 		
 	}
@@ -34,9 +35,9 @@ public class MessageModel {
 	public LinkedList<MessageStore> getMessages(UserStore us,UserStore friendMessaged)
 	{
 		LinkedList<MessageStore> messageList = new LinkedList<MessageStore>();
-		Session session = cluster.connect("eventmate");
+		Session session = cluster.connect(eventmate);
 		
-		PreparedStatement statement = session.prepare("SELECT * FROM eventmate.messages WHERE  userto in (?,?) ORDER BY time ASC;");
+		PreparedStatement statement = session.prepare("SELECT * FROM messages WHERE  userto in (?,?) ORDER BY time ASC;");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		ResultSet rs = session.execute(boundStatement.bind(us.getUsername(),friendMessaged.getUsername()));
 		if (rs.isExhausted()) {
@@ -71,7 +72,7 @@ public class MessageModel {
 	
 	public void insertMessage(UserStore us,UserStore friendMessaged,String message)
 	{
-		Session session = cluster.connect("eventmate");
+		Session session = cluster.connect(eventmate);
 		java.util.Date date= new java.util.Date();
 		Timestamp times = new Timestamp(date.getTime());
 
@@ -86,7 +87,7 @@ public class MessageModel {
 	
 	public LinkedList<MessagerStore> messagerList(UserStore us)
 	{
-		Session session = cluster.connect("eventmate");
+		Session session = cluster.connect(eventmate);
 		LinkedList<MessagerStore> messagerList = new LinkedList<MessagerStore>();
 		Set<String> list = new HashSet<String>();
 		
@@ -235,7 +236,7 @@ public class MessageModel {
 	
 	public LinkedList<MessagerStore> messagerListByUsername(UserStore us,String username)
 	{
-		Session session = cluster.connect("eventmate");
+		Session session = cluster.connect(eventmate);
 		LinkedList<MessagerStore> messagerList = new LinkedList<MessagerStore>();
 		Set<String> list = new HashSet<String>();
 		

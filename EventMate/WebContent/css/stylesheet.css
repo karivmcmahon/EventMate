@@ -730,7 +730,7 @@ input {
     display: block;
     position: relative;
     margin: 0 -1px;
-    padding: 6px 40px 6px 10px;
+   /* padding: 6px 40px 6px 10px; */
     color: #808394;
     font-weight: 500;
     text-shadow: 0 1px #fff;
@@ -742,8 +742,8 @@ input {
 
 .search .results a:before {
     content: '';
-    width: 18px;
-    height: 18px;
+    width: 18px; 
+    height: 18px; 
     position: absolute;
     top: 50%;
     right: 10px;
@@ -770,7 +770,7 @@ input {
     box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
 } 
 
-/*:-moz-placeholder {
+:-moz-placeholder {
     color: #a7aabc;
     font-weight: 200;
 }
@@ -784,4 +784,4 @@ ul.results
     font-weight: 200;
 }
 
-.lt-ie9 .search input { line-height: 26px } */
+.lt-ie9 .search input { line-height: 26px } 

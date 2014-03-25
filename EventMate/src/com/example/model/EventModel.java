@@ -40,6 +40,7 @@ public class EventModel {
 		int count;
 		int attendingCount;
 		Set<String> events = new HashSet<String>();
+		String eventmate="eventmate2";
 		public EventModel(){
 			
 		}
@@ -52,7 +53,7 @@ public class EventModel {
 		public LinkedList<eventStore> getEvents(UserStore us) {
 		
 			LinkedList<eventStore> eventList = new LinkedList<eventStore>();
-			Session session = cluster.connect("eventmate");
+			Session session = cluster.connect(eventmate);
 			
 			PreparedStatement statement = session.prepare("SELECT * from events;");
 			BoundStatement boundStatement = new BoundStatement(statement);
@@ -120,7 +121,7 @@ public class EventModel {
 		public LinkedList<eventStore> getEventByName(UserStore us,String eventname) {
 			
 			LinkedList<eventStore> eventList = new LinkedList<eventStore>();
-			Session session = cluster.connect("eventmate");
+			Session session = cluster.connect(eventmate);
 			eventname = eventname.replaceAll("%20"," ");
 			PreparedStatement statement = session.prepare("SELECT * from events WHERE name=?;");
 			BoundStatement boundStatement = new BoundStatement(statement);
@@ -204,7 +205,7 @@ public class EventModel {
 public LinkedList<eventStore> getEventByCategory(UserStore us,String eventname) {
 			
 			LinkedList<eventStore> eventList = new LinkedList<eventStore>();
-			Session session = cluster.connect("eventmate");
+			Session session = cluster.connect(eventmate);
 			eventname = eventname.replaceAll("%20"," ");
 			PreparedStatement statement = session.prepare("SELECT * from events WHERE category=?;");
 			BoundStatement boundStatement = new BoundStatement(statement);
@@ -292,7 +293,7 @@ public LinkedList<eventStore> getEventByCategory(UserStore us,String eventname) 
 			count = 0;
 			attendingCount = 1;
 			eventStore event = new eventStore();
-			Session session = cluster.connect("eventmate");
+			Session session = cluster.connect("eventmate2");
 			PreparedStatement statement = session.prepare("SELECT * from events;");
 			BoundStatement boundStatement = new BoundStatement(statement);
 			ResultSet rs = session.execute(boundStatement);
@@ -320,7 +321,7 @@ public LinkedList<eventStore> getEventByCategory(UserStore us,String eventname) 
 			
 			eventStore event = new eventStore();
 			//event = null;
-			Session session = cluster.connect("eventmate");
+			Session session = cluster.connect(eventmate);
 			int count2 = 1;
 			//event = null;
 			
@@ -525,7 +526,7 @@ public LinkedList<eventStore> getEventByCategory(UserStore us,String eventname) 
 		
 public void setAttending(UserStore us, String event)
 {
-	Session session = cluster.connect("eventmate");
+	Session session = cluster.connect(eventmate);
 	PreparedStatement statement = session.prepare("INSERT INTO userattending(username,eventname) VALUES(?,?);");
 	BoundStatement boundStatement = new BoundStatement(statement);
     session.execute(boundStatement.bind(us.getUsername(),event));
@@ -537,7 +538,7 @@ public void setAttending(UserStore us, String event)
 
 public void setNotAttending(UserStore us,String event)
 {
-	Session session = cluster.connect("eventmate");
+	Session session = cluster.connect(eventmate);
 	PreparedStatement statement = session.prepare("INSERT INTO usernotattending(username,eventname) VALUES(?,?);");
 	BoundStatement boundStatement = new BoundStatement(statement);
     session.execute(boundStatement.bind(us.getUsername(),event));
