@@ -95,7 +95,7 @@ public class ProfileModel {
 		return profile;
 	}
 	
-	public LinkedList<ProfileStore> getProfileByUsername(String username)
+	public LinkedList<ProfileStore> getProfileByUsername(String username,UserStore us)
 	{
 		LinkedList<ProfileStore> profile = new LinkedList<ProfileStore>();
 		Session session = cluster.connect(eventmate);
@@ -146,6 +146,29 @@ public class ProfileModel {
 							p.setEventList(row4.getString("name"));
 						}
 
+					}
+					
+					PreparedStatement statement5 = session.prepare("SELECT * from userfriends WHERE usersname= ? AND friendsname= ? LIMIT 1000 ALLOW FILTERING;");
+					BoundStatement boundStatement5 = new BoundStatement(statement5);
+					ResultSet rs5 = session.execute(boundStatement5.bind(us.getUsername(),username));
+					PreparedStatement statement6 = session.prepare("SELECT * from userfriends WHERE usersname=? AND friendsname=? LIMIT 1000 ALLOW FILTERING;");
+					BoundStatement boundStatement6 = new BoundStatement(statement6);
+					ResultSet rs6 = session.execute(boundStatement6.bind(username,us.getUsername()));
+					
+					if(rs6.isExhausted() && rs5.isExhausted())
+					{
+						System.out.println("nFriends");
+						p.setUserFriends(false);
+					}
+					else if(!rs6.isExhausted())
+					{
+						System.out.println("Friends");
+						p.setUserFriends(true);
+					}
+					else if(!rs5.isExhausted())
+					{
+						System.out.println("Friends");
+						p.setUserFriends(true);
 					}
 				}
 				

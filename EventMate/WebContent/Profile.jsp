@@ -106,7 +106,19 @@
 				</span> <span class="blackFont"><%=ts.getAge()%></span><br><br>
 				
 				<span class="blueFont2"> Interested in: 
-				</span> <span class="blackFont"><%=ts.getInterestedIn()%></span>
+				</span> <span class="blackFont"><%=ts.getInterestedIn()%></span><br><br>
+				
+				<% UserStore u = new UserStore();
+				u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+				System.out.println("Ts username " + ts.getUsername());
+				System.out.println("U username " + u.getUsername());
+				if(ts.getUserFriends() == false && !ts.getUsername().equals(u.getUsername()))
+		{%>
+		 <span class="blueFont2" >You are not friends with this person </span>
+
+		<%}%>
+		 
+		 
 			</div>
 			<div class="profileMore">
 				<span class="blueFont2"> Music: 

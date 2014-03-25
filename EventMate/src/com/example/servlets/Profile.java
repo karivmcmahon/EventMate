@@ -48,10 +48,11 @@ public class Profile extends HttpServlet {
 		//String args[]=Convertors.SplitRequestPath(request);
 				UserStore us = new UserStore();
 				ProfileModel pm = new ProfileModel();
-				if(request.getRequestURI().equals(request.getContextPath() + "/Profile"))
-				{
 				//Get session for user currently logged in
 				us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+				if(request.getRequestURI().equals(request.getContextPath() + "/Profile"))
+				{
+
 				pm.setCluster(cluster);
 				LinkedList<ProfileStore> profileList = pm.getProfile(us);
 				request.setAttribute("Profile", profileList); //Set a bean with the list in it
@@ -66,7 +67,7 @@ public class Profile extends HttpServlet {
 					String usernames = endOfUrl.toString();
 					us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 					pm.setCluster(cluster);
-					LinkedList<ProfileStore> profileList = pm.getProfileByUsername(usernames);
+					LinkedList<ProfileStore> profileList = pm.getProfileByUsername(usernames,us);
 					request.setAttribute("Profile", profileList); //Set a bean with the list in it
 					RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp"); 
 

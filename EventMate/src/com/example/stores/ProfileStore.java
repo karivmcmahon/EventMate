@@ -20,10 +20,21 @@ public class ProfileStore {
 	Set<String> sports;
 	String interestedIn;
 	ArrayList<String> eventList = new ArrayList<String>();
+	boolean userFriends = false;
 
 	public ProfileStore()
 	{
 
+	}
+	
+	public void setUserFriends(boolean userf)
+	{
+		userFriends = userf;
+	}
+	
+	public boolean getUserFriends()
+	{
+		return userFriends;
 	}
 	
 	public String getInterestedIn()
