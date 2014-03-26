@@ -8,12 +8,12 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/StephPLee/Documents/EventMate jar files/cassandra-driver-core-1.0.3 (1).jar"/>
-	<classpathentry kind="lib" path="C:/Users/StephPLee/Documents/EventMate jar files/org.json-20120521.jar"/>
-	<classpathentry kind="lib" path="C:/Users/StephPLee/Documents/EventMate jar files/servlet-api.jar"/>
-	<classpathentry kind="lib" path="C:/Users/StephPLee/Documents/EventMate jar files/taglibs-standard-compat-1.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/StephPLee/Documents/EventMate jar files/taglibs-standard-impl-1.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/StephPLee/Documents/EventMate jar files/taglibs-standard-jstlel-1.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/StephPLee/Documents/EventMate jar files/taglibs-standard-spec-1.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kari/Downloads/cassandra-driver-core-1.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/org.json-20120521.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kari/Documents/taglibs-standard-compat-1.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kari/Documents/taglibs-standard-impl-1.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kari/Documents/taglibs-standard-jstlel-1.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kari/Documents/taglibs-standard-spec-1.2.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

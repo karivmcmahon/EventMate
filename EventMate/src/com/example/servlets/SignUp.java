@@ -29,82 +29,74 @@ import com.example.stores.UserStore;
 public class SignUp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Cluster cluster;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public SignUp() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public void init(ServletConfig config) throws ServletException {
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public SignUp() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    
+    public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
 		cluster = CassandraHosts.getCluster();
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		UserModel um = new UserModel();
 		um.setCluster(cluster);
 		UserStore us = new UserStore();
 		UserStore user = new UserStore();
-		if (request.getParameter("usernameSignUp").equals("")
-				|| request.getParameter("passwordSignUp").equals("")
-				|| request.getParameter("emailSignUp").equals("")) {
+		if(request.getParameter("usernameSignUp").equals("") || request.getParameter("passwordSignUp").equals("") || request.getParameter("emailSignUp").equals(""))
+		{
 			RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
 			request.setAttribute("invalidSignUp", "Invalid");
 			rd.forward(request, response);
-		} else {
-			us.setUsername(request.getParameter("usernameSignUp"));
-			String password = "?btY?N1&zt" + request.getParameter("passwordSignUp") + "4IoIS^NY!r";
-			System.out.println("password" + password);
-			
-			String pw = "";
-			try {
-				pw = encrypt(password);
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			us.setPassword(pw);
-			us.setEmail(request.getParameter("emailSignUp"));
-			if (um.checkUsername(us) != "") {
-				RequestDispatcher rd = request
-						.getRequestDispatcher("/Home.jsp");
-				request.setAttribute("invalidSignUp",
-						"Username already in use!");
-				rd.forward(request, response);
-			} else if (um.checkEmail(us) != "") {
-				RequestDispatcher rd = request
-						.getRequestDispatcher("/Home.jsp");
-				request.setAttribute("invalidSignUp", "Email already in use!");
-				rd.forward(request, response);
-			} else {
-				HttpSession session = request.getSession(true);
-				session.setAttribute("possibleUser", us);
-				us = (UserStore) request.getSession().getAttribute(
-						"possibleUser");
-				// Direct to home.jsp once session true
-				response.sendRedirect("/EventMate/Bio");
-			}
+		}
+		else
+		{
+		us.setUsername(request.getParameter("usernameSignUp"));
+		String password = "?btY?N1&zt" + request.getParameter("passwordSignUp") + "4IoIS^NY!r";
+		System.out.println("password" + password);
+
+		String pw = "";
+		try {
+			pw = encrypt(password);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		us.setPassword(pw);
+		us.setEmail(request.getParameter("emailSignUp"));
+		if (um.checkUsername(us) != "") {
+		RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
+		request.setAttribute("invalidSignUp", "Username already in use!");
+		rd.forward(request, response);
+		}else if(um.checkEmail(us) != ""){
+		RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
+		request.setAttribute("invalidSignUp", "Email already in use!");
+		rd.forward(request, response);
+		}else{
+		HttpSession session = request.getSession(true);
+		session.setAttribute("possibleUser", us);
+		us = (UserStore) request.getSession().getAttribute("possibleUser");
+		// Direct to home.jsp once session true
+		response.sendRedirect("/EventMate/Bio");
+		}
 		}
 	}
-
+	
 	public String encrypt(String pass) throws NoSuchAlgorithmException {
 		// Set password string, and print it out
 		String passwd = pass;

@@ -50,6 +50,7 @@ public class RandomEvent extends HttpServlet {
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		tm.setCluster(cluster);
 		eventStore event = tm.count(us);
+		//System.out.println("EVNT 2" + event.getEvent());
 		request.setAttribute("Event", event); //Set a bean with the list in it
 		RequestDispatcher rd = request.getRequestDispatcher("/Random.jsp"); 
 		rd.forward(request, response);

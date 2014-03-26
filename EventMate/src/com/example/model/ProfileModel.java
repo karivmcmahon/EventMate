@@ -29,7 +29,7 @@ import com.example.stores.ProfileStore;
 public class ProfileModel {
 	
 	Cluster cluster;
-	String eventmate = "eventmate";
+	String eventmate = "eventmate2";
 	public void setCluster(Cluster cluster){
 		this.cluster=cluster;
 	}

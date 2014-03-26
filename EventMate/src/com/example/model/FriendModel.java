@@ -30,7 +30,7 @@ import com.example.stores.eventStore;
 public class FriendModel {
 	
 	Cluster cluster;
-	String eventmate = "eventmate";
+	String eventmate = "eventmate2";
 	
 	public FriendModel()
 	{

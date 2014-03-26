@@ -7,11 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link href="${pageContent.request.contextPath}/EventMate/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
-<link href='http://fonts.googleapis.com/css?family=Vibur'
+<link href='http://fonlTweet.googleapis.com/css?family=Vibur'
 	rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Glegoo'
+<link href='http://fonlTweet.googleapis.com/css?family=Glegoo'
 	rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Codystar'
+<link href='http://fonlTweet.googleapis.com/css?family=Codystar'
 	rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -27,7 +27,7 @@
 
 <%
 System.out.println("In render");
-List<eventStore> lTweet = (List<eventStore>)request.getAttribute("Events");
+eventStore lTweet = (eventStore)request.getAttribute("Event");
 if (lTweet==null){
  %>
 	<p class="blueFont">No event's found</p>
@@ -35,23 +35,12 @@ if (lTweet==null){
 }else{
 %>
 
-<% 
-Iterator<eventStore> iterator;
-iterator = lTweet.iterator(); 
-if(!iterator.hasNext())
-{ %>
-	<center>
-	<p class="blueFont" style="margin-top:30%;">No event's found</p>
-	</center>
-<%
-}
 
 
-iterator = lTweet.iterator();     
-while (iterator.hasNext()){
-	eventStore ts = (eventStore)iterator.next();
 
-	%>
+
+
+	
 
 
 
@@ -64,24 +53,24 @@ while (iterator.hasNext()){
 			</div>
 		
 		   <center>
-			<br> <br> <span class="blueFontWithoutMarg" ><%=ts.getEvent() %> - </span> <span
-				class="blueFont2"><%=ts.getDatess() %></span> <br> <br>
-			<span class="blackFont" ><%=ts.getDescription() %></span> <br> <span class="blueFont2">Attending:
-			</span> <span class="blackFont"><%= ts.getAttendee() %></span> <br>
-			 <span class="blueFont2" >Venue: </span> <span class="blackFont"><%= ts.getVenue() %></span> <br>
-			  <span class="blueFont2" >Location: </span> <span class="blackFont"><%= ts.getLocation() %></span>
+			<br> <br> <span class="blueFontWithoutMarg" ><%=lTweet.getEvent() %> - </span> <span
+				class="blueFont2"><%=lTweet.getDatess() %></span> <br> <br>
+			<span class="blackFont" ><%=lTweet.getDescription() %></span> <br> <span class="blueFont2">Attending:
+			</span> <span class="blackFont"><%= lTweet.getAttendee() %></span> <br>
+			 <span class="blueFont2" >Venue: </span> <span class="blackFont"><%= lTweet.getVenue() %></span> <br>
+			  <span class="blueFont2" >Location: </span> <span class="blackFont"><%= lTweet.getLocation() %></span>
 			 <br> <span
 			 
-				class="blueFont2" >Event Requirements: </span> <span
+				class="blueFont2" >Event RequiremenlTweet: </span> <span
 
-				class="blackFont"><%=ts.getEventReq() %></span> <br>
+				class="blackFont"><%=lTweet.getEventReq() %></span> <br>
 				 <span
 			 
 				class="blueFont2" >Event Type: </span> <span
 
-				class="blackFont"><%=ts.getCategory() %></span> <br><br><br>
+				class="blackFont"><%=lTweet.getCategory() %></span> <br><br><br>
 				
-				<%if(ts.getCorrectDistance() == false)
+				<%if(lTweet.getCorrectDistance() == false)
 					{%>
 					 <span
 			 
@@ -89,33 +78,33 @@ while (iterator.hasNext()){
 				<%} %>
 				
 	
-	<% if(ts.getAttending() == false && ts.getNotAttending() == false && ts.getEventPassed() == false)
+	<% if(lTweet.getAttending() == false && lTweet.getNotAttending() == false && lTweet.getEventPassed() == false)
 	{%>
 	 <div style="width:50%;float:right;" > 
 <form action="${pageContent.request.contextPath}/EventMate/NotAttending2" method="post"> 
-<button type="submit" value="<%=ts.getEvent() %>" name="cross" style="float:left;
+<button type="submit" value="<%=lTweet.getEvent() %>" name="cross" style="float:left;
 border: none;
 background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/cross2.png" width="100px" height="100px"></button>
 </form> 
 </div>
 <div style="width:50%;float:left;">
 <form action="${pageContent.request.contextPath}/EventMate/Attending2" method="post"> 
-<button type="submit" value="<%=ts.getEvent() %>" name="tick" style="float:right;
+<button type="submit" value="<%=lTweet.getEvent() %>" name="tick" style="float:right;
 border: none;
 background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/tick2.png" width="100px" height="100px"></button>
 </form>
 </div>
 		<%
 		}
-		else if(ts.getAttending() == true)
+		else if(lTweet.getAttending() == true)
 		{%>
 			<span class="blueFont2">You are attending this event</span>
 		<%} 
-		else if(ts.getNotAttending() == true)
+		else if(lTweet.getNotAttending() == true)
 		{%>
 			<span class="blueFont2" >You are not attending this event</span>
 		<%} 
-	     else if(ts.getEventPassed() == true)
+	     else if(lTweet.getEventPassed() == true)
 		 { %>
 			<span class="blueFont2" >Event has passed</span>
 		<%} %>
@@ -123,7 +112,7 @@ background: none;"><img src="${pageContent.request.contextPath}/EventMate/images
 	</div>
 	<%
 	}
-	}
+	
 	%>
    
 

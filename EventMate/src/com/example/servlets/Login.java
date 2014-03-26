@@ -24,27 +24,24 @@ import com.example.stores.UserStore;
 @WebServlet(urlPatterns = { "/Login", "/Login/*" })
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Cluster cluster;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public Login() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public void init(ServletConfig config) throws ServletException {
+	private Cluster cluster; 
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Login() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    
+    public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
 		cluster = CassandraHosts.getCluster();
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		UserStore us = new UserStore();
 		UserModel um = new UserModel();
@@ -71,11 +68,9 @@ public class Login extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("hello");
 		UserModel um = new UserModel();
@@ -91,28 +86,33 @@ public class Login extends HttpServlet {
 			e1.printStackTrace();
 		}
 		us.setPassword(pw);
-		try {
+		try
+		{
 			us = um.getUser(us);
-		} catch (Exception e) {
-
 		}
-
-		if (us.getValid()) {
+		catch(Exception e)
+		{
+			
+		}
+		
+		if(us.getValid())
+		{
 			us.setLoggedIn(true);
 			HttpSession session = request.getSession(true);
 			session.setAttribute("currentSeshUser", us);
-			// Direct to home.jsp once session true
+			//Direct to home.jsp once session true
 			response.sendRedirect("/EventMate/Event");
-		} else {
+		}
+		else
+		{
 			System.out.println("not valid");
 			us.setLoggedIn(false);
-			RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
-			request.setAttribute("invalidLogin",
-					"incorrect username or password");
-			rd.forward(request, response);
+			RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp"); 
+			request.setAttribute("invalidLogin", "incorrect username or password");
+		    rd.forward(request, response); 
 		}
-	}
-
+		}
+	
 	public String encrypt(String pass) throws NoSuchAlgorithmException {
 		// Set password string, and print it out
 		String passwd = pass;
@@ -155,4 +155,6 @@ public class Login extends HttpServlet {
 		return hashedpasswd.toString();
 
 	}
-}
+	}
+
+

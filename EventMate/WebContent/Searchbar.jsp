@@ -67,7 +67,7 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate
 	</form>
 	</div>
    
-	<span class="eventMate" >Event-Mate<img src="${pageContent.request.contextPath}/EventMate/images/martini2.jpg" width="40px" height="50px"  ></span>
+	<span class="eventMate" ><b>Event-Mate</b><img src="${pageContent.request.contextPath}/EventMate/images/martini2.jpg" width="40px" height="50px"  ></span>
 
 </ul>
 </body>

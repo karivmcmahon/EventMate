@@ -39,7 +39,7 @@ public class EventModel {
 	int count;
 	int attendingCount;
 	Set<String> events = new HashSet<String>();
-	String eventmate = "eventmate";
+	String eventmate = "eventmate2";
 	int randomCounter;
 
 	public EventModel() {
@@ -213,9 +213,9 @@ public class EventModel {
 
 	public eventStore count(UserStore us) {
 		count = 0;
-		attendingCount = 1;
+		attendingCount = 0;
 		eventStore event = new eventStore();
-		Session session = cluster.connect("eventmate");
+		Session session = cluster.connect(eventmate);
 		PreparedStatement statement = session.prepare("SELECT * from events;");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		ResultSet rs = session.execute(boundStatement);
@@ -244,6 +244,11 @@ public class EventModel {
 				System.out.println("Events " + events);
 				randomCounter = count;
 				event = getRandomEvent(us);
+				if(event == null)
+				{
+					System.out.println("Null");
+				}
+				System.out.println("EVNT ");
 			}
 
 		}
@@ -251,8 +256,160 @@ public class EventModel {
 		session.shutdown();
 		return event;
 	}
+	
+	public eventStore getRandomEvent(UserStore us)
+	{
+		//events.clear();
+		eventStore event = new eventStore();
+		event = null;
+		 Random rand = new Random();
+		 int count2 = 0;
+		 int randomNum = rand.nextInt(count+1);
+		Session session = cluster.connect(eventmate);
+		PreparedStatement statement2 = session.prepare("SELECT * from events;");
+		BoundStatement boundStatement2 = new BoundStatement(statement2);
+		ResultSet rs2 = session.execute(boundStatement2);
+		for(Row row2 : rs2)
+		{
+				if(randomNum == count2)
+				{
+				eventStore ts = new eventStore();
+			    String name = row2.getString("name");
+			    ts.setEvent(name);
+			    ts.setDesc(row2.getString("description"));
+				Calendar c =  Calendar.getInstance();
+				//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
+				c.setTime(row2.getDate("eventdate"));
+				//Create a new date format
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+				//Formats the calendar time into a date format
+				String date = dateFormat.format(c.getTime());
+				System.out.println(date);
+				ts.setDate(date);
+			    Date eventDate = row2.getDate("eventdate");
+				Calendar eventCal = Calendar.getInstance();
+				eventCal.setTime(eventDate);
+				Calendar today = Calendar.getInstance();
+			    boolean eventPassed = eventCal.get(Calendar.YEAR) <= today.get(Calendar.YEAR) &&
+		                  eventCal.get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR);
+			    String postcode = row2.getString("postcode");
+			    int distance = parseURL(postcode,us.getPostcode()) / 1000;
+				System.out.println(distance);
+				int attendeeAmount = row2.getInt("attendeeAmount");
+				ts.setAttendee(attendeeAmount);
+				ts.setEventReq(row2.getString("eventRequirements"));
+				ts.setLocation(row2.getString("location"));
+				ts.setVenue(row2.getString("venue")); 
+				if(eventPassed == true)
+				{
+					if(events.contains(name))
+					{
+						//getRandomEvent(us);
+					}
+					else
+					{
+						count--;
+						events.add(name);
+						//getRandomEvent(us);
+					}
+					
+	
+				}
+				if(eventPassed == false && distance <= us.getDistance())
+				{
+			    PreparedStatement statement3 = session.prepare("SELECT * from userattending WHERE username = ? AND eventname = ?;");
+				BoundStatement boundStatement3 = new BoundStatement(statement3);
+				ResultSet rs3 = session.execute(boundStatement3.bind(us.getUsername(),name));
+				PreparedStatement statement4 = session.prepare("SELECT * from usernotattending WHERE username = ? AND eventname = ?;");
+				BoundStatement boundStatement4 = new BoundStatement(statement4);
+				ResultSet rs4 = session.execute(boundStatement4.bind(us.getUsername(),name));
+				if(attendingCount == count)
+				{
+					event = null;
+					return event;
+				}
+				if(rs3.isExhausted() && rs4.isExhausted() )
+				{
+					if(events.contains(name))
+					{
+						//getRandomEvent(us);
+					}
+					else
+					{
+						events.add(name);
+					//getRandomEvent(us);
+					}
+					System.out.println("Count" + count);
+					System.out.println("Attending Count " + attendingCount);
+					System.out.println("Events" + events);
+					System.out.println("Event name " + name);
+					System.out.println("Return");
+					event = ts;
+					System.out.println(event.getEvent());
+					return event;
+					
+				}
+				else
+				{
+				if(!rs3.isExhausted())
+				{
+					if(events.contains(name))
+					{
+						//getRandomEvent(us);
+					}
+					else
+					{
+						events.add(name);
+						attendingCount++;
+					//getRandomEvent(us);
+					}
+					
+				}
+				if(attendingCount == count)
+				{
+					event = null;
+					return event;
+				}
+				if(!rs4.isExhausted())
+				{
+					if(events.contains(name))
+					{
+						//getRandomEvent(us);
+					}
+					else
+					{
+						events.add(name);
+						attendingCount++;
+						//getRandomEvent(us);
+					}
+				}
+				if(attendingCount == count)
+				{
+					
+					event = null;
+					return event;
+				}
+		
+				}
+				}
+			}
+				count2++;
+			//	return event;
+		}
+		if(attendingCount != count)
+		{
+			System.out.println("Random");
+			getRandomEvent(us);
+		}
 
-	public eventStore getRandomEvent(UserStore us) {
+		System.out.println("end");
+		
+	//	System.out.println(event.getEvent());
+		return event;
+		
+	}
+
+/*	public eventStore getRandomEvent(UserStore us) {
 
 		eventStore event = new eventStore();
 		//event = null;
@@ -282,7 +439,7 @@ public class EventModel {
 
 					System.out.println("Hallo");
 					String name = row2.getString("name");
-				/*	if(events.contains(name))
+					if(events.contains(name))
 					{
 						System.out.println("Contained");
 					}
@@ -290,7 +447,7 @@ public class EventModel {
 					{
 						System.out.println("Added");
 						events.add(name);
-					} */
+					} 
 
 					ts.setEvent(name);
 					ts.setDesc(row2.getString("description"));
@@ -407,7 +564,7 @@ public class EventModel {
 
 
 							System.out.println(" attending count "+ attendingCount);
-						}
+						} 
 
 
 					//	}
@@ -457,7 +614,7 @@ public class EventModel {
 				}
 		session.shutdown();
 		return event;
-	}
+	} */
 	public void setAttending(UserStore us, String event) {
 		Session session = cluster.connect(eventmate);
 		PreparedStatement statement = session
@@ -539,7 +696,7 @@ public class EventModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(jsonText);
+		//System.out.println(jsonText);
 		try {
 			JSONObject rootObject = new JSONObject(jsonText); // Parse the JSON
 																// to a
