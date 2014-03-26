@@ -345,6 +345,15 @@ display: table-cell;
 	
 }
 
+.blueFontWithoutMarg
+{
+	font-family: 'Glegoo', serif;
+	font-size:140%;
+	margin-left:8%;
+
+	color:rgb(51,181,229);
+}
+
 .smallBlueFont
 {
 	font-family: 'Glegoo', serif;
@@ -603,7 +612,7 @@ width:50%;;
 
 .randomEvent {
 margin-top:7%;
-margin-left:100px;
+
 }
 
 /* Code from http://cssdeck.com/labs/search-box-with-suggestions-dropdown */ 
@@ -731,11 +740,14 @@ input {
     position: relative;
     margin: 0 -1px;
    /* padding: 6px 40px 6px 10px; */
-    color: #808394;
+ /*   color: #808394; */
     font-weight: 500;
     text-shadow: 0 1px #fff;
     border: 1px solid transparent;
     border-radius: 3px;
+    font-family: 'Glegoo', serif;
+
+	color:rgb(51,181,229);
 }
 
 .search .results a span { font-weight: 200 }

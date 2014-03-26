@@ -14,22 +14,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-<script>
- $(function () {
-      
-      $('.dd').on('click', function(event){
-          event.stopPropagation();
-          $('.wrapper-dropdown-3').toggleClass('active');
-      });
-      
-      
-      $(document).click(function () {
-      // all dropdowns
-      $('.wrapper-dropdown-3').removeClass('active');
-    });
 
-  });
- </script>
 <!-- Ajax script to refresh tweet timeline every 15 mins, fade out is fast to show refresh occuring -->
 <script>
 var auto_refresh = setInterval(
@@ -44,25 +29,7 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/EventMate
 </head>
 <body>
 
-<div class="background"></div>
-<ul class="header2" style="clear:both;">
-	<div id="dd" class="wrapper-dropdown-3 dd">
-		<form class="search"  method="post" action="${pageContent.request.contextPath}/EventMate/Event" style="float:left;margin-left:24%;margin-top:1%;" >
-		 <input type="text" name="q" placeholder="Search For An Event"/>
-		 
-		 <ul class="results" >
-			 <li class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Sport" onclick="${pageContent.request.contextPath}/EventMate/Event/Sports">Sports<br /></a></li>
-			 <li class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Concert">Concerts<br /></a></li>
-	 		<li  class="searchList"><a  class="search" href="${pageContent.request.contextPath}/EventMate/Event/Food & Drink">Food & Drink<br /></a></li>
-         	<li  class="searchList"><a class="search" href="${pageContent.request.contextPath}/EventMate/Event/Social">Social</a></li>
-		 </ul>
-		
-	</form>
-	</div>
-<center>
-	<span class="eventMate">Event-Mate</span><img src="${pageContent.request.contextPath}/EventMate/images/martini2.jpg" width="40px" height="50px" style="margin-right:8%" >
-</center>
-</ul>
+<jsp:include page="Searchbar.jsp" />
 
 <div class="divMain2" style="min-height:100%;">
 	<jsp:include page="Header.jsp" />
@@ -127,7 +94,7 @@ background: none;"><img src="${pageContent.request.contextPath}/EventMate/images
 		{%>
 			<span class="blueFont2" style="float:right">This event has passed.</span>
 		<%} %>
-		 <a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent()%>" class="blueFont3"><img src="${pageContent.request.contextPath}/EventMate/images/crowd.jpg" width="160px" height="160px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
+		 <a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent()%>" class="blueFont3"><img src="${pageContent.request.contextPath}/EventMate/images/crowd.jpg" width="100px" height="160px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
 		
 		
 		<a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent()%>" class="blueFont3" style="margin-left:2%"><%=ts.getEvent() %></a> <span class="blueFont3">- <%=ts.getDatess() %></span><br>

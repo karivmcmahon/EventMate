@@ -68,12 +68,12 @@ public class Event extends HttpServlet {
 			int lastSlash = request.getRequestURI().lastIndexOf('/');
 			String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
 			String  eventname = endOfUrl.toString();
-		//	eventname = eventname.replaceAll("+"," ");
+		    eventname = eventname.replaceAll("%20"," ");
 			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 			tm.setCluster(cluster);
 			LinkedList<eventStore> eventList = tm.getEvents(us,2,eventname);
 			request.setAttribute("Events", eventList); //Set a bean with the list in it
-			if(eventname.equals("Sports") || eventname.equals("Concert") || eventname.equals("Food & Drink") || eventname.equals("Social"))
+			if(eventname.equals("Sports & Fitness") || eventname.equals("Concert") || eventname.equals("Lifestyle") || eventname.equals("Other") || eventname.equals("Food & Drink") || eventname.equals("Community") || eventname.equals("Hobbies") || eventname.equals("Outdoors") || eventname.equals("Religion") || eventname.equals("Arts") || eventname.equals("Tech"))
 			{
 				LinkedList<eventStore> eventsList = tm.getEvents(us,3,eventname);
 				request.setAttribute("Events", eventsList); //Set a bean with the list in it
