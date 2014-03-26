@@ -56,6 +56,7 @@ public class FriendModel {
 			fus.setAge(age);
 			fus.setLocation(row2.getString("location"));
 			fus.setInterests(row2.getSet("interests", String.class));
+			fus.setPhoto(row2.getString("photo"));
 			Set<String> intersection = new HashSet<String>(us.getInterests()); // use the copy constructor
 			intersection.retainAll(fus.getInterests());
 			System.out.println("intersection amount " + intersection.size());
@@ -248,6 +249,8 @@ public class FriendModel {
 					int age = getDate(row.getDate("dob"));
 					fus.setAge(age);
 					fus.setLocation(row.getString("location"));
+					System.out.println("photo url " + row.getString("photo") );
+					fus.setPhoto(row.getString("photo"));
 					fus.setInterests(row.getSet("interests", String.class));
 					Set<String> intersection = new HashSet<String>(us.getInterests()); // use the copy constructor
 					intersection.retainAll(fus.getInterests());

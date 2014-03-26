@@ -40,6 +40,7 @@ public class EventModel {
 	int attendingCount;
 	Set<String> events = new HashSet<String>();
 	String eventmate = "eventmate2";
+	int randomCounter;
 
 	public EventModel() {
 
@@ -229,9 +230,9 @@ public class EventModel {
 				if (distance <= us.getDistance())
 				{
 				count++;
-				System.out.println("count " + count);
+			
 				}
-				System.out.println("count " + count);
+				
 			}
 			if(count == 0)
 			{
@@ -239,7 +240,9 @@ public class EventModel {
 			}
 			else
 			{
+				System.out.println("count " + count);
 				System.out.println("Events " + events);
+				randomCounter = count;
 				event = getRandomEvent(us);
 			}
 
@@ -252,140 +255,209 @@ public class EventModel {
 	public eventStore getRandomEvent(UserStore us) {
 
 		eventStore event = new eventStore();
+		//event = null;
 		Session session = cluster.connect(eventmate);
 		int count2 = 1;
+		//event = null;
 
-		Random rand = new Random();
-		int randomNum = rand.nextInt(count) + 1;
-		System.out.println("Random num" + randomNum);
-		PreparedStatement statement2 = session.prepare("SELECT * from events;");
-		BoundStatement boundStatement2 = new BoundStatement(statement2);
-		ResultSet rs2 = session.execute(boundStatement2);
-		for (Row row2 : rs2) {
-			if (attendingCount == count) {
-				System.out.println("Attending count " + attendingCount);
-				event = null;
-				return event;
-			}
-			eventStore ts = new eventStore();
-
-			if (count2 == randomNum) {
-				String name = row2.getString("name");
-
-				ts.setEvent(name);
-				ts.setDesc(row2.getString("description"));
-				ts.setCategory(row2.getString("category"));
-				Calendar c = Calendar.getInstance();
-				// long timestamp =
-				// TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
-				c.setTime(row2.getDate("eventdate"));
-				// Create a new date format
-				SimpleDateFormat dateFormat = new SimpleDateFormat(
-						"dd/MM/yyyy hh:mm aa");
-				// Formats the calendar time into a date format
-				String date = dateFormat.format(c.getTime());
-				
-				boolean eventPassed = getEventPassed(c);
-				if (eventPassed == true) {
-				//	count--;
-					if(!events.contains(name))
+			   Random rand = new Random();
+			   int randomNum = rand.nextInt(count) + 1;
+			   System.out.println("Random num" + randomNum);
+			    PreparedStatement statement2 = session.prepare("SELECT * from events;");
+				BoundStatement boundStatement2 = new BoundStatement(statement2);
+				ResultSet rs2 = session.execute(boundStatement2);
+				for(Row row2 : rs2)
+				{
+					if(attendingCount == count)
 					{
-						attendingCount++;
-						events.add(name);
-					}
-					
-					getRandomEvent(us);
-				}
-				ts.setDate(date);
-				String postcode = row2.getString("postcode");
-				int distance = parseURL(postcode, us.getPostcode()) / 1000;
-				System.out.println(distance);
-				int attendeeAmount = row2.getInt("attendeeAmount");
-				ts.setAttendee(attendeeAmount);
-				ts.setEventReq(row2.getString("eventRequirements"));
-				ts.setLocation(row2.getString("location"));
-				ts.setVenue(row2.getString("venue"));
-				if (distance <= us.getDistance() && eventPassed == false) {
-					boolean attending1 = getAttending(us.getUsername(), name);
-					boolean attending2 = getNotAttending(name, us.getUsername());
-					
-					if (attending1 == false && attending2 == false) 
-					{
-						if (!events.contains(name)) 
-						{
-							events.add(name);
-						}
-						System.out.println("Attending count " + attendingCount);
-						event = ts;
+						event = null;
 						return event;
+					}
+					eventStore ts = new eventStore();
 
-					} else {
-						if (attendingCount == count) {
-							System.out.println("Attending count " + attendingCount);
+					System.out.println("count 2" + count2);
+					if(count2 == randomNum)
+					{
+
+
+					System.out.println("Hallo");
+					String name = row2.getString("name");
+				/*	if(events.contains(name))
+					{
+						System.out.println("Contained");
+					}
+					else
+					{
+						System.out.println("Added");
+						events.add(name);
+					} */
+
+					ts.setEvent(name);
+					ts.setDesc(row2.getString("description"));
+					Calendar c =  Calendar.getInstance();
+					//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
+					c.setTime(row2.getDate("eventdate"));
+					//Create a new date format
+					SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+					//Formats the calendar time into a date format
+					String date = dateFormat.format(c.getTime());
+					System.out.println(date);
+					ts.setDate(date);
+					Date eventDate = row2.getDate("eventdate");
+					Calendar eventCal = Calendar.getInstance();
+					eventCal.setTime(eventDate);
+					Calendar today = Calendar.getInstance();
+					String postcode = row2.getString("postcode");
+					 boolean eventPassed = eventCal.get(Calendar.YEAR) <= today.get(Calendar.YEAR) &&
+			                  eventCal.get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR);
+					if(eventPassed == true)
+					{
+						if(events.contains(name))
+						{
+						count--;
+						events.add(name);
+						}
+						getRandomEvent(us);
+					}
+					int distance = parseURL(postcode,us.getPostcode()) / 1000;
+					System.out.println(distance);
+					int attendeeAmount = row2.getInt("attendeeAmount");
+					ts.setAttendee(attendeeAmount);
+					ts.setEventReq(row2.getString("eventRequirements"));
+					ts.setLocation(row2.getString("location"));
+					ts.setVenue(row2.getString("venue")); 
+					if(distance <= us.getDistance() && eventPassed == false)
+					{
+						PreparedStatement statement3 = session.prepare("SELECT * from userattending WHERE username = ? AND eventname = ?;");
+						BoundStatement boundStatement3 = new BoundStatement(statement3);
+						ResultSet rs3 = session.execute(boundStatement3.bind(us.getUsername(),name));
+						PreparedStatement statement4 = session.prepare("SELECT * from usernotattending WHERE username = ? AND eventname = ?;");
+						BoundStatement boundStatement4 = new BoundStatement(statement4);
+						ResultSet rs4 = session.execute(boundStatement4.bind(us.getUsername(),name));
+						System.out.println(name);
+						System.out.println(" attending count " + attendingCount);
+						if(rs3.isExhausted() && rs4.isExhausted())
+						{
+
+							if(attendingCount == count)
+							{
+								event = null;
+								return event;
+							}
+							System.out.println("hello" + name);
+
+							System.out.println("added");
+							event = ts;
+							return event;
+
+						}
+						else
+						{
+							if(attendingCount == count)
+							{
+								event = null;
+								return event;
+							}
+							if(!rs3.isExhausted())
+							{
+								if(events.contains(name))
+								{
+
+								}
+								else
+								{
+								attendingCount++;
+								events.add(name);
+								}
+
+								if(attendingCount == count)
+								{
+									event = null;
+									return event;
+								}
+								else
+								{
+								getRandomEvent(us);
+								}
+							}
+							if(!rs4.isExhausted())
+							{
+
+								if(events.contains(name))
+								{
+
+								}
+								else
+								{
+								attendingCount++;
+								events.add(name);
+								}
+
+								if(attendingCount == count)
+								{
+									event = null;
+									return event;
+								}
+								else
+								{
+								getRandomEvent(us);
+								}
+
+							}
+
+
+							System.out.println(" attending count "+ attendingCount);
+						}
+
+
+					//	}
+						//else
+					//	{
+						//	if(attendingCount == count)
+						//	{
+						//		event = null;
+						//	}
+						//	getRandomEvent(us);
+						//	System.out.println("hello2");
+
+
+
+						//}
+
+
+
+
+					}
+				   else
+					{
+						System.out.println("hello2 just now");
+						if(attendingCount == count)
+						{
 							event = null;
 							return event;
 						}
-
-						if (attending1 == true) {
-							if (!events.contains(name)) {
-								attendingCount++;
-								events.add(name);
-							}
-
-							if (attendingCount == count) {
-								System.out.println("Attending count " + attendingCount);
-								event = null;
-								return event;
-							} else {
-								getRandomEvent(us);
-							}
-						}
-						if (attending2 == true) {
-
-							if (!events.contains(name)) {
-								attendingCount++;
-								events.add(name);
-							}
-
-							if (attendingCount == count) {
-								System.out.println("Attending count " + attendingCount);
-								event = null;
-								return event;
-							} 
-							else 
-							{
-								getRandomEvent(us);
-							}
-
+						else
+						{
+							getRandomEvent(us);
 						}
 
-						getRandomEvent(us);
+
 					}
 
-					
-				} 
-				else
+
+
+				}
+
+					count2++;
+
+				}
+				if(attendingCount != count)
 				{
-					if (attendingCount == count) {
-						System.out.println("Attending count " + attendingCount);
-						event = null;
-						return event;
-					} else {
-						getRandomEvent(us);
-					}
-
-				} 
-
-			}
-
-			count2++;
-
-		}
-		System.out.println("Attending count " + attendingCount);
+					getRandomEvent(us);
+				}
 		session.shutdown();
 		return event;
 	}
-
 	public void setAttending(UserStore us, String event) {
 		Session session = cluster.connect(eventmate);
 		PreparedStatement statement = session

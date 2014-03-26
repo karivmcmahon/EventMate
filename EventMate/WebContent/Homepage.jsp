@@ -127,7 +127,7 @@ background: none;"><img src="${pageContent.request.contextPath}/EventMate/images
 		{%>
 			<span class="blueFont2" style="float:right">This event has passed.</span>
 		<%} %>
-		 <a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent()%>" class="blueFont3"><img src="${pageContent.request.contextPath}/EventMate/images/martini.jpg" width="60px" height="160px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
+		 <a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent()%>" class="blueFont3"><img src="${pageContent.request.contextPath}/EventMate/images/crowd.jpg" width="160px" height="160px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
 		
 		
 		<a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent()%>" class="blueFont3" style="margin-left:2%"><%=ts.getEvent() %></a> <span class="blueFont3">- <%=ts.getDatess() %></span><br>

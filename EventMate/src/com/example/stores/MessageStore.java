@@ -10,6 +10,17 @@ public class MessageStore {
 	String message;
 	String friendMessaging;
 	String time;
+	String photo;
+	
+	public void setPhoto(String p)
+	{
+		photo = p;
+	}
+	
+	public String getPhoto()
+	{
+		return photo;
+	}
 	
 	public void setMessage(String m)
 	{

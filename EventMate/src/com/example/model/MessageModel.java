@@ -85,6 +85,32 @@ public class MessageModel {
 	//Then once they are selected check if they have messages to or from that friend if so
 	//Then add to messages list
 	
+	public String getMessagePhotos(UserStore us,
+			UserStore friendMessaged) {
+		LinkedList<String> photoList = new LinkedList<String>();
+		String userfrom = "";
+		Session session = cluster.connect(eventmate);
+		MessageStore f = null;
+		PreparedStatement statement2 = session
+				.prepare("SELECT * FROM users WHERE  username = ?;");
+		BoundStatement boundStatement2 = new BoundStatement(statement2);
+		ResultSet rs2 = session.execute(boundStatement2.bind(friendMessaged.getUsername()));
+		if (rs2.isExhausted()) {
+
+			System.out.println("No Tweets returned");
+		} else {
+			for (Row row : rs2) {
+				f = new MessageStore();
+				userfrom = row.getString("photo");
+				System.out.println("photo " + userfrom);
+				f.setPhoto(userfrom);
+				photoList.add(userfrom);
+			}
+		}
+		session.shutdown();
+		return userfrom;
+	}
+	
 	public LinkedList<MessagerStore> messagerList(UserStore us)
 	{
 		Session session = cluster.connect(eventmate);
@@ -126,6 +152,7 @@ public class MessageModel {
 							for(Row row3 : rs3)
 							{
 								 m.setName(row3.getString("name"));
+								 m.setPhoto(row3.getString("photo"));
 							}
 						}
 					}
@@ -147,6 +174,7 @@ public class MessageModel {
 							for(Row row3 : rs3)
 							{
 								 m.setName(row3.getString("name"));
+								 m.setPhoto(row3.getString("photo"));
 							}
 						}
 					}
@@ -190,6 +218,7 @@ public class MessageModel {
 								for(Row row5 : rs5)
 								{
 									 m2.setName(row5.getString("name"));
+									 m2.setPhoto(row5.getString("photo"));
 								}
 							}
 						}
@@ -211,6 +240,7 @@ public class MessageModel {
 								for(Row row5 : rs5)
 								{
 									 m2.setName(row5.getString("name"));
+									 m2.setPhoto(row5.getString("photo"));
 								}
 							}
 							
@@ -275,6 +305,7 @@ public class MessageModel {
 							for(Row row3 : rs3)
 							{
 								 m.setName(row3.getString("name"));
+								 m.setPhoto(row3.getString("photo"));
 							}
 						}
 					}
@@ -296,6 +327,7 @@ public class MessageModel {
 							for(Row row3 : rs3)
 							{
 								 m.setName(row3.getString("name"));
+								 m.setPhoto(row3.getString("photo"));
 							}
 						}
 					}
@@ -339,6 +371,7 @@ public class MessageModel {
 								for(Row row5 : rs5)
 								{
 									 m2.setName(row5.getString("name"));
+									 m2.setPhoto(row5.getString("photo"));
 								}
 							}
 						}
@@ -360,6 +393,7 @@ public class MessageModel {
 								for(Row row5 : rs5)
 								{
 									 m2.setName(row5.getString("name"));
+									 m2.setPhoto(row5.getString("photo"));
 								}
 							}
 							

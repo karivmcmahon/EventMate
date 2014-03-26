@@ -117,12 +117,12 @@ public class Bio extends HttpServlet {
 		photo = photoUrl;
 		} else {
 		if (request.getParameter("gender").equals("male")) {
-		photo = "images/man-silhouette.png";
+		photo = "http://bentleylends.org/wp-content/uploads/2011/04/man-silhouette.png";
 		}else{
-		photo = "images/silhouette-profile.png";
+		photo = "http://www4.images.coolspotters.com/photos/564571/silhouette-profile.png";
 		}
 		}
-		//us.setPhoto(photo);
+		us.setPhoto(photo);
 		try {
 		Date date = formatter.parse(dob);
 		us.setDob(date);

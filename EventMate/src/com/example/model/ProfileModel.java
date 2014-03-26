@@ -72,6 +72,7 @@ public class ProfileModel {
 				p.setInterests(row.getSet("interests", String.class));
 				p.setSports(row.getSet("sports", String.class));
 				p.setInterestedIn(row.getString("interestedIn"));
+				p.setPhoto(row.getString("photo"));
 				Date dob = row.getDate("dob");
 				int age = getDate(dob);
 				p.setAge(age);
@@ -90,9 +91,9 @@ public class ProfileModel {
 						Date eventDate = row4.getDate("eventdate");
 						Calendar events = Calendar.getInstance();  
 						events.setTime(eventDate);  
-						Calendar today = Calendar.getInstance();
-				        boolean sameDayOrGreater = events.get(Calendar.YEAR) <= today.get(Calendar.YEAR) &&
-				                  events.get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR);
+						FriendModel fm = new FriendModel();
+						fm.setCluster(cluster);
+				        boolean sameDayOrGreater = fm.sameDayOrGreater(events);
 						if(sameDayOrGreater == true)
 						{
 							p.setEventList(row4.getString("name"));

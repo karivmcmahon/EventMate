@@ -73,7 +73,7 @@ if (lTweet==null){
 		<div class="randomEvent">
 			<div class="eventPicture">
 				<center>
-					<img src="${pageContent.request.contextPath}/EventMate/images/beyonce.jpg" class=imgBorder width="636px"
+					<img src="${pageContent.request.contextPath}/EventMate/images/crowd.jpg" class=imgBorder width="636px"
 						height="322px">
 				</center>		
 			</div>

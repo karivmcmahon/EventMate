@@ -120,7 +120,7 @@ while (iterator.hasNext()){
 		<center>
 		<span class="smallBlueFont"><%=ts.getDate()%></span>
 		</center>
-		<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getFrom()%>"><img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="60px" height="60px" style="float:right;" class="userimgBorder"></a>
+		<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getFrom()%>"><img src="<%= u.getPhoto() %>" width="60px" height="60px" style="float:right;" class="userimgBorder"></a>
 		<div class="bubble" style="float:right;">
 		
 	  		<div class="smallBlackFont"><%= ts.getMessage()%></div>
@@ -135,7 +135,7 @@ while (iterator.hasNext()){
 		   
 		   <span class="smallBlackFont" ><%=ts.getDate()%></span>
 		   </center>
-		  <a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getFrom()%>"> <img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="60px" height="60px" style="float:left;" class="userimgBorder"></a>
+		  <a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getFrom()%>"> <img src="<%= friendName.getPhoto() %>" width="60px" height="60px" style="float:left;" class="userimgBorder"></a>
 		  <div class="bubble2" style="float:left;">
 	 
 	  <div class="senderPost"><%= ts.getMessage() %></div>
@@ -158,6 +158,7 @@ while (iterator.hasNext()){
 	<textarea  name="postMessage" rows="6" cols="70" class="textarea" ></textarea>
 	<input type="hidden"  value="<%= friendName.getName() %>" name="name">
 	<input type="hidden"  value="<%= friendName.getUsername() %>" name="sendingTo">
+	<input type="hidden"  value="<%= friendName.getPhoto() %>" name="photo">
 	<input type="submit" value="Send" class="button" >
 	</form>
 	

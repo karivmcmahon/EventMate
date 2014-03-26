@@ -58,6 +58,7 @@ public class UserModel {
 				user.setInterestedIn(row.getString("interestedIn"));
 				user.setSports(row.getSet("sports", String.class));
 				user.setMusic(row.getSet("music", String.class));
+				user.setPhoto(row.getString("photo"));
 				Date dob = row.getDate("dob");
 				user.setDateJoined(row.getDate("dateJoined"));
 				FriendModel f = new FriendModel();
@@ -137,6 +138,7 @@ public class UserModel {
 		int ageMin = us.getAgeMin();
 		int ageMax = us.getAgeMax();
 		String interestedIn = us.getInterestedIn();
+		String photo = us.getPhoto();
 		//Date dob = us.getDob();
 		
 		//Timestamp times = new Timestamp(dob.getTime());
@@ -144,10 +146,10 @@ public class UserModel {
 		//Date dateJoined = us.getDateJoined();
 		//Timestamp times2 = new Timestamp(dateJoined.getTime());
 		//System.out.println("Times 2" + times2);
-		PreparedStatement statement = session.prepare("UPDATE users SET name = ?, email = ?, bio = ?, gender = ?, interests = ?, location = ?, music = ?, postcode = ?, sports = ?, \"distanceAmount\" = ?, \"genderPref\" = ?, \"relationshipStatus\" = ?, \"ageMaxRange\" = ?, \"ageMinRange\" = ?, interestedIn = ? WHERE username = ? AND password = ?;");
+		PreparedStatement statement = session.prepare("UPDATE users SET name = ?, email = ?, bio = ?, gender = ?, interests = ?, location = ?, music = ?, postcode = ?, sports = ?, \"distanceAmount\" = ?, \"genderPref\" = ?, \"relationshipStatus\" = ?, \"ageMaxRange\" = ?, \"ageMinRange\" = ?, interestedIn = ?, photo = ? WHERE username = ? AND password = ?;");
 		System.out.println("Statement prepared");
 		BoundStatement boundStatement = new BoundStatement(statement);
-		session.execute(boundStatement.bind(name, email, bio, gender, interests, location, music, postcode, sports, distance, genderPref, relationship, ageMax, ageMin,interestedIn, un, pw));
+		session.execute(boundStatement.bind(name, email, bio, gender, interests, location, music, postcode, sports, distance, genderPref, relationship, ageMax, ageMin,interestedIn,photo, un, pw));
 		System.out.println("execute");
 		session.shutdown();
 	}
@@ -172,13 +174,14 @@ public class UserModel {
 		int ageMin = us.getAgeMin();
 		int ageMax = us.getAgeMax();
 		String interestedIn = us.getInterestedIn();
+		String photo = us.getPhoto();
 		Date dob = us.getDob();
 		java.util.Date date= new java.util.Date();
 		Timestamp times = new Timestamp(date.getTime());
-		PreparedStatement statement = session.prepare("INSERT INTO users(name,username,password,email,bio,gender,interests,location,music,postcode,sports,\"distanceAmount\",\"genderPref\",\"relationshipStatus\",\"ageMaxRange\",\"ageMinRange\",dob, \"dateJoined\",interestedIn) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+		PreparedStatement statement = session.prepare("INSERT INTO users(name,username,password,email,bio,gender,interests,location,music,postcode,sports,\"distanceAmount\",\"genderPref\",\"relationshipStatus\",\"ageMaxRange\",\"ageMinRange\",dob, \"dateJoined\",interestedIn,photo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
 		System.out.println("Statement prepared");
 		BoundStatement boundStatement = new BoundStatement(statement);
-		session.execute(boundStatement.bind(name, un, pw, email, bio, gender, interests, location, music, postcode, sports, distance, genderPref, relationship, ageMax, ageMin, dob, times,interestedIn));
+		session.execute(boundStatement.bind(name, un, pw, email, bio, gender, interests, location, music, postcode, sports, distance, genderPref, relationship, ageMax, ageMin, dob, times,interestedIn,photo));
 		System.out.println("execute");
 		session.shutdown();
 	}

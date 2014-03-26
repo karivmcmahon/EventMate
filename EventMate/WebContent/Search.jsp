@@ -127,7 +127,7 @@ background: none;"><img src="${pageContent.request.contextPath}/EventMate/images
 			<span class="blueFont2" style="float:right;margin-top:6%;margin-right:1%;">You are not attending this event</span>
 		<%} %>
 		
-		 <a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent()%>" class="blueFont3"><img src="${pageContent.request.contextPath}/EventMate/images/martini.jpg" width="60px" height="160px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
+		 <a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent()%>" class="blueFont3"><img src="${pageContent.request.contextPath}/EventMate/images/crowd.jpg" width="160px" height="160px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
 		
 		
 		<a href="${pageContent.request.contextPath}/EventMate/Event/<%=ts.getEvent()%>" class="blueFont3" style="margin-left:2%" ><%=ts.getEvent() %></a> <span class="blueFont3">- <%=ts.getDatess() %></span><br>
@@ -179,8 +179,8 @@ while (iterator.hasNext()){
 	UserStore us = (UserStore)iterator.next();
 
 	%>
-	<div class="event">
-			<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=us.getUsername()%>"><img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="80px" height="130px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
+	<div class="event" style="margin-top:2%;margin-top:2%;">
+			<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=us.getUsername()%>"><img src="<%= us.getPhoto() %>" width="80px" height="130px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
 	<% if(us.getUserFriends() == true)
 		{%>
 	<form action="${pageContent.request.contextPath}/EventMate/Messages" method="get">

@@ -97,8 +97,8 @@ while (iterator.hasNext()){
 	UserStore us = (UserStore)iterator.next();
 
 	%>
-	<div class="event">
-	<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=us.getUsername()%>"><img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" width="80px" height="130px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
+	<div class="event"  style="margin-top:2%;margin-bottom:2%;">
+	<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=us.getUsername()%>"><img src="<%= us.getPhoto() %>" height="130px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
 	<form action="${pageContent.request.contextPath}/EventMate/Messages" method="get">
 	<input type="hidden" name="name" value="<%= us.getName() %>">
 	<button type="submit" value="<%= us.getUsername() %>" name="username" style="float:right;margin-top:2%;padding: 0;

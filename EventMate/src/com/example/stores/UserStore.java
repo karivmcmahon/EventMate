@@ -29,11 +29,22 @@ public class UserStore {
 	String interestedIn;
 	ArrayList<String> eventList = new ArrayList<String>();
 	boolean userFriends = false;
+	String photo;
 	
 	
 	public UserStore()
 	{
 		
+	}
+	
+	public void setPhoto(String p)
+	{
+		photo = p;
+	}
+	
+	public String getPhoto()
+	{
+		return photo;
 	}
 	
 	public void setUserFriends(boolean userf)

@@ -87,7 +87,7 @@
 		%>
 		<div class="profile">
 			<div class="profilePicture">
-				<img src="${pageContent.request.contextPath}/EventMate/images/ryan.jpg" class=imgBorder width="250px"
+				<img src="<%=ts.getPhoto() %>" class=imgBorder width="250px"
 					height="300px">
 			</div>
 			<div class="profileRight">

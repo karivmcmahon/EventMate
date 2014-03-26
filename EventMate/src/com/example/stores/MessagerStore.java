@@ -3,6 +3,17 @@ package com.example.stores;
 public class MessagerStore {
 	String messager;
 	String name;
+	String photo;
+	
+	public void setPhoto(String p)
+	{
+		photo = p;
+	}
+	
+	public String getPhoto()
+	{
+		return photo;
+	}
 	
 	public void setMessager(String m)
 	{

@@ -125,6 +125,11 @@
 					<option value="female">Female</option>
 					<option value="both">Both</option>
 				</select> <br>
+				< <br><span class="font">Upload New Profile Picture: </span> <br>
+<span class="font">From Facebook ID: </span><input type="text" name="uploadFacebook"> <br>
+<span class="font">or</span> <br>
+<span class="font">From URL: </span><input type="text" name="uploadURL"> <br>
+<span class="font"><font color="red"><font size="3px">${invalidPhoto}</font></font></span>
 				<br>
 				<div class="divMain2" style="min-height: 100%;">
 					<div style="text-align: center">

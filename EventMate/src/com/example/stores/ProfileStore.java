@@ -21,10 +21,20 @@ public class ProfileStore {
 	String interestedIn;
 	ArrayList<String> eventList = new ArrayList<String>();
 	boolean userFriends = false;
-
+	String photo;
 	public ProfileStore()
 	{
 
+	}
+	
+	public void setPhoto(String p)
+	{
+		photo = p;
+	}
+	
+	public String getPhoto()
+	{
+		return photo;
 	}
 	
 	public void setUserFriends(boolean userf)

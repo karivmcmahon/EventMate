@@ -52,6 +52,7 @@ public class Messages extends HttpServlet {
 		friendMessaged.setUsername(request.getParameter("username"));
 		friendMessaged.setName(request.getParameter("name"));
 		mm.setCluster(cluster);
+		friendMessaged.setPhoto(mm.getMessagePhotos(us, friendMessaged));
 		LinkedList<MessageStore> messageList = mm.getMessages(us,friendMessaged);
 		request.setAttribute("Messages", messageList); //Set a bean with the list in it
 		request.setAttribute("Friend",friendMessaged);
@@ -81,6 +82,7 @@ public class Messages extends HttpServlet {
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		friendMessaged.setUsername(request.getParameter("sendingTo"));
 		friendMessaged.setName(request.getParameter("name"));
+		friendMessaged.setPhoto(request.getParameter("photo"));
 		String message = request.getParameter("postMessage");
 		mm.setCluster(cluster);
 		mm.insertMessage(us, friendMessaged, message);
