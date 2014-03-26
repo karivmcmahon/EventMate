@@ -1,0 +1,186 @@
+create keyspace eventMate WITH replication = {'class':'SimpleStrategy', 'replication_factor':1};
+
+CREATE TABLE eventmate.events
+(
+	name varchar,
+	attendeeamount int,
+	description varchar,
+	eventdate timestamp, 
+	insertiontime timestamp, 
+	location varchar,
+	country varchar,
+	postcode varchar,
+	"eventRequirements" varchar,
+	venue varchar,
+	category varchar,
+	PRIMARY KEY(name,eventdate)
+) WITH CLUSTERING ORDER BY (eventdate ASC);
+
+CREATE INDEX ON eventmate.events(category);
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Beyonce - Mrs Carter World Tour',30000,'Beyonces back on her Mrs Carter World Tour','2014-03-11 21:00','2013-03-15 13:12','Glasgow','UK','G38YW','Over 14s','The Hydro','Concert');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('One Direction',15000,'Midnight Memories Tour','2014-06-01 20:00','2013-03-15 13:26','Edinburgh','UK','EH125PJ','Under 16s accompanied by adult','Murrayfield','Concert');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Katy Perry',10000,'Prism World Tour','2014-08-21 21:00','2013-03-15 13:49','Glasgow','UK','G38YW','Over 14s','The Hydro','Concert');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Vampire Weekend',2000,'Intimate gig','2014-07-22 22:00','2013-03-15 14:17','London','UK','NW18EH','Over 18s','Roundhouse','Concert');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('McBusted',20000,'McBusted - World Tour','2014-05-04 21:00','2013-03-24 15:54','Glasgow','UK','G38YW','Over 14s','The Hydro','Concert');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Knitters uKNITe',30,'A fun night of knitter from beginners to experts','2014-04-11 18:00','2013-03-24 15:12','Edinburgh','UK','EH38DN','All welcome','The Playhouse','Hobbies');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Innocent Smoothie Hat Knitting',50,'Want to know how to make the cute hats for the top of the Innocent bottles? Then this is the place to be','2014-07-11 18:00','2013-03-24 16:05','London','UK','W1C1DD','All welcome','Topshop','Hobbies');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Dr Suess Poetry Reading',10,'Come along to hear all your favourite poets from Dr Suess!','2014-07-11 18:00','2013-03-24 16:05','London','UK','W1C1DD', 'All Welcome','Outside on Oxford Street','Hobbies');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Cassandra Meetup',100,'Straight from San Francisco, we will have Patrick McFadin sharing with us his experience with Cassandra! - Free pizza and beer!','2014-03-28 18:30','2013-03-25 11:17','Dundee','UK','DD14HN', 'All Welcome','Queen Mother Building, Dundee University','Tech');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Fault in Our Stars Book Club',15,'Come along to a great discussion of the about-to-be film, The Fault in Our Stars and hear about peoples opinion.','2014-04-28 18:30','2013-03-25 11:24','Manchester','UK','M607RA', 'All who've read the book','Picadilly Station, Manchester','Hobbies');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('D-Con',300,'Dundee's very own Anime Convention','2014-04-19 10:00','2013-03-25 11:30','Dundee','UK','DD14HN', 'Anime Lovers','Dundee University Student Union,'Community');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Breast Cancer Awareness Run',1000,'Run to show your support for Breast Cancer','2014-08-05 12:00','2013-03-25 11:37','Edinburgh','UK','EH436DB', 'All Welcome','Start at Royal Mile','Outdoors');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Afternoon Tea',30,'A small event to show appreciation for afternoon tea','2014-05-05 14:00','2013-03-25 11:48','Kirkcaldy','UK','KY26NW', 'Tea Lovers all round','The Tea Room','Social');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('T in the Park',50000,'Scottish Music Festival','2014-07-04 18:00','2013-03-25 11:52','Kinross','UK','KY139JR', 'Under 16s Accompanied by Adult','Balado Airfield','Concert');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Glastonbury',50000,'Music Festival','2014-08-04 18:00','2013-03-25 12:00','Pilton','UK','BA44BY', 'Under 16s Accompanied by Adult','Worthy Farm','Concert');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Rockness',50000,'Rock Music Festival','2014-07-29 18:00','2013-03-25 12:05','Iverness','UK','IV19TQ', 'Under 16s Accompanied by Adult','Somewhere in Inverness','Concert');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('TT',500,'TT racing','2014-09-01 11:00','2013-03-25 12:19','Isle of Man','UK','IM14AJ', 'All Welcome','Douglas','Sports & Fitness');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Art Exhibition',100,'Picasso Art Exhibit','2014-11-01 12:00','2013-03-25 12:31','Manchester','UK','M347HX', 'All Welcome','Manchester Art Gallery','Arts');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Nando's lovers dinner',10,'Hardcore Nando's fans come along to this dinner where we share our love for chicken','2014-04-01 17:00','2013-03-25 13:28','London','UK','EC1N8XA', 'Nando Fanatics Only','Nando's in London','Food & Drink');
+
+INSERT INTO eventmate.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Midnight Mass',300,'Christmas Midnight Mass','2014-12-24 00:00','2013-03-25 13:33','Glasgow','UK','G320DG', 'All Welcome','Church on Hill Road','Religion');
+
+Sports & Fitness
+Concert
+Lifestyle
+Other
+Social
+Food & Drink
+Community
+Hobbies
+Outdoors
+Religion
+Arts
+Tech
+
+CREATE TABLE eventmate.users
+(
+	username varchar,
+	password varchar,
+	name varchar,
+	"dateJoined" timestamp,
+	dob timestamp,
+	"relationshipStatus" varchar,
+	location varchar,
+	postcode varchar,
+	bio varchar,
+	email varchar,
+	"ageMinRange" int,
+	"ageMaxRange" int,
+	"genderPref" varchar,
+	"distanceAmount" int,
+	gender varchar,
+	sports set<text>,
+	music set<text>,
+	interests set<text>,
+	
+	PRIMARY KEY(username,password)
+);
+
+
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('rdw92','2erty','Ryan Dawson','2014-03-15 14:44','1992-04-17','In A Relationship','Glasgow','G117DD','Studys at Glasgow Uni,Loves a good night out','rw92@aol.co.uk',18,25,'both',60,'male',{'Football,Rugby'},{'Indie','Dubstep'},{'Video Games','Tech'});
+
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('janeausten22','tswift22','Jane Austen','2014-03-18 11:22','1990-12-18','Single','Dundee','DD15DL','English Lit Student','ja@hotmail.co.uk',22,27,'both',35,'female',{'Ultimate'},{'Jazz'},{'Watching TV,Poetry'});
+
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('JoshCarter101','JC101','Josh Carter','2014-03-18 11:30','1994-01-21','In A Relationship','Glasgow','G513AF','Joiner Apprentice','jc202@hotmail.co.uk',20,25,'both',60,'male',{'Football'},{'Indie'},{'Outdoors'});
+
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('summerj','hola','Summer Jones','2014-03-19 13:14','1993-03-12','Single','Edinburgh','EH11DS','Waitress And Coffee Addict','summerj@hotmail.com',19,25,'both',120,'female',{'Football'},{'Indie'},{'Tech','Video Games','Watching TV'});
+
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('harrystyles','hstylesss','Harry Styles','2014-03-19 15:48','1997-03-12','Single','Edinburgh','EH12DS','Signer','harrys@hotmail.com',19,25,'both',160,'male',{'Swimming'},{'Indie','Pop','Rock'},{'Reading','Drawing'});
+
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('MariaVanderpump','oranges','Maria Vanderpump','2014-03-19 21:24','1991-05-16','In A Relationship','Edinburgh','EH12DS','Stay at home mum','mariav@yahoo.co.uk',19,25,'both',150,'female',{'Football'},{'Indie','Pop','Rock'},{'Tech','Watching TV'});
+
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('JamesVanderpump','oranges2','Maria Vanderpump','2014-03-19 21:24','1991-05-16','In A Relationship','Edinburgh','EH12DS','Stay at home mum','mariav@yahoo.co.uk',19,25,'both',150,'female',{'Football'},{'Indie','Pop','Rock'},{'Tech','Watching TV'});
+
+CREATE TABLE eventmate.userattending
+(
+	username varchar,
+	eventname varchar,
+	PRIMARY KEY(username,eventname)
+);
+
+INSERT INTO eventmate.userattending(username, eventname)
+VALUES('rdw92','T in the Park');
+
+INSERT INTO eventmate.userattending(username, eventname)
+VALUES('rdw92','Afternoon Tea');
+
+INSERT INTO eventmate.userattending(username, eventname)
+VALUES('summerj','Afternoon Tea');
+
+INSERT INTO eventmate.userattending(username, eventname)
+VALUES('JoshCarter101','Afternoon Tea');
+
+INSERT INTO eventmate.userattending(username, eventname)
+VALUES('jwoodward','McBusted');
+
+INSERT INTO eventmate.userattending(username, eventname)
+VALUES('rdw92','T in the Park);
+
+CREATE TABLE eventmate.usernotattending
+(
+	username varchar,
+	eventname varchar,
+	PRIMARY KEY(username,eventname)
+);
+
+CREATE TABLE eventmate.messages
+(
+	userto varchar,
+	userfrom varchar,
+	time timestamp,
+	message varchar,
+	PRIMARY KEY((userto),time,message,userfrom)
+);
+
+INSERT INTO eventmate.messages(userto,userfrom,message,timesent) VALUES('rdw92','JoshCarter101','Hello','2014-03-20 11:43');
+
+INSERT INTO eventmate.messages(userto,userfrom,message,timesent) VALUES('JoshCarter101','rdw92','Hello','2014-03-20 11:44');
+
+SELECT * FROM eventmate.messages WHERE userfrom in ('JoshCarter101','rdw92') AND userto in('JoshCarter101','rdw92') ORDER BY timesent ASC  LIMIT 1000 ALLOW FILTERING;
+
