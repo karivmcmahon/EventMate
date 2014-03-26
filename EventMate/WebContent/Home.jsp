@@ -66,11 +66,6 @@ Message each other and arrange going to events  </span> <span class="smallGreyFo
 </form>
 </div>
 
-
-
-
-
-
 </div>
 
 </body>

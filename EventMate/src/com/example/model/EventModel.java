@@ -39,7 +39,7 @@ public class EventModel {
 	int count;
 	int attendingCount;
 	Set<String> events = new HashSet<String>();
-	String eventmate = "eventmate2";
+	String eventmate = "eventmate";
 	int randomCounter;
 
 	public EventModel() {
@@ -215,7 +215,7 @@ public class EventModel {
 		count = 0;
 		attendingCount = 1;
 		eventStore event = new eventStore();
-		Session session = cluster.connect("eventmate2");
+		Session session = cluster.connect("eventmate");
 		PreparedStatement statement = session.prepare("SELECT * from events;");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		ResultSet rs = session.execute(boundStatement);

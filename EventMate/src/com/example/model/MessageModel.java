@@ -23,7 +23,7 @@ import com.example.stores.eventStore;
 public class MessageModel {
 	
 	Cluster cluster;
-	String eventmate = "eventmate2";
+	String eventmate = "eventmate";
 	public MessageModel(){
 		
 	}

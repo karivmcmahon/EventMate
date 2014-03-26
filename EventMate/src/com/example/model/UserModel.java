@@ -19,7 +19,7 @@ import com.example.stores.eventStore;
 public class UserModel {
 	
 	Cluster cluster;
-	String eventmate = "eventmate2";
+	String eventmate = "eventmate";
 	
 	public void setCluster(Cluster cluster){
 		this.cluster=cluster;
