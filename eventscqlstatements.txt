@@ -111,50 +111,31 @@ CREATE TABLE eventmate.users
 	sports set<text>,
 	music set<text>,
 	interests set<text>,
-	photo varchar,
 	
 	PRIMARY KEY(username,password)
 );
 
-CREATE INDEX ON eventmate.users(name);
-CREATE INDEX ON eventmate.users(email);
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
-VALUES('rdw92','2erty','Ryan Dawson','2014-03-15 14:44','1992-04-17','In A Relationship','Glasgow','G117DD','Studys at Glasgow Uni,Loves a good night out','rw92@aol.co.uk',18,25,'both',60,'male',{'Football,Rugby'},{'Indie','Dubstep'},{'Video Games','Tech'},'http://bentleylends.org/wp-content/uploads/2011/04/man-silhouette.png');
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('rdw92','2erty','Ryan Dawson','2014-03-15 14:44','1992-04-17','In A Relationship','Glasgow','G117DD','Studys at Glasgow Uni,Loves a good night out','rw92@aol.co.uk',18,25,'both',60,'male',{'Football,Rugby'},{'Indie','Dubstep'},{'Video Games','Tech'});
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
-VALUES('janeausten22','tswift22','Jane Austen','2014-03-18 11:22','1990-12-18','Single','Dundee','DD15DL','English Lit Student','ja@hotmail.co.uk',22,27,'both',35,'female',{'Ultimate'},{'Jazz'},{'Watching TV,Poetry'},'http://www4.images.coolspotters.com/photos/564571/silhouette-profile.png');
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('janeausten22','tswift22','Jane Austen','2014-03-18 11:22','1990-12-18','Single','Dundee','DD15DL','English Lit Student','ja@hotmail.co.uk',22,27,'both',35,'female',{'Ultimate'},{'Jazz'},{'Watching TV,Poetry'});
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
-VALUES('JoshCarter101','JC101','Josh Carter','2014-03-18 11:30','1994-01-21','In A Relationship','Glasgow','G513AF','Joiner Apprentice','jc202@hotmail.co.uk',20,25,'both',60,'male',{'Football'},{'Indie'},{'Outdoors'},'http://bentleylends.org/wp-content/uploads/2011/04/man-silhouette.png');
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('JoshCarter101','JC101','Josh Carter','2014-03-18 11:30','1994-01-21','In A Relationship','Glasgow','G513AF','Joiner Apprentice','jc202@hotmail.co.uk',20,25,'both',60,'male',{'Football'},{'Indie'},{'Outdoors'});
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
-VALUES('summerj','hola','Summer Jones','2014-03-19 13:14','1993-03-12','Single','Edinburgh','EH11DS','Waitress And Coffee Addict','summerj@hotmail.com',19,25,'both',120,'female',{'Football'},{'Indie'},{'Tech','Video Games','Watching TV'},'http://www4.images.coolspotters.com/photos/564571/silhouette-profile.png');
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('summerj','hola','Summer Jones','2014-03-19 13:14','1993-03-12','Single','Edinburgh','EH11DS','Waitress And Coffee Addict','summerj@hotmail.com',19,25,'both',120,'female',{'Football'},{'Indie'},{'Tech','Video Games','Watching TV'});
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
-VALUES('harrystyles','hstylesss','Harry Styles','2014-03-19 15:48','1997-03-12','Single','Edinburgh','EH12DS','Signer','harrys@hotmail.com',19,25,'both',160,'male',{'Swimming'},{'Indie','Pop','Rock'},{'Reading','Drawing'},'http://bentleylends.org/wp-content/uploads/2011/04/man-silhouette.png');
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('harrystyles','hstylesss','Harry Styles','2014-03-19 15:48','1997-03-12','Single','Edinburgh','EH12DS','Signer','harrys@hotmail.com',19,25,'both',160,'male',{'Swimming'},{'Indie','Pop','Rock'},{'Reading','Drawing'});
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
-VALUES('MariaVanderpump','oranges','Maria Vanderpump','2014-03-19 21:24','1991-05-16','In A Relationship','Edinburgh','EH12DS','Stay at home mum','mariav@yahoo.co.uk',19,25,'both',150,'female',{'Football'},{'Indie','Pop','Rock'},{'Tech','Outdoors'},'http://www4.images.coolspotters.com/photos/564571/silhouette-profile.png');
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('MariaVanderpump','oranges','Maria Vanderpump','2014-03-19 21:24','1991-05-16','In A Relationship','Edinburgh','EH12DS','Stay at home mum','mariav@yahoo.co.uk',19,25,'both',150,'female',{'Football'},{'Indie','Pop','Rock'},{'Tech','Watching TV'});
 
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
-VALUES('jasond','marryme','Jason Derulo','2014-03-26 12:42','1987-07-16','In A Relationship','Edinburgh','EH915BB','I'm Jaaaason Derulooo: Im a singer/songwriter','jasond@msn.com',21,27,'both',1000,'male',{'Rugby'},{'Pop','Dubstep'},{'Poetry','Watching TV'},'http://bentleylends.org/wp-content/uploads/2011/04/man-silhouette.png');
-
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
-VALUES('beyonce','totheleft','Beyonce','2014-03-26 12:56','1983-09-22','In A Relationship','Manchester','M239JR','To the left, to the left, everything you own in a box to the left','beyoncebaby@msn.com',25,35,'both',1000,'female',{'Tennis','Cycling'},{'Pop','Indie'},{'Poetry','Watching TV'},'http://bentleylends.org/wp-content/uploads/2011/04/man-silhouette.png');
-
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
-VALUES('stephplee','nails','Steph Lee','2014-03-26 13:56','1994-01-01','In A Relationship','Dundee','DD21ET','I love Totoro! I'm the school pressie so you dont want to mess with me','stephplee94@gmail.com',18,25,'both',500,'female',{'Swimming','Cycling'},{'Pop','Indie','Rock','Metal','J-Pop'},{'Drawing','Tech','Video Games','Watching TV'},'graph.facebook.com/StephyPLee94/picture?type=large');
-
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
-VALUES('kmcxo','vodka','Kari McMahon','2014-03-26 14:05','1994-01-15','Single','Dundee','DD21ET','I love nachos with jalapenos peppers','kmc_ox@hotmail.com',18,25,'both',1000,'female',{'Swimming','Rugby'},{'Pop','Indie','Rock','Metal'},{'Reading','Tech','Watching TV'},'graph.facebook.com/xKmcx/picture?type=large');
-
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
-VALUES('jadeewoodward','green','Jade Woodward','2014-03-26 14:16','1993-01-19','Single','Dundee','DD37AL','I work in Sainsburys and i'm very boring','jadey_ward@msn.com',20,27,'both',1000,'female',{'Swimming'},{'Pop','Indie','Rock'},{'Reading','Tech','Watching TV','Outdoors'},'graph.facebook.com/jadeewoodward/picture?type=large');
-
-INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
-VALUES('kirstywoodward','twin','Kirsty Woodward','2014-03-26 14:19','1993-01-19','Single','Dundee','DD37AL','I LOOOOVE working at West Park so much','kirstywoodward@gmail.com',20,27,'male',1000,'female',{'Swimming'},{'Pop','Indie','Rock'},{'Watching TV','Outdoors'},'graph.facebook.com/kirsty.woodward2/picture?type=large');
-
+INSERT INTO eventmate.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('JamesVanderpump','oranges2','Maria Vanderpump','2014-03-19 21:24','1991-05-16','In A Relationship','Edinburgh','EH12DS','Stay at home mum','mariav@yahoo.co.uk',19,25,'both',150,'female',{'Football'},{'Indie','Pop','Rock'},{'Tech','Watching TV'});
 
 CREATE TABLE eventmate.userattending
 (
