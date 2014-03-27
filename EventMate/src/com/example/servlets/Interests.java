@@ -55,6 +55,7 @@ public class Interests extends HttpServlet {
 	}
 
 	/**
+	 * Servlet gets information from jsp and insert user information into database then redirect to login page
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

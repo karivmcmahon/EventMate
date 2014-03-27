@@ -37,6 +37,7 @@ public class Login extends HttpServlet {
 	}
 
 	/**
+	 * Servlet checks if user is valid and either directs to Event page or back to sign up page
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -66,6 +67,7 @@ public class Login extends HttpServlet {
 	}
 
 	/**
+	 * Servlet checks if user is valid and either directs to Event page or back to sign up page
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

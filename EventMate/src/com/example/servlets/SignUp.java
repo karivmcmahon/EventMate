@@ -48,6 +48,7 @@ public class SignUp extends HttpServlet {
 	}
 
 	/**
+	 * This servlet sends gets user information from Home.jsp file and sets it to a user store
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,6 +57,7 @@ public class SignUp extends HttpServlet {
 		um.setCluster(cluster);
 		UserStore us = new UserStore();
 		UserStore user = new UserStore();
+		//If username,password or email null then display error
 		if(request.getParameter("usernameSignUp").equals("") || request.getParameter("passwordSignUp").equals("") || request.getParameter("emailSignUp").equals(""))
 		{
 			RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
@@ -64,24 +66,31 @@ public class SignUp extends HttpServlet {
 		}
 		else
 		{
-		us.setUsername(request.getParameter("usernameSignUp"));
-		us.setPassword(request.getParameter("passwordSignUp"));
-		us.setEmail(request.getParameter("emailSignUp"));
-		if (um.checkUsername(us) != "") {
-		RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
-		request.setAttribute("invalidSignUp", "Username already in use!");
-		rd.forward(request, response);
-		}else if(um.checkEmail(us) != ""){
-		RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
-		request.setAttribute("invalidSignUp", "Email already in use!");
-		rd.forward(request, response);
-		}else{
-		HttpSession session = request.getSession(true);
-		session.setAttribute("possibleUser", us);
-		us = (UserStore) request.getSession().getAttribute("possibleUser");
-		// Direct to home.jsp once session true
-		response.sendRedirect("/EventMate/Bio");
-		}
+			//Set username,password,email
+			us.setUsername(request.getParameter("usernameSignUp"));
+			us.setPassword(request.getParameter("passwordSignUp"));
+			us.setEmail(request.getParameter("emailSignUp"));
+			//If check username does not return null display error
+			if (um.checkUsername(us) != "") 
+			{
+				RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
+				request.setAttribute("invalidSignUp", "Username already in use!");
+				rd.forward(request, response);
+			}
+			//If check email does not return null display error
+			else if(um.checkEmail(us) != "")
+			{
+				RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
+				request.setAttribute("invalidSignUp", "Email already in use!");
+				rd.forward(request, response);
+			}else{
+				//Set user store to the session possibleUser and direct to next form
+				HttpSession session = request.getSession(true);
+				session.setAttribute("possibleUser", us);
+				us = (UserStore) request.getSession().getAttribute("possibleUser");
+				// Direct to home.jsp once session true
+				response.sendRedirect("/EventMate/Bio");
+			}
 		}
 	}
 

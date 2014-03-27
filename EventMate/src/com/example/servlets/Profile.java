@@ -41,11 +41,12 @@ public class Profile extends HttpServlet {
 	}
 
 	/**
+	 * Servlet gets profile information from model
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//String args[]=Convertors.SplitRequestPath(request);
+		
 				UserStore us = new UserStore();
 				ProfileModel pm = new ProfileModel();
 				//Get session for user currently logged in
@@ -55,6 +56,7 @@ public class Profile extends HttpServlet {
 				{
 
 					pm.setCluster(cluster);
+					//Attempt to get profile
 					LinkedList<ProfileStore> profileList = pm.getProfile(us,1,"");
 					request.setAttribute("Profile", profileList); //Set a bean with the list in it
 					RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp"); 
@@ -69,6 +71,7 @@ public class Profile extends HttpServlet {
 					String usernames = endOfUrl.toString();
 					us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 					pm.setCluster(cluster);
+					//Attempt to get profile
 					LinkedList<ProfileStore> profileList = pm.getProfile(us,2,usernames);
 					request.setAttribute("Profile", profileList); //Set a bean with the list in it
 					RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp"); 

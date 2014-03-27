@@ -40,6 +40,7 @@ public class Messagers extends HttpServlet {
   	}
 
 	/**
+	 * Servlet gets information from jsp and then uses it to retrieve list of users who sent logged in user a message
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

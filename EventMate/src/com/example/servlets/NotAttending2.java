@@ -41,6 +41,7 @@ public class NotAttending2 extends HttpServlet {
 	}
 
 	/**
+	 * Gets information from jsp page about an event and insert into database 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

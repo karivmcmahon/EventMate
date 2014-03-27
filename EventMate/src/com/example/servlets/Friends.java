@@ -41,6 +41,7 @@ public class Friends extends HttpServlet {
 	}
 
 	/**
+	 * Servlet gets information from model about user and displays there friend list
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -43,7 +43,7 @@ public class Event extends HttpServlet {
 	}
     
 	/**
-	 * Display events
+	 * Servlet displays friends
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -116,6 +116,7 @@ public class Event extends HttpServlet {
 	}
 
 	/**
+	 * Servlets gets information from jsp file and returns events and friends (Used for search bar)
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

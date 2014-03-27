@@ -35,7 +35,6 @@ public class UserModel {
 	 */
 	public UserStore getUser(UserStore us)
 	{
-		System.out.println("HELLLOOO");
 		UserStore user = new UserStore();
 		Session session = cluster.connect(eventmate);
 		String un = us.getUsername();
@@ -46,7 +45,6 @@ public class UserModel {
 		//if result set empty set user valid to false
 		if (rs.isExhausted()) 
 		{
-			System.out.println("HELLLOOO");
 			user.setValid(false);
 		} 
 		else 
@@ -54,7 +52,6 @@ public class UserModel {
 
 			for (Row row : rs) 
 			{
-				System.out.println("HELLLOOO2");
 				//Set up user into
 				user.setUsername(row.getString("username"));
 				user.setPassword(row.getString("password"));
@@ -210,7 +207,6 @@ public class UserModel {
 		PreparedStatement statement = session.prepare("INSERT INTO users(name,username,password,email,bio,gender,interests,location,music,postcode,sports,\"distanceAmount\",\"genderPref\",\"relationshipStatus\",\"ageMaxRange\",\"ageMinRange\",dob, \"dateJoined\",interestedIn,photo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		session.execute(boundStatement.bind(name, un, pw, email, bio, gender, interests, location, music, postcode, sports, distance, genderPref, relationship, ageMax, ageMin, dob, times,interestedIn,photo));
-		System.out.println("execute");
 		session.shutdown();
 	}
 

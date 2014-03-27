@@ -457,6 +457,7 @@ public void getAttending(UserStore us,String event)
 			}
 			
 		}
+	session.shutdown();
 	}
 	
 

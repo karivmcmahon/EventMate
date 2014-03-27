@@ -40,6 +40,7 @@ public class Settings extends HttpServlet {
 	}
 
 	/**
+	 * Servlet gets current logged in user and goto the Settings.jsp
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,6 +54,7 @@ public class Settings extends HttpServlet {
 	}
 
 	/**
+	 * Servlet gets information from Settings.jsp sets it to currentSeshUser and redirects to SettingsInterests
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

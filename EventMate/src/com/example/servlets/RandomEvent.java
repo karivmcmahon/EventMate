@@ -40,6 +40,7 @@ public class RandomEvent extends HttpServlet {
     
 
 	/**
+	 *Servlet gets random event from database and then calls Random.jsp to display
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -50,8 +51,10 @@ public class RandomEvent extends HttpServlet {
 		//Get session for user currently logged in
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		tm.setCluster(cluster);
+		//Get random event
 		eventStore event = tm.count(us);
 		request.setAttribute("Event", event); //Set a bean with the list in it
+		//Redirect to Random.jsp
 		RequestDispatcher rd = request.getRequestDispatcher("/Random.jsp"); 
 		rd.forward(request, response);
 	}

@@ -39,6 +39,7 @@ public class SettingInterests extends HttpServlet {
 	}
 
 	/**
+	 * Servlet redirects to SettingsInterest with user store info
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -51,6 +52,7 @@ public class SettingInterests extends HttpServlet {
 	}
 
 	/**
+	 * Servlet gets info from SettingsInterest.jsp file, sets it to currentSeshUser, then attempts to call editUser() in the model and redirect to Event servlet
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -86,7 +88,6 @@ public class SettingInterests extends HttpServlet {
 			}
 			us.setMusic(musics);
 		}
-		// Direct to home.jsp once session true
 		try
 		{
 			um.editUser(us);

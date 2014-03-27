@@ -42,6 +42,7 @@ public class NotAttending extends HttpServlet {
 	}
 
 	/**
+	 * Gets information from jsp file about event and then inserts that the user wants to attend event into database
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

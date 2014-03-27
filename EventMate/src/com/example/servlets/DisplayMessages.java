@@ -40,6 +40,7 @@ public class DisplayMessages extends HttpServlet {
     
 
 	/**
+	 * If this servlet is called it just redirects to page not found
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -54,6 +55,7 @@ public class DisplayMessages extends HttpServlet {
 	}
 
 	/**
+	 * Servlets gets users messages from database
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -39,6 +39,7 @@ public class Messages extends HttpServlet {
   	}
     
 	/**
+	 * Servlet gets information from jsp and returns a friend list
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -74,6 +75,7 @@ public class Messages extends HttpServlet {
 	}
 
 	/**
+	 * Servlet gets information from jsp file and inserts it into the database via the model
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -81,13 +83,16 @@ public class Messages extends HttpServlet {
 		UserStore us = new UserStore();
 		UserStore friendMessaged = new UserStore();
 		MessageModel mm = new MessageModel();
+		//Gets message info
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		friendMessaged.setUsername(request.getParameter("sendingTo"));
 		friendMessaged.setName(request.getParameter("name"));
 		friendMessaged.setPhoto(request.getParameter("photo"));
 		String message = request.getParameter("postMessage");
 		mm.setCluster(cluster);
+		//Attempts to insert message into database
 		mm.insertMessage(us, friendMessaged, message);
+		//Retrieve messages from database and redirect to message page
 		LinkedList<MessageStore> messageList = mm.getMessages(us,friendMessaged);
 		request.setAttribute("Messages", messageList); //Set a bean with the list in it
 		request.setAttribute("Friend",friendMessaged);

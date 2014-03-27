@@ -4,7 +4,7 @@ import java.util.*;
 
 /**
  * Method is from here http://stackoverflow.com/questions/109383/how-to-sort-a-mapkey-value-on-the-values-in-java
- * @author Kari
+ * 
  *
  */
 public class MapUtil
