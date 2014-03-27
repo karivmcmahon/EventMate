@@ -17,17 +17,17 @@ import com.example.stores.UserStore;
 import com.example.stores.eventStore;
 
 public class UserModel {
-	
+
 	Cluster cluster;
 	//Database name
-	String eventmate = "eventmate2";
-	
+	String eventmate = "eventmate3";
+
 	//Sets up cluster
 	public void setCluster(Cluster cluster)
 	{
 		this.cluster=cluster;
 	}
-	
+
 	/**
 	 * Method gets user info when logging in
 	 * @param us
@@ -35,6 +35,7 @@ public class UserModel {
 	 */
 	public UserStore getUser(UserStore us)
 	{
+		System.out.println("HELLLOOO");
 		UserStore user = new UserStore();
 		Session session = cluster.connect(eventmate);
 		String un = us.getUsername();
@@ -45,14 +46,15 @@ public class UserModel {
 		//if result set empty set user valid to false
 		if (rs.isExhausted()) 
 		{
-			
+			System.out.println("HELLLOOO");
 			user.setValid(false);
 		} 
 		else 
 		{
-			
+
 			for (Row row : rs) 
 			{
+				System.out.println("HELLLOOO2");
 				//Set up user into
 				user.setUsername(row.getString("username"));
 				user.setPassword(row.getString("password"));
@@ -71,7 +73,7 @@ public class UserModel {
 				user.setInterestedIn(row.getString("interestedIn"));
 				user.setSports(row.getSet("sports", String.class));
 				user.setMusic(row.getSet("music", String.class));
-				user.setPhoto(row.getString("photo"));
+				//user.setPhoto(row.getString("photo"));
 				Date dob = row.getDate("dob");
 				user.setDateJoined(row.getDate("dateJoined"));
 				FriendModel f = new FriendModel();
@@ -84,7 +86,7 @@ public class UserModel {
 		session.shutdown();
 		return user;
 	}
-	
+
 	/** 
 	 * Checks if username is already in database returns that user is invalid if it is
 	 * @param us
@@ -101,14 +103,14 @@ public class UserModel {
 		ResultSet rs = session.execute(boundStatement.bind(un));
 		if (rs.isExhausted()) 
 		{
-			
+
 			user.setValid(false);
 		} 
 		else 
 		{
 			for (Row row : rs) 
 			{
-			
+
 				username = row.getString("username");
 			}
 		}
@@ -144,7 +146,7 @@ public class UserModel {
 		session.shutdown();
 		return email;
 	}
-	
+
 	/**
 	 * This method is used for when the user wants update there information
 	 * @param us
@@ -176,7 +178,7 @@ public class UserModel {
 		System.out.println("execute");
 		session.shutdown();
 	}
-	
+
 	/**
 	 * This method is used for when a user signs up and we want to add them to the database
 	 * @param us

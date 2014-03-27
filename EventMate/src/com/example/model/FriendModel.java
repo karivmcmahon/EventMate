@@ -31,7 +31,7 @@ public class FriendModel {
 	
 	Cluster cluster;
 	//Stores database name
-	String eventmate = "eventmate2";
+	String eventmate = "eventmate3";
 	
 	public FriendModel()
 	{

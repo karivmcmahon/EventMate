@@ -48,7 +48,7 @@ public class EventModel {
 	//Stores events to track which ones we have seen in the random method
 	Set<String> events = new HashSet<String>();
 	//Database name
-	String eventmate = "eventmate2";
+	String eventmate = "eventmate3";
 
 	public EventModel() 
 	{
@@ -387,6 +387,7 @@ public class EventModel {
 						ts.setEventReq(row2.getString("eventRequirements"));
 						ts.setLocation(row2.getString("location"));
 						ts.setVenue(row2.getString("venue")); 
+						ts.setCategory(row2.getString("category"));
 						//If event has passed - 
 						if(eventPassed == true)
 						{

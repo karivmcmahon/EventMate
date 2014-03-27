@@ -4,18 +4,18 @@
       <%@ page import="com.example.stores.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="${pageContent.request.contextPath}/EventMate/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
-<link href='http://fonts.googleapis.com/css?family=Vibur'
-	rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Glegoo'
-	rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Codystar'
-	rel='stylesheet' type='text/css'>
-<link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
-<title>Event-Mate</title>
-</head>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<link href="${pageContent.request.contextPath}/EventMate/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+		<link href='http://fonts.googleapis.com/css?family=Vibur'
+			rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Glegoo'
+			rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Codystar'
+			rel='stylesheet' type='text/css'>
+		<link rel="shortcut icon" href="${pageContent.request.contextPath}/EventMate/images/martiniicon.png" type="image/png">
+		<title>Event-Mate</title>
+	</head>
 <body>
 <jsp:include page="Searchbar.jsp" />
 

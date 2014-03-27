@@ -25,7 +25,7 @@ public class MessageModel {
 	Cluster cluster;
 	
 	//Database name
-	String eventmate = "eventmate2";
+	String eventmate = "eventmate3";
 	public MessageModel(){
 		
 	}

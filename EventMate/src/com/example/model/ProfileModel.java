@@ -30,7 +30,7 @@ public class ProfileModel {
 	
 	Cluster cluster;
 	//Gets database name
-	String eventmate = "eventmate2";
+	String eventmate = "eventmate3";
 	
 	//Sets up cluster
 	public void setCluster(Cluster cluster)
