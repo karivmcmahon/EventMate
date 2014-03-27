@@ -3,6 +3,11 @@ package com.example.stores;
 import java.util.ArrayList;
 import java.util.Set;
 
+/**
+ * Class stores profile information
+ * @author Kari
+ *
+ */
 public class ProfileStore {
 	String username;
 	String password;

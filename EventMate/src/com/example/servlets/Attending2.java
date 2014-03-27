@@ -43,16 +43,21 @@ public class Attending2 extends HttpServlet {
 	}
 
 	/**
+	 * Gets event user wants to attend sends it model to insert to db and then redirects back to the RandomEventServlet
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		EventModel em = new EventModel();
 		UserStore us = new UserStore();
+		//Gets current logged in user
 	    us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+	    //Gets event name
 	    String event = request.getParameter("tick");
 	    em.setCluster(cluster);
+	    //Inserts attending event
 	    em.setAttending(us,event);
+	    //Redirect to RandomEvent servlet
 	    response.sendRedirect("/EventMate/RandomEvent");
 	}
 

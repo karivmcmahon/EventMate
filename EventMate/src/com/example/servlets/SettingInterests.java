@@ -42,7 +42,7 @@ public class SettingInterests extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		//Redirect to SettingsInterst with user information
 		UserStore us = new UserStore();
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		RequestDispatcher rd = request.getRequestDispatcher("/SettingInterests.jsp");
@@ -57,8 +57,8 @@ public class SettingInterests extends HttpServlet {
 		// TODO Auto-generated method stub
 		UserModel um = new UserModel();
 		um.setCluster(cluster);
-		UserStore us = (UserStore) request.getSession().getAttribute(
-				"currentSeshUser");
+		//Insert users updated info into database
+		UserStore us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		Set<String> interests = new HashSet<String>();
 		Set<String> sports = new HashSet<String>();
 		Set<String> musics = new HashSet<String>();
@@ -66,25 +66,29 @@ public class SettingInterests extends HttpServlet {
 		String[] sport = request.getParameterValues("sport");
 		String[] music = request.getParameterValues("music");
 		if (interest != null) {
-			for (int i = 0; i < interest.length; i++) {
+			for (int i = 0; i < interest.length; i++) 
+			{
 				interests.add(interest[i]);
 			}
 			us.setInterests(interests);
 		}
 		if (sport != null) {
-			for (int i = 0; i < sport.length; i++) {
+			for (int i = 0; i < sport.length; i++)
+			{
 				sports.add(sport[i]);
 			}
 			us.setSports(sports);
 		}
 		if (music != null) {
-			for (int i = 0; i < music.length; i++) {
+			for (int i = 0; i < music.length; i++) 
+			{
 				musics.add(music[i]);
 			}
 			us.setMusic(musics);
 		}
 		// Direct to home.jsp once session true
-		try {
+		try
+		{
 			um.editUser(us);
 			response.sendRedirect("Homepage.jsp");
 		} catch (Exception e) {

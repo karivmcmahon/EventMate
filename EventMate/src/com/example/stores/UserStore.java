@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 
+/**
+ * Class stores user information
+ * @author Kari
+ *
+ */
 public class UserStore {
 	String username;
 	String password;

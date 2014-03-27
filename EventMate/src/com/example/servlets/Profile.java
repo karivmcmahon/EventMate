@@ -50,18 +50,20 @@ public class Profile extends HttpServlet {
 				ProfileModel pm = new ProfileModel();
 				//Get session for user currently logged in
 				us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+				//If Url just /Profile get the users Profile and send to Profile.jsp
 				if(request.getRequestURI().equals(request.getContextPath() + "/Profile"))
 				{
 
-				pm.setCluster(cluster);
-				LinkedList<ProfileStore> profileList = pm.getProfile(us,1,"");
-				request.setAttribute("Profile", profileList); //Set a bean with the list in it
-				RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp"); 
-
-				rd.forward(request, response);
+					pm.setCluster(cluster);
+					LinkedList<ProfileStore> profileList = pm.getProfile(us,1,"");
+					request.setAttribute("Profile", profileList); //Set a bean with the list in it
+					RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp"); 
+	
+					rd.forward(request, response);
 				}
 				else
 				{
+					//If anything after /Profile/ then attempt to get the profile of the said string
 					int lastSlash = request.getRequestURI().lastIndexOf('/');
 					String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
 					String usernames = endOfUrl.toString();
@@ -71,14 +73,16 @@ public class Profile extends HttpServlet {
 					request.setAttribute("Profile", profileList); //Set a bean with the list in it
 					RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp"); 
 
-					rd.forward(request, response);				}
-	}
+					rd.forward(request, response);				
+				}
+			}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		// TODO Auto-generated method stub
 	}
-
 }
+

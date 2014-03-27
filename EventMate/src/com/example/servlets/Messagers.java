@@ -46,19 +46,20 @@ public class Messagers extends HttpServlet {
 		// TODO Auto-generated method stub
 		UserStore us = new UserStore();
 		MessageModel fm= new MessageModel();
+		//If the url request is /Messagers
 		if(request.getRequestURI().equals(request.getContextPath() + "/Messagers"))
 		{
-		//Get session for user currently logged in
-		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
-		fm.setCluster(cluster);
-		LinkedList<MessagerStore> messageList = fm.messagerList(us);
-		request.setAttribute("Message", messageList); //Set a bean with the list in it
-		RequestDispatcher rd = request.getRequestDispatcher("/Messages.jsp"); 
-
-		rd.forward(request, response);
+			//Display all the users the logged in user has messages from
+			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+			fm.setCluster(cluster);
+			LinkedList<MessagerStore> messageList = fm.messagerList(us);
+			request.setAttribute("Message", messageList); //Set a bean with the list in it
+			RequestDispatcher rd = request.getRequestDispatcher("/Messages.jsp"); 
+			rd.forward(request, response);
 		}
 		else
 		{
+			//If there is a string after the slash attempt to display messager list by username
 			int lastSlash = request.getRequestURI().lastIndexOf('/');
 			String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
 			String usernames = endOfUrl.toString();

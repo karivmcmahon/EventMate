@@ -2,6 +2,11 @@ package com.example.stores;
 
 import java.util.Date;
 
+/**
+ * Class stores information about events
+ * @author Kari
+ *
+ */
 
 
 public class eventStore {

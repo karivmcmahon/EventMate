@@ -61,22 +61,26 @@ public class DisplayMessages extends HttpServlet {
 		UserStore us = new UserStore();
 		UserStore friendMessaged = new UserStore();
 		MessageModel mm = new MessageModel();
+		//If the url equals display messages
 		if(request.getRequestURI().equals(request.getContextPath() + "/DisplayMessages"))
 		{
-		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
-		friendMessaged.setUsername(request.getParameter("username"));
-		friendMessaged.setName(request.getParameter("name"));
-		mm.setCluster(cluster);
-		friendMessaged.setPhoto(mm.getMessagePhotos(us, friendMessaged));
-		LinkedList<MessageStore> messageList = mm.getMessages(us,friendMessaged);
-		request.setAttribute("Messages", messageList); //Set a bean with the list in it
-		request.setAttribute("Friend",friendMessaged);
-		RequestDispatcher rd = request.getRequestDispatcher("/Message.jsp"); 
-
-		rd.forward(request, response);
+			//Then retrieve message information from the parameters sent in from jsp file
+			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+			friendMessaged.setUsername(request.getParameter("username"));
+			friendMessaged.setName(request.getParameter("name"));
+			mm.setCluster(cluster);
+			friendMessaged.setPhoto(mm.getMessagePhotos(us, friendMessaged));
+			LinkedList<MessageStore> messageList = mm.getMessages(us,friendMessaged);
+			request.setAttribute("Messages", messageList); //Set a bean with the list in it
+			request.setAttribute("Friend",friendMessaged);
+			//Redirect to message.jsp
+			RequestDispatcher rd = request.getRequestDispatcher("/Message.jsp"); 
+	
+			rd.forward(request, response);
 		}
 		else
 		{
+			//If the url is not this display PageNotFound
 			int lastSlash = request.getRequestURI().lastIndexOf('/');
 			String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
 			String eventname = endOfUrl.toString();

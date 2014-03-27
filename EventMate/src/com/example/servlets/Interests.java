@@ -35,11 +35,13 @@ public class Interests extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void init(ServletConfig config) throws ServletException {
+	public void init(ServletConfig config) throws ServletException
+	{
 		// TODO Auto-generated method stub
 		cluster = CassandraHosts.getCluster();
 	}
 	/**
+	 * Redirect page to Interests.jsp
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -61,37 +63,48 @@ public class Interests extends HttpServlet {
 		// TODO Auto-generated method stub
 		UserModel um = new UserModel();
 		um.setCluster(cluster);
-		UserStore us = (UserStore) request.getSession().getAttribute(
-				"possibleUser");
+		//Gets possible user
+		UserStore us = (UserStore) request.getSession().getAttribute("possibleUser");
+		//Get form information and set to possible user
 		Set<String> interests = new HashSet<String>();
 		Set<String> sports = new HashSet<String>();
 		Set<String> musics = new HashSet<String>();
 		String[] interest = request.getParameterValues("interest");
 		String[] sport = request.getParameterValues("sport");
 		String[] music = request.getParameterValues("music");
-		if (interest != null) {
-			for (int i = 0; i < interest.length; i++) {
+		if (interest != null) 
+		{
+			for (int i = 0; i < interest.length; i++) 
+			{
 				interests.add(interest[i]);
 			}
 			us.setInterests(interests);
 		}
-		if (sport != null) {
-			for (int i = 0; i < sport.length; i++) {
+		if (sport != null) 
+		{
+			for (int i = 0; i < sport.length; i++) 
+			{
 				sports.add(sport[i]);
 			}
 			us.setSports(sports);
 		}
-		if (music != null) {
-			for (int i = 0; i < music.length; i++) {
+		if (music != null) 
+		{
+			for (int i = 0; i < music.length; i++) 
+			{
 				musics.add(music[i]);
 			}
 			us.setMusic(musics);
 		}
-		// Direct to home.jsp once session true
-		try {
+	
+		try 
+		{
+			//Attempt to add user to database and redirect user to login page
 			um.addUser(us);
 			response.sendRedirect("/EventMate/Login");
-		} catch (Exception e) {
+		} 
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}

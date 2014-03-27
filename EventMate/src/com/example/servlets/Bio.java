@@ -41,6 +41,7 @@ public class Bio extends HttpServlet {
 	}
 
 	/**
+	 * Redirects to bioInfo.jsp
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -61,78 +62,99 @@ public class Bio extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		UserModel um = new UserModel();
-		UserStore us = (UserStore) request.getSession().getAttribute(
-		"possibleUser");
+		//Gets userstore of a possible new user
+		UserStore us = (UserStore) request.getSession().getAttribute("possibleUser");
+		//Gets the users details from forms
 		String name = request.getParameter("name");
 		String postcode = request.getParameter("postcode");
-		if (name == "" && postcode == "") {
-		RequestDispatcher rd = request.getRequestDispatcher("/BioInfo.jsp");
-		request.setAttribute("invalidName", "Please enter your name!");
-		request.setAttribute("invalidPostcode",
-		"Please enter your postcode!");
-		rd.forward(request, response);
-		} else if (name == "") {
-		RequestDispatcher rd = request.getRequestDispatcher("/BioInfo.jsp");
-		request.setAttribute("invalidName", "Please enter your name!");
-		rd.forward(request, response);
-		} else if (postcode == "") {
-		RequestDispatcher rd = request.getRequestDispatcher("/BioInfo.jsp");
-		request.setAttribute("invalidPostcode",
-		"Please enter your postcode!");
-		rd.forward(request, response);
-		} else {
-		us.setName(request.getParameter("name"));
-		us.setBio(request.getParameter("bio"));
-		us.setGender(request.getParameter("gender"));
-		us.setGenderPref(request.getParameter("genderPref"));
-		us.setAgeMin(Integer.parseInt(request.getParameter("minAge")));
-		us.setAgeMax(Integer.parseInt(request.getParameter("maxAge")));
-		us.setLocation(request.getParameter("location"));
-		// removing spaces from postcode
-		postcode = postcode.replaceAll("\\s+", "");
-		System.out.println(postcode);
-		us.setPostcode(postcode);
-		us.setDistancePref(Integer.parseInt(request
-		.getParameter("distance")));
-		us.setRelationship(request.getParameter("relationshipStat"));
-		us.setInterestedIn(request.getParameter("editGender"));
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-		String dob = request.getParameter("year") + "/"
-		+ request.getParameter("month") + "/"
-		+ request.getParameter("day");
-		System.out.println(dob);
-		String facebook = request.getParameter("uploadFacebook");
-		String photoUrl = request.getParameter("uploadURL");
-		String photo = "";
-		if (facebook != "" && photoUrl != "") {
-		RequestDispatcher rd = request
-		.getRequestDispatcher("/BioInfo.jsp");
-		request.setAttribute("invalidPhoto",
-		"Please only enter a Facebook ID or a URL!");
-		rd.forward(request, response);
-		} else if (facebook != "") {
-		photo = "https://graph.facebook.com/" + facebook
-		+ "/picture?type=large";
-		} else if (photoUrl != "") {
-		photo = photoUrl;
-		} else {
-		if (request.getParameter("gender").equals("male")) {
-		photo = "http://bentleylends.org/wp-content/uploads/2011/04/man-silhouette.png";
-		}else{
-		photo = "http://www4.images.coolspotters.com/photos/564571/silhouette-profile.png";
+		if (name == "" && postcode == "") 
+		{
+			//If name or postcode null display error
+			RequestDispatcher rd = request.getRequestDispatcher("/BioInfo.jsp");
+			request.setAttribute("invalidName", "Please enter your name!");
+			request.setAttribute("invalidPostcode","Please enter your postcode!");
+			rd.forward(request, response);
+		} 
+		else if (name == "") 
+		{
+			//if name null display error
+			RequestDispatcher rd = request.getRequestDispatcher("/BioInfo.jsp");
+			request.setAttribute("invalidName", "Please enter your name!");
+			rd.forward(request, response);
+		} 
+		else if (postcode == "") 
+		{
+			//if postcode null display error
+			RequestDispatcher rd = request.getRequestDispatcher("/BioInfo.jsp");
+			request.setAttribute("invalidPostcode",
+			"Please enter your postcode!");
+			rd.forward(request, response);
 		}
-		}
+		else
+		{
+			us.setName(request.getParameter("name"));
+			us.setBio(request.getParameter("bio"));
+			us.setGender(request.getParameter("gender"));
+			us.setGenderPref(request.getParameter("genderPref"));
+			us.setAgeMin(Integer.parseInt(request.getParameter("minAge")));
+			us.setAgeMax(Integer.parseInt(request.getParameter("maxAge")));
+			us.setLocation(request.getParameter("location"));
+			// removing spaces from postcode
+			postcode = postcode.replaceAll("\\s+", "");
+			us.setPostcode(postcode);
+			us.setDistancePref(Integer.parseInt(request	.getParameter("distance")));
+			us.setRelationship(request.getParameter("relationshipStat"));
+			us.setInterestedIn(request.getParameter("editGender"));
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+			String dob = request.getParameter("year") + "/" + request.getParameter("month") + "/"+ request.getParameter("day");
+			System.out.println(dob);
+			String facebook = request.getParameter("uploadFacebook");
+			String photoUrl = request.getParameter("uploadURL");
+			String photo = "";
+			if (facebook != "" && photoUrl != "") 
+			{
+				RequestDispatcher rd = request.getRequestDispatcher("/BioInfo.jsp");
+				request.setAttribute("invalidPhoto","Please only enter a Facebook ID or a URL!");
+				rd.forward(request, response);
+			} 
+			//If facebook not null create url
+			else if (facebook != "")
+			{
+				photo = "https://graph.facebook.com/" + facebook
+				+ "/picture?type=large";
+			} 
+			//if photo url not null
+			else if (photoUrl != "")
+			{
+				//set photo to url
+				photo = photoUrl;
+			} 
+			else 
+			{
+				//Set image for user if one is not given
+				if (request.getParameter("gender").equals("male")) 
+				{
+					photo = "http://bentleylends.org/wp-content/uploads/2011/04/man-silhouette.png";
+				}
+				else
+				{
+					photo = "http://www4.images.coolspotters.com/photos/564571/silhouette-profile.png";
+				}
+			}
+		//Set up photo
 		us.setPhoto(photo);
-		try {
-		Date date = formatter.parse(dob);
-		us.setDob(date);
-		System.out.println(formatter.format(date));
+		try 
+		{
+			//Format date and set it
+			Date date = formatter.parse(dob);
+			us.setDob(date);
+			System.out.println(formatter.format(date));
 		} catch (ParseException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		// Direct to home.jsp once session true
+		// Direct to interests servlet
 		response.sendRedirect("/EventMate/Interests");
 
 	}

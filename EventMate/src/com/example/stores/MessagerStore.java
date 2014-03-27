@@ -1,5 +1,10 @@
 package com.example.stores;
 
+/**
+ * Class stores messager information
+ * @author Kari
+ *
+ */
 public class MessagerStore {
 	String messager;
 	String name;

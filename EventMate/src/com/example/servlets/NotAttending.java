@@ -45,6 +45,8 @@ public class NotAttending extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			
+				//Inserts the event the user does not want to attend into the database and redirect back to Event servlet
 				EventModel em = new EventModel();
 				UserStore us = new UserStore();
 			    us = (UserStore) request.getSession().getAttribute("currentSeshUser");

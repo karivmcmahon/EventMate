@@ -43,6 +43,7 @@ public class Event extends HttpServlet {
 	}
     
 	/**
+	 * Display events
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -51,48 +52,64 @@ public class Event extends HttpServlet {
 		UserStore us = new UserStore();
 		EventModel tm= new EventModel();
 		FriendModel fm = new FriendModel();
+		//If url is just /Event display all popular events in users distance range
 		if(request.getRequestURI().equals(request.getContextPath() + "/Event"))
-		{
-		//Get session for user currently logged in
-		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
-		tm.setCluster(cluster);
-		LinkedList<eventStore> eventList = tm.getEvents(us,1,"");
-		request.setAttribute("Events", eventList); //Set a bean with the list in it
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/Homepage.jsp"); 
-
-		rd.forward(request, response);
+			{
+			//Get session for user currently logged in
+			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+			tm.setCluster(cluster);
+			LinkedList<eventStore> eventList = tm.getEvents(us,1,"");
+			request.setAttribute("Events", eventList); //Set a bean with the list in it
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/Homepage.jsp"); 
+	
+			rd.forward(request, response);
 		}
 		else
 		{
+			//Get the end of the url
 			int lastSlash = request.getRequestURI().lastIndexOf('/');
 			String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
 			String  eventname = endOfUrl.toString();
+			//Get the spaces in string
 		    eventname = eventname.replaceAll("%20"," ");
 			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 			tm.setCluster(cluster);
-			LinkedList<eventStore> eventList = tm.getEvents(us,2,eventname);
-			request.setAttribute("Events", eventList); //Set a bean with the list in it
+			
+			//if eventname sent in is equal to any of the categorys
 			if(eventname.equals("Sports & Fitness") || eventname.equals("Concert") || eventname.equals("Lifestyle") || eventname.equals("Other") || eventname.equals("Food & Drink") || eventname.equals("Community") || eventname.equals("Hobbies") || eventname.equals("Outdoors") || eventname.equals("Religion") || eventname.equals("Arts") || eventname.equals("Tech"))
 			{
 				LinkedList<eventStore> eventsList = tm.getEvents(us,3,eventname);
 				request.setAttribute("Events", eventsList); //Set a bean with the list in it
-			
-				RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp"); 
-				rd.forward(request, response);
-			}
-			else if(eventList.size() > 1)
-			{
-				
+			    //Display in Search.jsp
 				RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp"); 
 				rd.forward(request, response);
 			}
 			else
 			{
-				
-				RequestDispatcher rd = request.getRequestDispatcher("/Event.jsp"); 
-				rd.forward(request, response);
+				//Get event list by name
+				LinkedList<eventStore> eventList = tm.getEvents(us,2,eventname);
+				request.setAttribute("Events", eventList); //Set a bean with the list in it
+				if(eventList.size() > 1)
+				{
+					//if event list greater than 1 display in search list form
+					RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp"); 
+					rd.forward(request, response);
+				}
+				else if(eventList.size() == 1)
+				{
+					//Display as a single event
+					RequestDispatcher rd = request.getRequestDispatcher("/Event.jsp"); 
+					rd.forward(request, response);
+				}
+				else
+				{
+					//Display page not found
+					RequestDispatcher rd = request.getRequestDispatcher("/PageNotFound.jsp"); 
+					rd.forward(request, response);
+				}
 			}
+			
 			
 			
 		}

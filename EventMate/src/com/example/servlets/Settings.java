@@ -44,6 +44,7 @@ public class Settings extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//Redirect to Settings.jsp
 		UserStore us = new UserStore();
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		RequestDispatcher rd = request.getRequestDispatcher("/Settings.jsp");
@@ -57,8 +58,8 @@ public class Settings extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		UserModel um = new UserModel();
-		UserStore us = (UserStore) request.getSession().getAttribute(
-				"currentSeshUser");
+		UserStore us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		//Set information for user and redirect to settings interest
 		us.setName(request.getParameter("name"));
 		us.setEmail(request.getParameter("email"));
 		us.setBio(request.getParameter("editBio"));

@@ -34,7 +34,8 @@ public class Friends extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
-    public void init(ServletConfig config) throws ServletException {
+    public void init(ServletConfig config) throws ServletException 
+    {
 		// TODO Auto-generated method stub
 		cluster = CassandraHosts.getCluster();
 	}
@@ -46,19 +47,21 @@ public class Friends extends HttpServlet {
 		// TODO Auto-generated method stub
 		UserStore us = new UserStore();
 		FriendModel fm= new FriendModel();
+		//If request path friends get friend list and display on Friends.jsp
 		if(request.getRequestURI().equals(request.getContextPath() + "/Friends"))
 		{
-		//Get session for user currently logged in
-		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
-		fm.setCluster(cluster);
-		LinkedList<UserStore> friendList = fm.displayFriends(us);
-		request.setAttribute("Friends", friendList); //Set a bean with the list in it
-		RequestDispatcher rd = request.getRequestDispatcher("/Friends.jsp"); 
-
-		rd.forward(request, response);
+			//Get session for user currently logged in
+			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+			fm.setCluster(cluster);
+			LinkedList<UserStore> friendList = fm.displayFriends(us);
+			request.setAttribute("Friends", friendList); //Set a bean with the list in it
+			RequestDispatcher rd = request.getRequestDispatcher("/Friends.jsp"); 
+	
+			rd.forward(request, response);
 		}
 		else
 		{
+			//if request path has a string after friends attempt to get friends by that username
 			int lastSlash = request.getRequestURI().lastIndexOf('/');
 			String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
 			String usernames = endOfUrl.toString();

@@ -44,13 +44,13 @@ public class RandomEvent extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//Gets random event and displays it on random page
 		UserStore us = new UserStore();
 		EventModel tm= new EventModel();
 		//Get session for user currently logged in
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		tm.setCluster(cluster);
 		eventStore event = tm.count(us);
-		//System.out.println("EVNT 2" + event.getEvent());
 		request.setAttribute("Event", event); //Set a bean with the list in it
 		RequestDispatcher rd = request.getRequestDispatcher("/Random.jsp"); 
 		rd.forward(request, response);

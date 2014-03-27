@@ -29,7 +29,8 @@ public class Logout extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
-    public void init(ServletConfig config) throws ServletException {
+    public void init(ServletConfig config) throws ServletException 
+    {
 		// TODO Auto-generated method stub
 		cluster = CassandraHosts.getCluster();
 	}
@@ -39,6 +40,7 @@ public class Logout extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//When user logs out invalidate the users session and redirect to Home.jsp
 		UserStore u = new UserStore();
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		u.setLoggedIn(false);

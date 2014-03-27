@@ -21,7 +21,7 @@
 	<jsp:include page="Searchbar.jsp" />
 	
 	<div class="divMain2" style="min-height: 100%;">
-		<jsp:include page="${pageContent.request.contextPath}/Header.jsp" />
+	
 		<div align="center">
 		<br> <br> <br> <span class="blueFont" ><b>Please Enter Your Bio Information</b></span> <br></div>
 		<br>
