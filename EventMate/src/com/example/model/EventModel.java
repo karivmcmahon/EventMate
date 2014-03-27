@@ -33,20 +33,34 @@ import com.datastax.driver.core.Session;
 import com.example.stores.UserStore;
 import com.example.stores.eventStore;
 
+/**
+ * This class deals with all methods relating to retrieving and setting up event details in the database
+ * @author Kari
+ *
+ */
 public class EventModel {
 
 	Cluster cluster;
+	//Counters for random
 	int count;
 	int attendingCount;
-	Set<String> events = new HashSet<String>();
-	String eventmate = "eventmate2";
 	int randomCounter;
+	//Stores events to track which ones we have seen in the random method
+	Set<String> events = new HashSet<String>();
+	//Database name
+	String eventmate = "eventmate2";
 
-	public EventModel() {
+	public EventModel() 
+	{
 
 	}
-
-	public void setCluster(Cluster cluster) {
+	
+	/**
+	 * Sets up cluster
+	 * @param cluster
+	 */
+	public void setCluster(Cluster cluster) 
+	{
 		this.cluster = cluster;
 	}
 
@@ -54,40 +68,59 @@ public class EventModel {
 
 	}
 
-	public LinkedList<eventStore> getEvents(UserStore us,int num,String event) {
-
+	/**
+	 * Retrieves a list of events
+	 * If num param is 1 we retrieve a list of events based on it's popularity if it has an attendee amount over 2000 and is within the users distance pref
+	 * If num param is 2 we retrieve an event where the name matches the name the user has sent in - mainly used for searching and restful
+	 * If num param is 3 we retrieve events based on category - used for the search bar in webpage
+	 * @param us
+	 * @param num
+	 * @param event
+	 * @return
+	 */
+	public LinkedList<eventStore> getEvents(UserStore us,int num,String event)
+	{
+		//Stores event list
 		LinkedList<eventStore> eventList = new LinkedList<eventStore>();
+		//Sets up session
 		Session session = cluster.connect(eventmate);
+		//Sets up statement stuff
 		PreparedStatement statement;
 		BoundStatement boundStatement;
 		ResultSet rs = null;
+		//If the event sent in from the http has %20 turn that into spaces as that is what it represents
 		event = event.replaceAll("%20", " ");
+		//If num is 1 just select all events
 		if(num == 1)
 		{
 			statement = session.prepare("SELECT * from events;");
 		    boundStatement = new BoundStatement(statement);
 			rs = session.execute(boundStatement);
 		}
+		//If num is 2 select all events where the name equals the string passed into the method
 		else if(num == 2)
 		{
-			statement = session
-					.prepare("SELECT * from events WHERE name=?;");
+			statement = session.prepare("SELECT * from events WHERE name=?;");
 			boundStatement = new BoundStatement(statement);
 			rs = session.execute(boundStatement.bind(event));
 		}
+		//If num is 3 select all events where the category equals  the category sent in
 		else if(num == 3)
 		{
-			statement = session
-					.prepare("SELECT * from events WHERE category=?;");
+			statement = session.prepare("SELECT * from events WHERE category=?;");
 		    boundStatement = new BoundStatement(statement);
 			 rs = session.execute(boundStatement.bind(event));
 		}
-		if (rs.isExhausted()) {
+		if (rs.isExhausted()) 
+		{
 
-			System.out.println("No Tweets returned");
-		} else {
-			for (Row row : rs) {
-
+			System.out.println("No events returned");
+		} 
+		else 
+		{
+			for (Row row : rs) 
+			{
+				//Sets up an event store and then sets event info from the the table to it
 				eventStore ts = new eventStore();
 				String name = row.getString("name");
 				ts.setEvent(name);
@@ -96,68 +129,87 @@ public class EventModel {
 				Calendar c = Calendar.getInstance();
 				c.setTime(row.getDate("eventdate"));
 				// Create a new date format
-				SimpleDateFormat dateFormat = new SimpleDateFormat(
-						"dd/MM/yyyy hh:mm aa");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
 				// Formats the calendar time into a date format
 				String date = dateFormat.format(c.getTime());
-				System.out.println(date);
 				ts.setDate(date);
 				boolean eventPassed = getEventPassed(c);
 				ts.setEventPassed(eventPassed);
 				String postcode = row.getString("postcode");
+				//Gets distance from the Google API by using the users postcode and events postcode
 				int distance = parseURL(postcode, us.getPostcode()) / 1000;
-				System.out.println(distance);
 				int attendeeAmount = row.getInt("attendeeAmount");
 				ts.setAttendee(attendeeAmount);
 				ts.setEventReq(row.getString("eventRequirements"));
 				ts.setLocation(row.getString("location"));
 				ts.setVenue(row.getString("venue"));
+				
+				//If num 1
 				if(num == 1)
 				{
-					if (distance <= us.getDistance() && attendeeAmount > 2000
-							&& eventPassed == false) {
+					//If the distance is less than or equal to distance and the attendee amount is greater than 2000 and the event has not passed
+					if (distance <= us.getDistance() && attendeeAmount > 2000	&& eventPassed == false) 
+					{
+						//Check if the user is attending or not attending event
 						boolean attending1 = getAttending(us.getUsername(), name);
 						boolean attending2 = getNotAttending(us.getUsername(), name);
-						if (attending1 == false && attending2 == false) {
+						//If they are not
+						if (attending1 == false && attending2 == false) 
+						{
+							//Then add to event list to display on front page - popular events for you
 							eventList.add(ts);
 						}
 					}
 				}
+				//If num 2
 				if(num == 2)
 				{
-					if (distance <= us.getDistance()) {
+					//Check if distance matches users prefs
+					if (distance <= us.getDistance()) 
+					{
+						//If so set correct distance to true so we know its within there distance range
 						ts.setCorrectDistance(true);
 					}
+					//Check if user is or isn't attending the event, then set it based on outcome so we can display on page whether they are attending or not
 					boolean attending1 = getAttending(us.getUsername(), name);
 					boolean attending2 = getNotAttending(name, us.getUsername());
-					if (attending1 == false && attending2 == false) {
+					if (attending1 == false && attending2 == false) 
+					{
 
 						ts.setAttending(false);
 						ts.setNotAttending(false);
-					} else if (attending1 == true) {
+					} 
+					else if (attending1 == true) 
+					{
 						ts.setAttending(true);
-					} else if (attending2 == true) {
+					} 
+					else if (attending2 == true) 
+					{
 						ts.setNotAttending(true);
 					}
-					
-					
-
+					//Then add event to list
 					eventList.add(ts);
 				}
 				if(num == 3)
 				{
+					//Check if user is or isn't attending the event, then set it based on outcome so we can display on page whether they are attending or not
 					boolean attending1 = getAttending(us.getUsername(), name);
 					boolean attending2 = getNotAttending(name, us.getUsername());
-					if (attending1 == false && attending2 == false) {
+					if (attending1 == false && attending2 == false) 
+					{
 
 						ts.setAttending(false);
 						ts.setNotAttending(false);
-					} else if (attending1 == true) {
+					} else if (attending1 == true) 
+					{
 						ts.setAttending(true);
-					} else if (attending2 == true) {
+					} 
+					else if (attending2 == true) 
+					{
 						ts.setNotAttending(true);
 					}
 
+					//If event within users distance prefs add to list
 					if (distance <= us.getDistance()) {
 						ts.setCorrectDistance(true);
 						eventList.add(ts);
@@ -169,86 +221,119 @@ public class EventModel {
 		return eventList;
 	}
 
-	public boolean getEventPassed(Calendar eventCal) {
+	/**
+	 * This method takes todays date and the events date and checks if it has passed
+	 * @param eventCal
+	 * @return eventPassed
+	 */
+	public boolean getEventPassed(Calendar eventCal) 
+	{
 		Calendar today = Calendar.getInstance();
-		boolean eventPassed = eventCal.get(Calendar.YEAR) <= today
-				.get(Calendar.YEAR)
-				&& eventCal.get(Calendar.DAY_OF_YEAR) < today
-						.get(Calendar.DAY_OF_YEAR);
+		boolean eventPassed = eventCal.get(Calendar.YEAR) <= today.get(Calendar.YEAR)&& eventCal.get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR);
 		return eventPassed;
 
 	}
 
+	/**
+	 * This method checks if user is attending event
+	 * @param name
+	 * @param name2
+	 * @return true/false
+	 */
 	public boolean getAttending(String name, String name2) {
+		//Checks if user attending event based on there username and the eventname
 		Session session = cluster.connect(eventmate);
-		PreparedStatement attendingStatement = session
-				.prepare("SELECT * from userattending WHERE username = ? AND eventname = ?;");
-		BoundStatement boundAttendingStatement = new BoundStatement(
-				attendingStatement);
-		ResultSet resultSetAttending = session.execute(boundAttendingStatement
-				.bind(name, name2));
-		if (resultSetAttending.isExhausted()) {
+		PreparedStatement attendingStatement = session.prepare("SELECT * from userattending WHERE username = ? AND eventname = ?;");
+		BoundStatement boundAttendingStatement = new BoundStatement(attendingStatement);
+		ResultSet resultSetAttending = session.execute(boundAttendingStatement.bind(name, name2));
+		session.shutdown();
+		if (resultSetAttending.isExhausted()) 
+		{
 			return false;
-		} else {
+		} 
+		else 
+		{
 			return true;
 		}
 	}
 
-	public boolean getNotAttending(String name, String name2) {
+	/**
+	 * This method checks if user is not attending event
+	 * @param name
+	 * @param name2
+	 * @return true/false
+	 */
+	public boolean getNotAttending(String name, String name2) 
+	{
+		//Checks if user not attending event based on there username and the eventname
 		Session session = cluster.connect(eventmate);
-		PreparedStatement attendingNotStatement = session
-				.prepare("SELECT * from usernotattending WHERE username = ? AND eventname = ?;");
-		BoundStatement boundAttendingNotStatement = new BoundStatement(
-				attendingNotStatement);
-		ResultSet resultSetNotAttending = session
-				.execute(boundAttendingNotStatement.bind(name, name2));
-		if (resultSetNotAttending.isExhausted()) {
+		PreparedStatement attendingNotStatement = session.prepare("SELECT * from usernotattending WHERE username = ? AND eventname = ?;");
+		BoundStatement boundAttendingNotStatement = new BoundStatement(attendingNotStatement);
+		ResultSet resultSetNotAttending = session.execute(boundAttendingNotStatement.bind(name, name2));
+		session.shutdown();
+		if (resultSetNotAttending.isExhausted()) 
+		{
 			return false;
-		} else {
+		} 
+		else 
+		{
 			return true;
 		}
 
 	}
 
 
+	/**
+	 * This method counts the amount of events and then starts the random method for the random page
+	 * @param us
+	 * @return eventstore
+	 */
 	public eventStore count(UserStore us) {
 		count = 0;
 		attendingCount = 0;
+		//Create new event
 		eventStore event = new eventStore();
 		Session session = cluster.connect(eventmate);
+		//Select all events 
 		PreparedStatement statement = session.prepare("SELECT * from events;");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		ResultSet rs = session.execute(boundStatement);
+		//Clear event list before starting
 		events.clear();
-		if (rs.isExhausted()) {
+		if (rs.isExhausted()) 
+		{
 
-			System.out.println("No Tweets returned");
-		} else {
-			for (Row row : rs) {
+			System.out.println("No events returned");
+		} 
+		else 
+		{
+			for (Row row : rs) 
+			{
+				//Gets postcode
 				String postcode = row.getString("postcode");
+				///Gets distance for the google api
 				int distance = parseURL(postcode, us.getPostcode()) / 1000;
+				//If distance less than the users pref
 				if (distance <= us.getDistance())
 				{
-				count++;
+				   //Add to event count
+				   count++;
 			
 				}
 				
 			}
+			//If count is 0 
 			if(count == 0)
 			{
+				//just make event null
 				event = null;
 			}
 			else
 			{
-				System.out.println("count " + count);
-				System.out.println("Events " + events);
+				//Set randomCounter to count
 				randomCounter = count;
+				//Get random event
 				event = getRandomEvent(us);
-				if(event == null)
-				{
-					System.out.println("Null");
-				}
-				System.out.println("EVNT ");
 			}
 
 		}
@@ -257,428 +342,256 @@ public class EventModel {
 		return event;
 	}
 	
+	/**
+	 * This method gets an event randomly that the user is not attending and is within there distance prefs
+	 * @param us
+	 * @return
+	 */
 	public eventStore getRandomEvent(UserStore us)
 	{
-		//events.clear();
+		//Create a new event store set up equal to null
 		eventStore event = new eventStore();
 		event = null;
-		 Random rand = new Random();
-		 int count2 = 0;
-		 int randomNum = rand.nextInt(count+1);
+		
+	    //Set count2 to 0 this will count the number of events in the loop
+		int count2 = 0;
+		
+	    //Get all events
 		Session session = cluster.connect(eventmate);
 		PreparedStatement statement2 = session.prepare("SELECT * from events;");
 		BoundStatement boundStatement2 = new BoundStatement(statement2);
 		ResultSet rs2 = session.execute(boundStatement2);
 		for(Row row2 : rs2)
 		{
-				if(randomNum == count2)
-				{
-				eventStore ts = new eventStore();
-			    String name = row2.getString("name");
-			    ts.setEvent(name);
-			    ts.setDesc(row2.getString("description"));
-				Calendar c =  Calendar.getInstance();
-				//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
-				c.setTime(row2.getDate("eventdate"));
-				//Create a new date format
-				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
-				//Formats the calendar time into a date format
-				String date = dateFormat.format(c.getTime());
-				System.out.println(date);
-				ts.setDate(date);
-			    Date eventDate = row2.getDate("eventdate");
-				Calendar eventCal = Calendar.getInstance();
-				eventCal.setTime(eventDate);
-				Calendar today = Calendar.getInstance();
-			    boolean eventPassed = eventCal.get(Calendar.YEAR) <= today.get(Calendar.YEAR) &&
-		                  eventCal.get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR);
-			    String postcode = row2.getString("postcode");
-			    int distance = parseURL(postcode,us.getPostcode()) / 1000;
-				System.out.println(distance);
-				int attendeeAmount = row2.getInt("attendeeAmount");
-				ts.setAttendee(attendeeAmount);
-				ts.setEventReq(row2.getString("eventRequirements"));
-				ts.setLocation(row2.getString("location"));
-				ts.setVenue(row2.getString("venue")); 
-				if(eventPassed == true)
-				{
-					if(events.contains(name))
-					{
-						//getRandomEvent(us);
-					}
-					else
-					{
-						count--;
-						events.add(name);
-						//getRandomEvent(us);
-					}
-					
-	
-				}
-				if(eventPassed == false && distance <= us.getDistance())
-				{
-			    PreparedStatement statement3 = session.prepare("SELECT * from userattending WHERE username = ? AND eventname = ?;");
-				BoundStatement boundStatement3 = new BoundStatement(statement3);
-				ResultSet rs3 = session.execute(boundStatement3.bind(us.getUsername(),name));
-				PreparedStatement statement4 = session.prepare("SELECT * from usernotattending WHERE username = ? AND eventname = ?;");
-				BoundStatement boundStatement4 = new BoundStatement(statement4);
-				ResultSet rs4 = session.execute(boundStatement4.bind(us.getUsername(),name));
-				if(attendingCount == count)
-				{
-					event = null;
-					return event;
-				}
-				if(rs3.isExhausted() && rs4.isExhausted() )
-				{
-					if(events.contains(name))
-					{
-						//getRandomEvent(us);
-					}
-					else
-					{
-						events.add(name);
-					//getRandomEvent(us);
-					}
-					System.out.println("Count" + count);
-					System.out.println("Attending Count " + attendingCount);
-					System.out.println("Events" + events);
-					System.out.println("Event name " + name);
-					System.out.println("Return");
-					event = ts;
-					System.out.println(event.getEvent());
-					return event;
-					
-				}
-				else
-				{
-				if(!rs3.isExhausted())
-				{
-					if(events.contains(name))
-					{
-						//getRandomEvent(us);
-					}
-					else
-					{
-						events.add(name);
-						attendingCount++;
-					//getRandomEvent(us);
-					}
-					
-				}
-				if(attendingCount == count)
-				{
-					event = null;
-					return event;
-				}
-				if(!rs4.isExhausted())
-				{
-					if(events.contains(name))
-					{
-						//getRandomEvent(us);
-					}
-					else
-					{
-						events.add(name);
-						attendingCount++;
-						//getRandomEvent(us);
-					}
-				}
-				if(attendingCount == count)
-				{
-					
-					event = null;
-					return event;
-				}
+				
+						//Create a new event store and set event details to it
+						eventStore ts = new eventStore();
+					    String name = row2.getString("name");
+					    ts.setEvent(name);
+					    ts.setDesc(row2.getString("description"));
+						Calendar c =  Calendar.getInstance();
+						//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
+						c.setTime(row2.getDate("eventdate"));
+						//Create a new date format
+						SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+						//Formats the calendar time into a date format
+						String date = dateFormat.format(c.getTime());
+						System.out.println(date);
+						ts.setDate(date);
+					    boolean eventPassed = getEventPassed(c);
+					    String postcode = row2.getString("postcode");
+					    int distance = parseURL(postcode,us.getPostcode()) / 1000;
+						System.out.println(distance);
+						int attendeeAmount = row2.getInt("attendeeAmount");
+						ts.setAttendee(attendeeAmount);
+						ts.setEventReq(row2.getString("eventRequirements"));
+						ts.setLocation(row2.getString("location"));
+						ts.setVenue(row2.getString("venue")); 
+						//If event has passed - 
+						if(eventPassed == true)
+						{
+							//if already in event list do nothing
+							if(events.contains(name))
+							{
+								
+							}
+							else
+							{
+								//Take one off count and add to list
+								count--;
+								events.add(name);
+								
+							}
+							
+			
+						}
+						//If event has passed and is within users distance preferences
+						if(eventPassed == false && distance <= us.getDistance())
+						{
+							ts.setCorrectDistance(true);
+							boolean getAttending = getAttending(us.getUsername(),name);
+							boolean getNotAttending = getNotAttending(us.getUsername(),name);
+								//If attending count equals count return null
+								if(attendingCount == count)
+								{
+									event = null;
+									return event;
+								}
+								if(getAttending == false && getNotAttending == false )
+								{
+									if(events.contains(name))
+									{
+										
+									}
+									else
+									{
+										//Add event to list if not already on it
+										events.add(name);
+									}
+								    //Set event to ts and return it
+									event = ts;
+									return event;
+									
+								}
+								else
+								{
+										if(getAttending == true)
+										{
+											if(events.contains(name))
+											{
+												
+											}
+											else
+											{
+												//If not already on list add to list and increment attending counter
+												events.add(name);
+												attendingCount++;
+											
+											}
+											
+										}
+										//If attending count equals count return null
+										if(attendingCount == count)
+										{
+											event = null;
+											return event;
+										}
+										if(getNotAttending == true)
+										{
+											if(events.contains(name))
+											{
+												
+											}
+											else
+											{
+												//If not already on list add to list and increment attending counter
+												events.add(name);
+												attendingCount++;
+											
+											}
+										}
+										//If attending count equals count return null
+										if(attendingCount == count)
+										{
+											
+											event = null;
+											return event;
+										}
 		
-				}
-				}
-			}
-				count2++;
-			//	return event;
+								}
+						}
+				
+		//Increment count2
+		count2++;
+			
 		}
+		//If attending is not equal call the method again 
 		if(attendingCount != count)
 		{
-			System.out.println("Random");
 			getRandomEvent(us);
 		}
-
-		System.out.println("end");
-		
-	//	System.out.println(event.getEvent());
+		//return event
+	    session.shutdown();
 		return event;
 		
 	}
-
-/*	public eventStore getRandomEvent(UserStore us) {
-
-		eventStore event = new eventStore();
-		//event = null;
-		Session session = cluster.connect(eventmate);
-		int count2 = 1;
-		//event = null;
-
-			   Random rand = new Random();
-			   int randomNum = rand.nextInt(count) + 1;
-			   System.out.println("Random num" + randomNum);
-			    PreparedStatement statement2 = session.prepare("SELECT * from events;");
-				BoundStatement boundStatement2 = new BoundStatement(statement2);
-				ResultSet rs2 = session.execute(boundStatement2);
-				for(Row row2 : rs2)
-				{
-					if(attendingCount == count)
-					{
-						event = null;
-						return event;
-					}
-					eventStore ts = new eventStore();
-
-					System.out.println("count 2" + count2);
-					if(count2 == randomNum)
-					{
-
-
-					System.out.println("Hallo");
-					String name = row2.getString("name");
-					if(events.contains(name))
-					{
-						System.out.println("Contained");
-					}
-					else
-					{
-						System.out.println("Added");
-						events.add(name);
-					} 
-
-					ts.setEvent(name);
-					ts.setDesc(row2.getString("description"));
-					Calendar c =  Calendar.getInstance();
-					//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
-					c.setTime(row2.getDate("eventdate"));
-					//Create a new date format
-					SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
-					//Formats the calendar time into a date format
-					String date = dateFormat.format(c.getTime());
-					System.out.println(date);
-					ts.setDate(date);
-					Date eventDate = row2.getDate("eventdate");
-					Calendar eventCal = Calendar.getInstance();
-					eventCal.setTime(eventDate);
-					Calendar today = Calendar.getInstance();
-					String postcode = row2.getString("postcode");
-					 boolean eventPassed = eventCal.get(Calendar.YEAR) <= today.get(Calendar.YEAR) &&
-			                  eventCal.get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR);
-					if(eventPassed == true)
-					{
-						if(events.contains(name))
-						{
-						count--;
-						events.add(name);
-						}
-						getRandomEvent(us);
-					}
-					int distance = parseURL(postcode,us.getPostcode()) / 1000;
-					System.out.println(distance);
-					int attendeeAmount = row2.getInt("attendeeAmount");
-					ts.setAttendee(attendeeAmount);
-					ts.setEventReq(row2.getString("eventRequirements"));
-					ts.setLocation(row2.getString("location"));
-					ts.setVenue(row2.getString("venue")); 
-					if(distance <= us.getDistance() && eventPassed == false)
-					{
-						PreparedStatement statement3 = session.prepare("SELECT * from userattending WHERE username = ? AND eventname = ?;");
-						BoundStatement boundStatement3 = new BoundStatement(statement3);
-						ResultSet rs3 = session.execute(boundStatement3.bind(us.getUsername(),name));
-						PreparedStatement statement4 = session.prepare("SELECT * from usernotattending WHERE username = ? AND eventname = ?;");
-						BoundStatement boundStatement4 = new BoundStatement(statement4);
-						ResultSet rs4 = session.execute(boundStatement4.bind(us.getUsername(),name));
-						System.out.println(name);
-						System.out.println(" attending count " + attendingCount);
-						if(rs3.isExhausted() && rs4.isExhausted())
-						{
-
-							if(attendingCount == count)
-							{
-								event = null;
-								return event;
-							}
-							System.out.println("hello" + name);
-
-							System.out.println("added");
-							event = ts;
-							return event;
-
-						}
-						else
-						{
-							if(attendingCount == count)
-							{
-								event = null;
-								return event;
-							}
-							if(!rs3.isExhausted())
-							{
-								if(events.contains(name))
-								{
-
-								}
-								else
-								{
-								attendingCount++;
-								events.add(name);
-								}
-
-								if(attendingCount == count)
-								{
-									event = null;
-									return event;
-								}
-								else
-								{
-								getRandomEvent(us);
-								}
-							}
-							if(!rs4.isExhausted())
-							{
-
-								if(events.contains(name))
-								{
-
-								}
-								else
-								{
-								attendingCount++;
-								events.add(name);
-								}
-
-								if(attendingCount == count)
-								{
-									event = null;
-									return event;
-								}
-								else
-								{
-								getRandomEvent(us);
-								}
-
-							}
-
-
-							System.out.println(" attending count "+ attendingCount);
-						} 
-
-
-					//	}
-						//else
-					//	{
-						//	if(attendingCount == count)
-						//	{
-						//		event = null;
-						//	}
-						//	getRandomEvent(us);
-						//	System.out.println("hello2");
-
-
-
-						//}
+	
 
 
 
 
-					}
-				   else
-					{
-						System.out.println("hello2 just now");
-						if(attendingCount == count)
-						{
-							event = null;
-							return event;
-						}
-						else
-						{
-							getRandomEvent(us);
-						}
-
-
-					}
-
-
-
-				}
-
-					count2++;
-
-				}
-				if(attendingCount != count)
-				{
-					getRandomEvent(us);
-				}
-		session.shutdown();
-		return event;
-	} */
+	/**
+	 * When user selects to attend event this adds it into the database
+	 * @param us
+	 * @param event
+	 */
 	public void setAttending(UserStore us, String event) {
 		Session session = cluster.connect(eventmate);
-		PreparedStatement statement = session
-				.prepare("INSERT INTO userattending(username,eventname) VALUES(?,?);");
+		PreparedStatement statement = session.prepare("INSERT INTO userattending(username,eventname) VALUES(?,?);");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		session.execute(boundStatement.bind(us.getUsername(), event));
+		session.shutdown();
 		FriendModel fm = new FriendModel();
 		fm.setCluster(cluster);
 		fm.getAttending(us, event);
+		
 
 	}
 
+	/**
+	 * When user selects not to attend event this adds it into database
+	 * @param us
+	 * @param event
+	 */
 	public void setNotAttending(UserStore us, String event) {
 		Session session = cluster.connect(eventmate);
-		PreparedStatement statement = session
-				.prepare("INSERT INTO usernotattending(username,eventname) VALUES(?,?);");
+		PreparedStatement statement = session.prepare("INSERT INTO usernotattending(username,eventname) VALUES(?,?);");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		session.execute(boundStatement.bind(us.getUsername(), event));
+		session.shutdown();
 	}
 
-	public String convertTime(long time) {
+	/**
+	 * This method converts time
+	 * @param time
+	 * @return
+	 */
+	public String convertTime(long time) 
+	{
 		Date date = new Date(time);
 		Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
 		return format.format(date).toString();
 	}
 
+	/**
+	 * This method parses the google maps api for getting distance between to places by postcode, we parse the json
+	 * @param ePostcode
+	 * @param uPostcode
+	 * @return
+	 */
 	public int parseURL(String ePostcode, String uPostcode) {
-		// Create JSON and Finance objects (used to convert one data type to
-		// another on request)
-		JSONObject jObject = null;
-		String distance = "";
-		JSONArray json = null;
+	
+        //Stores user and event postcode
 		String userPostcode = uPostcode;
 		String eventPostcode = ePostcode;
+		//Stores mode
 		String mode = "walking";
 		int eventDistance = 0;
-		// Generate URL from which to read the stock details
 
 		URL feedUrl = null;
-		try {
+		try 
+		{
+			//Gets URL
 			feedUrl = new URL(
 					"http://maps.googleapis.com/maps/api/distancematrix/json?origins="
 							+ userPostcode + "&destinations=" + eventPostcode
 							+ "+BC&mode=" + mode
 							+ "&language=en-EN&sensor=false");
 		} catch (MalformedURLException e) {
+			
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		//Attempts to read feed into input stream
 		InputStream inputstream = null;
-		try {
+		try 
+		{
 			inputstream = feedUrl.openStream();
-		} catch (IOException e1) {
+		} catch (IOException e1) 
+		{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		// Read from stream
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				inputstream, Charset.forName("UTF-8")));
+		//New string builder
 		StringBuilder stringbuilder = new StringBuilder();
 		int cp;
 		try {
-			while ((cp = reader.read()) != -1) {
+			while ((cp = reader.read()) != -1)
+			{
 				stringbuilder.append((char) cp);
 			}
 		} catch (IOException e) {
@@ -689,48 +602,36 @@ public class EventModel {
 		// Get text from stream
 		String jsonText = stringbuilder.toString();
 		// close stream
-
-		try {
+		try 
+		{
 			inputstream.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//System.out.println(jsonText);
 		try {
-			JSONObject rootObject = new JSONObject(jsonText); // Parse the JSON
-																// to a
-																// JSONObject
-			JSONArray rows = rootObject.getJSONArray("rows"); // Get all
-																// JSONArray
-																// rows
-
-			for (int i = 0; i < rows.length(); i++) { // Loop over each each row
-				JSONObject row = rows.getJSONObject(i); // Get row object
-				JSONArray elements = row.getJSONArray("elements"); // Get all
-																	// elements
-																	// for each
-																	// row as an
-																	// array
-
-				for (int j = 0; j < elements.length(); j++) { // Iterate each
-																// element in
-																// the elements
-																// array
-					JSONObject element = elements.getJSONObject(j); // Get the
-																	// element
-																	// object
-
-					JSONObject distances = element.getJSONObject("distance"); // Get
-																				// distance
-																				// sub
-																				// object
+			//Parse the JSON to a JSON Object
+			JSONObject rootObject = new JSONObject(jsonText); 
+			//Get all JSONArray rows
+			JSONArray rows = rootObject.getJSONArray("rows"); 
+            //Loop over each row
+			for (int i = 0; i < rows.length(); i++) 
+			{ 
+				//Get row object
+				JSONObject row = rows.getJSONObject(i); 
+				//Get all elements for each row as an array
+				JSONArray elements = row.getJSONArray("elements"); 
+                //Iterate each element in the elements array
+				for (int j = 0; j < elements.length(); j++) 
+				{
+					//Get the element object									
+					JSONObject element = elements.getJSONObject(j); 
+					//Get distance sub object
+					JSONObject distances = element.getJSONObject("distance"); 
+					//Get distance valye
 					eventDistance = distances.getInt("value");
-
-					System.out
-							.println("Distance: " + distances.getInt("value")); // Print
-																				// int
-																				// value
+					//Print distance
+					System.out.println("Distance: " + distances.getInt("value")); 
 				}
 			}
 		} catch (JSONException e1) {
@@ -738,6 +639,7 @@ public class EventModel {
 			e1.printStackTrace();
 		}
 
+		//Return distance
 		return eventDistance;
 	}
 }

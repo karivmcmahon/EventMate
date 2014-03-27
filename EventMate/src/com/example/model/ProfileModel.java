@@ -29,11 +29,22 @@ import com.example.stores.ProfileStore;
 public class ProfileModel {
 	
 	Cluster cluster;
+	//Gets database name
 	String eventmate = "eventmate2";
-	public void setCluster(Cluster cluster){
+	
+	//Sets up cluster
+	public void setCluster(Cluster cluster)
+	{
 		this.cluster=cluster;
 	}
 	
+	/**
+	 * Gets profile of userws
+	 * @param us
+	 * @param num
+	 * @param username
+	 * @return
+	 */
 	public LinkedList<ProfileStore> getProfile(UserStore us,int num,String username)
 	{
 		LinkedList<ProfileStore> profile = new LinkedList<ProfileStore>();
@@ -44,14 +55,14 @@ public class ProfileModel {
 		
 		if(num == 1)
 		{
-			//do stuff to get the profile of user logged in
+			//Get profile of user logged in
 		    statement = session.prepare("SELECT * FROM users WHERE username =?;");
 		    boundStatement = new BoundStatement(statement);
 		    rs = session.execute(boundStatement.bind(us.getUsername()));
 		}
 		if(num == 2)
 		{
-			//do stuff to get the profile of user logged in
+			//Get profile of a user
 		    statement = session.prepare("SELECT * FROM users WHERE username =?;");
 		    boundStatement = new BoundStatement(statement);
 		    rs = session.execute(boundStatement.bind(username));
@@ -60,8 +71,8 @@ public class ProfileModel {
 
 			System.out.println("No profile returned");
 		} else {
-			System.out.println("this could work");
 			for (Row row : rs) {
+				//Sets up profile info
 				ProfileStore p = new ProfileStore();
 				p.setUsername(row.getString("username"));
 				p.setName(row.getString("name"));
@@ -77,17 +88,20 @@ public class ProfileModel {
 				int age = getDate(dob);
 				p.setAge(age);
 			
+				//Gets if they are attending events
 				PreparedStatement statement3 = session.prepare("SELECT * from userattending WHERE username=?;");
 				BoundStatement boundStatement3 = new BoundStatement(statement3);
 				ResultSet rs3 = session.execute(boundStatement3.bind(us.getUsername()));
 				for(Row row3 : rs3)
 				{
 					String event = row3.getString("eventname");
+					//Gets event info
 					PreparedStatement statement4 = session.prepare("SELECT * from events WHERE name= ?;");
 					BoundStatement boundStatement4 = new BoundStatement(statement4);
 					ResultSet rs4 = session.execute(boundStatement4.bind(event));
 					for(Row row4 : rs4)
 					{
+						//Adds event to eventlist if today or greater
 						Date eventDate = row4.getDate("eventdate");
 						Calendar events = Calendar.getInstance();  
 						events.setTime(eventDate);  
@@ -103,6 +117,7 @@ public class ProfileModel {
 				}
 				if(num == 2)
 				{
+					//Adds information to list about whether they are friends with user or not
 					FriendModel fm = new FriendModel();
 					fm.setCluster(cluster);
 					boolean friends = fm.getUsersFriends(us.getUsername(),username);
@@ -124,7 +139,7 @@ public class ProfileModel {
 						p.setUserFriends(true);
 					}
 				}
-				
+				//Add info to profile
 				profile.add(p);
 			}
 		}
@@ -133,19 +148,25 @@ public class ProfileModel {
 	}
 	
 
-	
+	/**
+	 * Method calculates age from the date of birth given
+	 * @param dateOfBirth
+	 * @return
+	 */
 	public int getDate(Date dateOfBirth)
 	{
-	Calendar dob = Calendar.getInstance(); 
-	dob.setTime(dateOfBirth); 
-	Calendar today = Calendar.getInstance(); 
-	int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR); 
-	if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH)) {
-	age--; 
-	} else if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH)
-	&& today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
-	age--; 
-	}
+		Calendar dob = Calendar.getInstance(); 
+		dob.setTime(dateOfBirth); 
+		Calendar today = Calendar.getInstance(); 
+		int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR); 
+		if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH))
+		{
+			age--; 
+		} 
+		else if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH) && today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH))
+		{
+			age--; 
+		}
 	return age;
 	}
 

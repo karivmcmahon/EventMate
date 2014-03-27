@@ -19,12 +19,20 @@ import com.example.stores.eventStore;
 public class UserModel {
 	
 	Cluster cluster;
+	//Database name
 	String eventmate = "eventmate2";
 	
-	public void setCluster(Cluster cluster){
+	//Sets up cluster
+	public void setCluster(Cluster cluster)
+	{
 		this.cluster=cluster;
 	}
 	
+	/**
+	 * Method gets user info when logging in
+	 * @param us
+	 * @return
+	 */
 	public UserStore getUser(UserStore us)
 	{
 		UserStore user = new UserStore();
@@ -33,14 +41,19 @@ public class UserModel {
 		String pw = us.getPassword();
 		PreparedStatement statement = session.prepare("SELECT * from users WHERE username = ? AND password = ?;");
 		BoundStatement boundStatement = new BoundStatement(statement);
-		System.out.println("fail1");
 		ResultSet rs = session.execute(boundStatement.bind(un,pw));
-		if (rs.isExhausted()) {
-			System.out.println("fail1");
+		//if result set empty set user valid to false
+		if (rs.isExhausted()) 
+		{
+			
 			user.setValid(false);
-		} else {
-			for (Row row : rs) {
-				System.out.println("fail2");
+		} 
+		else 
+		{
+			
+			for (Row row : rs) 
+			{
+				//Set up user into
 				user.setUsername(row.getString("username"));
 				user.setPassword(row.getString("password"));
 				user.setName(row.getString("name"));
@@ -67,59 +80,77 @@ public class UserModel {
 				user.setValid(true);
 			}
 		}
+		//return user
 		session.shutdown();
 		return user;
 	}
 	
+	/** 
+	 * Checks if username is already in database returns that user is invalid if it is
+	 * @param us
+	 * @return
+	 */
 	public String checkUsername(UserStore us)
 	{
-	UserStore user = new UserStore();
-	Session session = cluster.connect(eventmate);
-	String username = "";
-	String un = us.getUsername();
-	PreparedStatement statement = session.prepare("SELECT * from users WHERE username = ?;");
-	BoundStatement boundStatement = new BoundStatement(statement);
-	System.out.println("fail1");
-	ResultSet rs = session.execute(boundStatement.bind(un));
-	if (rs.isExhausted()) {
-	System.out.println("fail1");
-	user.setValid(false);
-	} else {
-	for (Row row : rs) {
-	System.out.println("fail2");
-	username = row.getString("username");
-	}
-	}
-	session.shutdown();
-	return username;
+		UserStore user = new UserStore();
+		Session session = cluster.connect(eventmate);
+		String username = "";
+		String un = us.getUsername();
+		PreparedStatement statement = session.prepare("SELECT * from users WHERE username = ?;");
+		BoundStatement boundStatement = new BoundStatement(statement);
+		ResultSet rs = session.execute(boundStatement.bind(un));
+		if (rs.isExhausted()) 
+		{
+			
+			user.setValid(false);
+		} 
+		else 
+		{
+			for (Row row : rs) 
+			{
+			
+				username = row.getString("username");
+			}
+		}
+		session.shutdown();
+		return username;
 	}
 
+	/**
+	 * Checks if email is already used in database and returns user invalid if it it is
+	 * @param us
+	 * @return
+	 */
 	public String checkEmail(UserStore us)
 	{
-	UserStore user = new UserStore();
-	Session session = cluster.connect(eventmate);
-	String email = "";
-	String em = us.getEmail();
-	PreparedStatement statement = session.prepare("SELECT email from users WHERE email = ?;");
-	BoundStatement boundStatement = new BoundStatement(statement);
-	System.out.println("fail1");
-	ResultSet rs = session.execute(boundStatement.bind(em));
-	if (rs.isExhausted()) {
-	System.out.println("fail1");
-	user.setValid(false);
-	} else {
-	for (Row row : rs) {
-	System.out.println("fail2");
-	email = row.getString("email");
-	}
-	}
-	session.shutdown();
-	return email;
+		UserStore user = new UserStore();
+		Session session = cluster.connect(eventmate);
+		String email = "";
+		String em = us.getEmail();
+		PreparedStatement statement = session.prepare("SELECT email from users WHERE email = ?;");
+		BoundStatement boundStatement = new BoundStatement(statement);
+		ResultSet rs = session.execute(boundStatement.bind(em));
+		if (rs.isExhausted()) 
+		{
+			user.setValid(false);
+		} 
+		else 
+		{
+			for (Row row : rs) 
+			{
+				email = row.getString("email");
+			}
+		}
+		session.shutdown();
+		return email;
 	}
 	
+	/**
+	 * This method is used for when the user wants update there information
+	 * @param us
+	 */
 	public void editUser(UserStore us)
 	{
-		System.out.println("Edit user");
 		Session session = cluster.connect(eventmate);
 		String name = us.getName();
 		String un = us.getUsername();
@@ -139,21 +170,17 @@ public class UserModel {
 		int ageMax = us.getAgeMax();
 		String interestedIn = us.getInterestedIn();
 		String photo = us.getPhoto();
-		//Date dob = us.getDob();
-		
-		//Timestamp times = new Timestamp(dob.getTime());
-	//	System.out.println("Times" + times);
-		//Date dateJoined = us.getDateJoined();
-		//Timestamp times2 = new Timestamp(dateJoined.getTime());
-		//System.out.println("Times 2" + times2);
 		PreparedStatement statement = session.prepare("UPDATE users SET name = ?, email = ?, bio = ?, gender = ?, interests = ?, location = ?, music = ?, postcode = ?, sports = ?, \"distanceAmount\" = ?, \"genderPref\" = ?, \"relationshipStatus\" = ?, \"ageMaxRange\" = ?, \"ageMinRange\" = ?, interestedIn = ?, photo = ? WHERE username = ? AND password = ?;");
-		System.out.println("Statement prepared");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		session.execute(boundStatement.bind(name, email, bio, gender, interests, location, music, postcode, sports, distance, genderPref, relationship, ageMax, ageMin,interestedIn,photo, un, pw));
 		System.out.println("execute");
 		session.shutdown();
 	}
 	
+	/**
+	 * This method is used for when a user signs up and we want to add them to the database
+	 * @param us
+	 */
 	public void addUser(UserStore us)
 	{
 		Session session = cluster.connect(eventmate);
@@ -179,7 +206,6 @@ public class UserModel {
 		java.util.Date date= new java.util.Date();
 		Timestamp times = new Timestamp(date.getTime());
 		PreparedStatement statement = session.prepare("INSERT INTO users(name,username,password,email,bio,gender,interests,location,music,postcode,sports,\"distanceAmount\",\"genderPref\",\"relationshipStatus\",\"ageMaxRange\",\"ageMinRange\",dob, \"dateJoined\",interestedIn,photo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-		System.out.println("Statement prepared");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		session.execute(boundStatement.bind(name, un, pw, email, bio, gender, interests, location, music, postcode, sports, distance, genderPref, relationship, ageMax, ageMin, dob, times,interestedIn,photo));
 		System.out.println("execute");
