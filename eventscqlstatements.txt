@@ -106,11 +106,11 @@ CREATE TABLE eventmate3.users
 CREATE INDEX ON eventmate3.users(name);
 CREATE INDEX ON eventmate3.users(email);
 
-INSERT INTO eventmate3.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,interestedIn)
-VALUES('rdw92','2erty','Ryan Dawson','2014-03-15 14:44','1992-04-17','In A Relationship','Glasgow','G117DD','Studys at Glasgow Uni,Loves a good night out','rw92@aol.co.uk',18,25,'both',60,'male',{'Football,Rugby'},{'Indie','Dubstep'},{'Video Games','Tech'},'female');
+INSERT INTO eventmate3.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('rdw92','2erty','Ryan Dawson','2014-03-15 14:44','1992-04-17','In A Relationship','Glasgow','G117DD','Studys at Glasgow Uni,Loves a good night out','rw92@aol.co.uk',18,25,'both',60,'male',{'Football,Rugby'},{'Indie','Dubstep'},{'Video Games','Tech'});
 
-INSERT INTO eventmate3.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,interestedIn)
-VALUES('janeausten22','tswift22','Jane Austen','2014-03-18 11:22','1990-12-18','Single','Dundee','DD15DL','English Lit Student','ja@hotmail.co.uk',22,27,'both',35,'female',{'Ultimate'},{'Jazz'},{'Watching TV,Poetry'}, );
+INSERT INTO eventmate3.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
+VALUES('janeausten22','tswift22','Jane Austen','2014-03-18 11:22','1990-12-18','Single','Dundee','DD15DL','English Lit Student','ja@hotmail.co.uk',22,27,'both',35,'female',{'Ultimate'},{'Jazz'},{'Watching TV,Poetry'});
 
 INSERT INTO eventmate3.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests)
 VALUES('JoshCarter101','JC101','Josh Carter','2014-03-18 11:30','1994-01-21','In A Relationship','Glasgow','G513AF','Joiner Apprentice','jc202@hotmail.co.uk',20,25,'both',60,'male',{'Football'},{'Indie'},{'Outdoors'});
