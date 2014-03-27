@@ -27,64 +27,70 @@
 	</head>
 
 <body>
-<jsp:include page="Searchbar.jsp" />
-
-<div class="divMain2" style="min-height:100%;">
-	<jsp:include page="Header.jsp" />
-	<br><br><br>
-	<center>
-	<span class="blueFont" >Your Messages:</span>
-	</center>
-
-	<div id="loaddiv">
-
-					<%
-		System.out.println("In render");
-		List<MessagerStore> messages = (List<MessagerStore>)request.getAttribute("Message");
-		if (messages==null){
-		 %>
-			<p class="blueFont" style="margin-top:30%;">Could not find any messages</p>
-			<% 
-		}else{
-		%>
+		<!-- Includes search bar and event-mate title -->
+		<jsp:include page="Searchbar.jsp" />
 		
+		<div class="divMain2" style="min-height:100%;">
+			
+			<!-- Incluces icon header for rounded div -->
+			<jsp:include page="Header.jsp" />
+			<br><br><br>
 		
-		<% 
-		Iterator<MessagerStore> iterator;
-		
-		
-		iterator = messages.iterator();    
-		if(!iterator.hasNext())
-		{ %>
 			<center>
-			<p class="blueFont" style="margin-top:30%;">Could not find any messages</p>
+				<span class="blueFont" >Your Messages:</span>
 			</center>
-		<%
-		}
-		while (iterator.hasNext()){
-			MessagerStore ts = (MessagerStore)iterator.next();
 		
-			%>
-			<div class="event">
-			<form action="${pageContent.request.contextPath}/EventMate/DisplayMessages" method="post">
-			<input type="hidden" name="name" value="<%= ts.getName() %>">
-			<button type="submit" value="<%= ts.getMessager() %>" name="username" style="float:right;padding: 0;border: none;background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/ic_post.png"  width="60px" height="60px"></button>
-			</form>
+			<div id="loaddiv">
+		
+				<%
+				System.out.println("In render");
+				List<MessagerStore> messages = (List<MessagerStore>)request.getAttribute("Message");
+				if (messages==null){
+				 %>
+					<p class="blueFont" style="margin-top:30%;">Could not find any messages</p>
+					<% 
+				}else{
+				%>
+				
+				
+				<% 
+				Iterator<MessagerStore> iterator;
+				
+				
+				iterator = messages.iterator();    
+				if(!iterator.hasNext())
+				{ %>
+					<center>
+					<p class="blueFont" style="margin-top:30%;">Could not find any messages</p>
+					</center>
+				<%
+				}
+				while (iterator.hasNext()){
+					MessagerStore ts = (MessagerStore)iterator.next();
+				
+					%>
+					
+					<!-- Display messager list -->
+					<div class="event">
+						<form action="${pageContent.request.contextPath}/EventMate/DisplayMessages" method="post">
+						<input type="hidden" name="name" value="<%= ts.getName() %>">
+						<button type="submit" value="<%= ts.getMessager() %>" name="username" style="float:right;padding: 0;border: none;background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/ic_post.png"  width="60px" height="60px"></button>
+						</form>
+					
+					
+							<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getMessager()%>"><img src="<%=ts.getPhoto() %>" width="60px" height="60px" style="float:left;" class="userimgBorder"></a>
+							<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getMessager()%>" class="blueFont">	<%= ts.getName() %></a>
+								<br><br><br>
+				
+					</div>
+				<%
+				
+				}
+				}
+				%>
 		
 		
-				<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getMessager()%>"><img src="<%=ts.getPhoto() %>" width="60px" height="60px" style="float:left;" class="userimgBorder"></a>
-				<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getMessager()%>" class="blueFont">	<%= ts.getName() %></a>
-					<br><br><br>
-		
-			</div>
-		<%
-		
-		}
-		}
-		%>
-
-
-</div>	
-</div>
+		</div>	
+		</div>
 </body>
 </html>

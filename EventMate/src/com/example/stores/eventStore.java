@@ -3,8 +3,7 @@ package com.example.stores;
 import java.util.Date;
 
 /**
- * Class stores information about events
- * @author Kari
+ * Class sets and gets information about events and relating too 
  *
  */
 

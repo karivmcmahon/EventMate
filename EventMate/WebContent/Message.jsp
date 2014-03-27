@@ -16,6 +16,7 @@
 		
 		<title>Event-Mate</title>
 		<!-- Ajax script to refresh tweet timeline every 15 mins, fade out is fast to show refresh occuring -->
+	
 		<script>
 		var auto_refresh = setInterval(
 		function()
@@ -39,99 +40,106 @@
 	</head>
 <body>
    
-<jsp:include page="Searchbar.jsp" />
-
-<div class="divMain2" style="min-height:100%;">
-	<jsp:include page="Header.jsp" />
-	<br><br><br>
-	<center><%UserStore friendName = (UserStore)request.getAttribute("Friend");%>
-		<span class="blueFont" >Messages From <%= friendName.getName() %></span>
-	</center>
+    <!-- Search bar and event-mate title bar -->
+	<jsp:include page="Searchbar.jsp" />
 	
-	<div  id="m">
+	<div class="divMain2" style="min-height:100%;">
 	
-	<%
-System.out.println("In render");
-List<MessageStore> Message = (List<MessageStore>)request.getAttribute("Messages");
-if (Message==null){
- %>
- <% System.out.println("Empty"); %>
-	<p class="blueFont">No event's found</p>
-	<% 
-}else{
-%>
-
-
-<% 
-UserStore u = (UserStore)request.getSession().getAttribute("currentSeshUser");
-Iterator<MessageStore> iterator;
-
-System.out.println("User logged in " + u.getUsername());
-iterator = Message.iterator();     
-if(!iterator.hasNext())
-{ %>
-	<center>
-	<p class="blueFont" style="margin-top:50%;">Go on send a message......</p>
-	</center>
-<%
-}
-else
-{ 
-while (iterator.hasNext()){
-	MessageStore ts = (MessageStore)iterator.next();
-	if(u.getUsername().equals(ts.getFrom()))
-	{
-	%>
+			<!-- Icon header in rounded div -->
+			<jsp:include page="Header.jsp" />
+			<br><br><br>
+			
+			<center><%UserStore friendName = (UserStore)request.getAttribute("Friend");%>
+				<span class="blueFont" >Messages From <%= friendName.getName() %></span>
+			</center>
+			
+			
+			<div  id="m">
+			
+			<%
+				System.out.println("In render");
+				List<MessageStore> Message = (List<MessageStore>)request.getAttribute("Messages");
+				if (Message==null){
+				 %>
+				 <% System.out.println("Empty"); %>
+					<p class="blueFont">No event's found</p>
+					<% 
+				}else{
+				%>
+				
+				
+				<% 
+				UserStore u = (UserStore)request.getSession().getAttribute("currentSeshUser");
+				Iterator<MessageStore> iterator;
+				
+				System.out.println("User logged in " + u.getUsername());
+				iterator = Message.iterator();     
+				if(!iterator.hasNext())
+				{ %>
+					<center>
+					<p class="blueFont" style="margin-top:50%;">Go on send a message......</p>
+					</center>
+				<%
+				}
+				else
+				{ 
+				while (iterator.hasNext()){
+					MessageStore ts = (MessageStore)iterator.next();
+					if(u.getUsername().equals(ts.getFrom()))
+					{
+					%>
+						
+						<!-- Display users message bubble -->
+						<div class="beforeBubble">
+							<center>
+								<span class="smallBlueFont"><%=ts.getDate()%></span>
+							</center>
+							<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getFrom()%>"><img src="<%= u.getPhoto() %>" width="60px" height="60px" style="float:right;" class="userimgBorder"></a>
+							<div class="bubble" style="float:right;">
+							
+						  		<div class="smallBlackFont"><%= ts.getMessage()%></div>
+						 	</div>
+					 	</div>
+					 	<%}
+						else
+					 	{%>
+					 	  <!-- Display friends message bubble -->
+						  <div class="beforeBubble2">
+						   <center>
+						   
+						  	 <span class="smallBlackFont" ><%=ts.getDate()%></span>
+						   </center>
+						  <a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getFrom()%>"> <img src="<%= friendName.getPhoto() %>" width="60px" height="60px" style="float:left;" class="userimgBorder"></a>
+						  <div class="bubble2" style="float:left;">
+					 
+					 		 <div class="senderPost"><%= ts.getMessage() %></div>
+					  	</div>
+					  </div>
+					  <%} %>
+					  
+					 
+					 
+				<%
+				}
+			    }
+				}
+				
+				%>
+			
+			 
+			 </div>
+			 
+			 <!-- Form to send new message to servlet -->
+			<form action="${pageContent.request.contextPath}/EventMate/Messages" method="POST">
+				<textarea  name="postMessage" rows="6" cols="70" class="textarea" ></textarea>
+				<input type="hidden"  value="<%= friendName.getName() %>" name="name">
+				<input type="hidden"  value="<%= friendName.getUsername() %>" name="sendingTo">
+				<input type="hidden"  value="<%= friendName.getPhoto() %>" name="photo">
+				<input type="submit" value="Send" class="button" >
+			</form>
+			
 		
-		<% System.out.println("Empty"); %>
-		<div class="beforeBubble">
-		<center>
-		<span class="smallBlueFont"><%=ts.getDate()%></span>
-		</center>
-		<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getFrom()%>"><img src="<%= u.getPhoto() %>" width="60px" height="60px" style="float:right;" class="userimgBorder"></a>
-		<div class="bubble" style="float:right;">
 		
-	  		<div class="smallBlackFont"><%= ts.getMessage()%></div>
-	 	</div>
-	 	</div>
-	 	<%}
-	else
-	 		{%>
-	 		<% System.out.println("Empty"); %>
-		  <div class="beforeBubble2">
-		   <center>
-		   
-		   <span class="smallBlackFont" ><%=ts.getDate()%></span>
-		   </center>
-		  <a href="${pageContent.request.contextPath}/EventMate/Profile/<%=ts.getFrom()%>"> <img src="<%= friendName.getPhoto() %>" width="60px" height="60px" style="float:left;" class="userimgBorder"></a>
-		  <div class="bubble2" style="float:left;">
-	 
-	  <div class="senderPost"><%= ts.getMessage() %></div>
-	  </div>
-	  </div>
-	  <%} %>
-	  
-	 
-	 
-<%
-}
-	 		}
-}
-
-%>
-	
-	 
-	 </div>
-	<form action="${pageContent.request.contextPath}/EventMate/Messages" method="POST">
-	<textarea  name="postMessage" rows="6" cols="70" class="textarea" ></textarea>
-	<input type="hidden"  value="<%= friendName.getName() %>" name="name">
-	<input type="hidden"  value="<%= friendName.getUsername() %>" name="sendingTo">
-	<input type="hidden"  value="<%= friendName.getPhoto() %>" name="photo">
-	<input type="submit" value="Send" class="button" >
-	</form>
-	
-
-	
-</div>
+	</div>
 </body>
 </html>

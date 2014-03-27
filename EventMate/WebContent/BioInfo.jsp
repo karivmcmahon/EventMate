@@ -23,13 +23,15 @@
 		<title>Event-Mate</title>
 	</head>
 <body>
-	<ul class="header2">
-<center>
-	<span class="eventMate">Event-Mate</span><img src="images/martini2.jpg" width="40px" height="50px" >
-</center>
+
+<!-- Event-Mate Title Bar -->
+<ul class="header2">
+	<center>
+		<span class="eventMate">Event-Mate</span><img src="images/martini2.jpg" width="40px" height="50px" >
+	</center>
 </ul>
 
-	
+	<!--  Div containing form info -->
 	<div class="divMain2" style="min-height:100%;">
 		
 		<br> <br> <br> 
@@ -39,6 +41,8 @@
 		<br>
 		
 		<div class="styleform">
+			
+			<!-- Form containing info that user fills and is then posted to servlet -->
 			<form action="${pageContent.request.contextPath}/EventMate/Bio" method="post">
 				<span class="font">Name:</span> <input type="text" name="name">
 				<br>

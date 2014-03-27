@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Set;
 
 /**
- * Class stores profile information
- * @author Kari
+ * Class sets and gets profile information
+ * 
  *
  */
 public class ProfileStore {

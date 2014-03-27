@@ -23,16 +23,19 @@
 	</head>
 <body>
 
+	<!-- Displays Event-Mate title and search bar -->
 	<jsp:include page="Searchbar.jsp" />
 	<div class="divMain2" style="min-height: 100%;">
+		<!-- Displays icons in rounded header div -->
 		<jsp:include page="Header.jsp" />
+	
 		<%
 			System.out.println("In render");
 			List<ProfileStore> lTweet = (List<ProfileStore>) request
 					.getAttribute("Profile");
 			if (lTweet == null) {
 		%>
-		<p class="blueFont" style="margin-top:30%;">Profile wasn't found!</p>
+			<p class="blueFont" style="margin-top:30%;">Profile wasn't found!</p>
 		<%
 		} 
 		else 
@@ -54,59 +57,61 @@
 				while (iterator.hasNext()) {
 					ProfileStore ts = (ProfileStore) iterator.next();
 		%>
-		<div class="profile">
-			<div class="profilePicture">
-				<img src="<%=ts.getPhoto() %>" class=imgBorder width="250px"
-					height="300px">
-			</div>
-			
-			<div class="profileRight">
-				<p class="blueFont"><%=ts.getName()%></p>
-
-				<br /> <br />
-				<p class="blueFont2"><%=ts.getBio()%></p>
-				<br> <br />
-				 <span class="blueFont2"> Location: 
-				</span> 
-				<span class="blackFont"><%=ts.getLocation()%></span> 
-				<br> <br>
-				<span class="blueFont2"> Relationship
-						Status: 
-				</span> 
-				
-				<span class="blackFont"><%=ts.getStatus()%></span> 
-				
-				<br> <br>
-				
-				<span class="blueFont2"> Age: </span> <span class="blackFont"><%=ts.getAge()%></span><br><br>
-				
-				<span class="blueFont2"> Interested in: </span> <span class="blackFont"><%=ts.getInterestedIn()%></span><br><br>
-				
-				<% UserStore u = new UserStore();
-				u = (UserStore) request.getSession().getAttribute("currentSeshUser");
-				System.out.println("Ts username " + ts.getUsername());
-				System.out.println("U username " + u.getUsername());
-				if(ts.getUserFriends() == false && !ts.getUsername().equals(u.getUsername()))
-				{%>
-				 	<span class="blueFont2" >You are not friends with this person </span>
 		
-				<%}%>
-				 
+			<!-- Displays profile info -->
+			<div class="profile">
+					<div class="profilePicture">
+						<img src="<%=ts.getPhoto() %>" class=imgBorder width="250px"
+							height="300px">
+					</div>
+					
+					<div class="profileRight">
+						<p class="blueFont"><%=ts.getName()%></p>
+		
+						<br /> <br />
+						<p class="blueFont2"><%=ts.getBio()%></p>
+						<br> <br />
+						 <span class="blueFont2"> Location: 
+						</span> 
+						<span class="blackFont"><%=ts.getLocation()%></span> 
+						<br> <br>
+						<span class="blueFont2"> Relationship
+								Status: 
+						</span> 
+						
+						<span class="blackFont"><%=ts.getStatus()%></span> 
+						
+						<br> <br>
+						
+						<span class="blueFont2"> Age: </span> <span class="blackFont"><%=ts.getAge()%></span><br><br>
+						
+						<span class="blueFont2"> Interested in: </span> <span class="blackFont"><%=ts.getInterestedIn()%></span><br><br>
+						
+						<% UserStore u = new UserStore();
+						u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+						System.out.println("Ts username " + ts.getUsername());
+						System.out.println("U username " + u.getUsername());
+						if(ts.getUserFriends() == false && !ts.getUsername().equals(u.getUsername()))
+						{%>
+						 	<span class="blueFont2" >You are not friends with this person </span>
+				
+						<%}%>
+					 
 		 
-			</div>
-			<div class="profileMore">
-				<span class="blueFont2"> Music: 
-				</span> <span class="blackFont"><%=ts.getMusic()%> </span> <br /> <br /> <span class="blueFont2"> Interests: 
-				</span> <span class="blackFont"><%=ts.getInterests() %> </span> <br /> <br /> <span class="blueFont2"> Sports: 
-				</span> <span class="blackFont"><%=ts.getSports() %> </span>
-			</div>
-			<div class="profileEvents">
-				<span class="blueFont2"> Events wanting to attend : </span> <span class="blackFont"><%=ts.getEventList() %> </span>
-			</div>
-			<br>
-			<div class="profileEvents">
-				<span class="blueFont2"> Past events : </span> <span class="blackFont"><%=ts.getPastEventList() %> </span>
-			</div>
+						</div>
+						<div class="profileMore">
+							<span class="blueFont2"> Music: 
+							</span> <span class="blackFont"><%=ts.getMusic()%> </span> <br /> <br /> <span class="blueFont2"> Interests: 
+							</span> <span class="blackFont"><%=ts.getInterests() %> </span> <br /> <br /> <span class="blueFont2"> Sports: 
+							</span> <span class="blackFont"><%=ts.getSports() %> </span>
+						</div>
+						<div class="profileEvents">
+							<span class="blueFont2"> Events wanting to attend : </span> <span class="blackFont"><%=ts.getEventList() %> </span>
+						</div>
+						<br>
+						<div class="profileEvents">
+							<span class="blueFont2"> Past events : </span> <span class="blackFont"><%=ts.getPastEventList() %> </span>
+						</div>
 		</div>
 		<%
 			}

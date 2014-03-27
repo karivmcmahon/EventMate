@@ -5,8 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Class stores message information
- * @author Kari
+ * Class sets and gets information about those sending the messages
+ * 
  *
  */
 public class MessageStore {

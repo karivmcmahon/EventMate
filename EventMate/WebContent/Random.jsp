@@ -19,90 +19,88 @@
 		
 		<title>Event-Mate</title>
 	</head>
+
 <body>
+
+	<!-- Searchbar and Event-Mate title -->
 	<jsp:include page="Searchbar.jsp" />
 
 	<div class="divMain2" style="min-height: 100%;">
+		
+		<!-- Displays icons in rounded div -->
 		<jsp:include page="Header.jsp" />
 
-<%
-System.out.println("In render");
-eventStore lTweet = (eventStore)request.getAttribute("Event");
-if (lTweet==null){
- %>
-	<p class="blueFont" style="margin-top:30%">No event's currently available</p>
-	<% 
-}else{
-%>
-	<div class="randomEvent">
-			<div class="eventPicture">
-				<center>
-					<img src="${pageContent.request.contextPath}/EventMate/images/crowd.jpg" class=imgBorder width="636px"
-						height="322px">
-				</center>		
-			</div>
-		
-		   <center>
-			<br> <br> <span class="blueFontWithoutMarg" ><%=lTweet.getEvent() %> - </span> <span
-				class="blueFont2"><%=lTweet.getDatess() %></span> <br> <br>
-			<span class="blackFont" ><%=lTweet.getDescription() %></span> <br> <span class="blueFont2">Attending:
-			</span> <span class="blackFont"><%= lTweet.getAttendee() %></span> <br>
-			 <span class="blueFont2" >Venue: </span> <span class="blackFont"><%= lTweet.getVenue() %></span> <br>
-			  <span class="blueFont2" >Location: </span> <span class="blackFont"><%= lTweet.getLocation() %></span>
-			 <br> <span
-			 
-				class="blueFont2" >Event Requirement: </span> <span
-
-				class="blackFont"><%=lTweet.getEventReq() %></span> <br>
-				 <span
-			 
-				class="blueFont2" >Event Type: </span> <span
-
-				class="blackFont"><%=lTweet.getCategory() %></span> <br><br><br>
+			<%
+			System.out.println("In render");
+			eventStore lTweet = (eventStore)request.getAttribute("Event");
+			if (lTweet==null){
+			 %>
+				<p class="blueFont" style="margin-top:30%">No event's currently available</p>
+				<% 
+			}else{
+			%>
+				<!-- Displays event info -->
+				<div class="randomEvent">
+						
+						<div class="eventPicture">
+							<center>
+								<img src="${pageContent.request.contextPath}/EventMate/images/crowd.jpg" class=imgBorder width="636px"
+									height="322px">
+							</center>		
+						</div>
+					
+					   <center>
+						<br> <br> 
+						<span class="blueFontWithoutMarg" ><%=lTweet.getEvent() %> - </span> 
+						<span class="blueFont2"><%=lTweet.getDatess() %></span> <br> <br>
+						<span class="blackFont" ><%=lTweet.getDescription() %></span> <br> 
+						<span class="blueFont2">Attending:</span> <span class="blackFont"><%= lTweet.getAttendee() %></span> <br>
+						 <span class="blueFont2" >Venue: </span> <span class="blackFont"><%= lTweet.getVenue() %></span> <br>
+						 <span class="blueFont2" >Location: </span> <span class="blackFont"><%= lTweet.getLocation() %></span>
+						 <br> <span	class="blueFont2" >Event Requirement: </span> <span class="blackFont"><%=lTweet.getEventReq() %></span> <br>
+							 <span class="blueFont2" >Event Type: </span> <span class="blackFont"><%=lTweet.getCategory() %></span> <br><br><br>
+							
+							<%if(lTweet.getCorrectDistance() == false)
+								{%>
+								 <span class="blueFont2" >This event is not within your distance preferences</span><br>
+							<%} %>
+							
 				
-				<%if(lTweet.getCorrectDistance() == false)
+					<% if(lTweet.getAttending() == false && lTweet.getNotAttending() == false && lTweet.getEventPassed() == false)
 					{%>
-					 <span
-			 
-				class="blueFont2" >This event is not within your distance preferences</span><br>
-				<%} %>
+						 <div style="width:50%;float:right;" > 
+							<form action="${pageContent.request.contextPath}/EventMate/NotAttending2" method="post"> 
+								<button type="submit" value="<%=lTweet.getEvent() %>" name="cross" style="float:left;border: none;background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/cross2.png" width="100px" height="100px"></button>
+							</form> 
+						</div>
+						<div style="width:50%;float:left;">
+							<form action="${pageContent.request.contextPath}/EventMate/Attending2" method="post"> 
+								<button type="submit" value="<%=lTweet.getEvent() %>" name="tick" style="float:right;border: none;background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/tick2.png" width="100px" height="100px"></button>
+							</form>
+						</div>
+					<%
+					}
+					else if(lTweet.getAttending() == true)
+					{%>
+						<span class="blueFont2">You are attending this event</span>
+					<%} 
+					else if(lTweet.getNotAttending() == true)
+					{%>
+						<span class="blueFont2" >You are not attending this event</span>
+					<%} 
+				     else if(lTweet.getEventPassed() == true)
+					 { %>
+						<span class="blueFont2" >Event has passed</span>
+					<%} %>
+					</center>
+				</div>
+				<%
+				}
 				
+				%>
+	   
 	
-		<% if(lTweet.getAttending() == false && lTweet.getNotAttending() == false && lTweet.getEventPassed() == false)
-		{%>
-			 <div style="width:50%;float:right;" > 
-				<form action="${pageContent.request.contextPath}/EventMate/NotAttending2" method="post"> 
-					<button type="submit" value="<%=lTweet.getEvent() %>" name="cross" style="float:left;border: none;background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/cross2.png" width="100px" height="100px"></button>
-				</form> 
-			</div>
-			<div style="width:50%;float:left;">
-				<form action="${pageContent.request.contextPath}/EventMate/Attending2" method="post"> 
-					<button type="submit" value="<%=lTweet.getEvent() %>" name="tick" style="float:right;border: none;background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/tick2.png" width="100px" height="100px"></button>
-				</form>
-			</div>
-		<%
-		}
-		else if(lTweet.getAttending() == true)
-		{%>
-			<span class="blueFont2">You are attending this event</span>
-		<%} 
-		else if(lTweet.getNotAttending() == true)
-		{%>
-			<span class="blueFont2" >You are not attending this event</span>
-		<%} 
-	     else if(lTweet.getEventPassed() == true)
-		 { %>
-			<span class="blueFont2" >Event has passed</span>
-		<%} %>
-		</center>
-	</div>
-	<%
-	}
-	
-	%>
-   
-
-	</div>
+		</div>
 
 
 

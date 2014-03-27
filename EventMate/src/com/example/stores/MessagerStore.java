@@ -1,8 +1,8 @@
 package com.example.stores;
 
 /**
- * Class stores messager information
- * @author Kari
+ * Class sets and gets message info
+ * 
  *
  */
 public class MessagerStore {

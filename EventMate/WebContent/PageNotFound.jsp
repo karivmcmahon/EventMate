@@ -17,11 +17,13 @@
 		<title>Event-Mate</title>
 	</head>
 <body>
-<jsp:include page="Searchbar.jsp" />
+	<jsp:include page="Searchbar.jsp" />
 
 	<div class="divMain2" style="min-height: 100%;">
+		<!-- Shows Header.jsp with icon -->
 		<jsp:include page="Header.jsp" />
 
+		<!-- Displays page is not found -->
 		<center>
 			<p class="blueFont" style="margin-top:30%;">Oop's something went wrong....we could not find the page you were looking for :(</p>
 		</center>

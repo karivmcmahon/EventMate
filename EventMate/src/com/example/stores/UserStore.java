@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.Set;
 
 /**
- * Class stores user information
- * @author Kari
+ * Class sets and gets user information
+ *
  *
  */
 public class UserStore {

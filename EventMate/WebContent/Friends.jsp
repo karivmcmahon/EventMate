@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="java.util.*" %>
-      <%@ page import="com.example.stores.*" %>
+<%@ page import="java.util.*" %>
+ <%@ page import="com.example.stores.*" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -28,89 +28,95 @@
 		<title>Event-Mate</title>
 	</head>
 <body>
+
+<!-- Searchbar and event-mate title -->
 <jsp:include page="Searchbar.jsp" />
 
 <div class="divMain2" style="min-height:100%;">
+	
+	<!-- Icons header inside rounded div -->
 	<jsp:include page="Header.jsp" />
 	
 	<br><br><br>
+	
 	<div id="loaddiv">
 	
 		<center>
-		<span class="blueFont">Your Friends</span>
+			<span class="blueFont">Your Friends</span>
 		</center>
 		
 	
-		<%
-System.out.println("In render");
-List<UserStore> friends = (List<UserStore>)request.getAttribute("Friends");
-if (friends==null){
- %>
-	<p class="blueFont" style="margin-top:30%">Could not find any of your friends</p>
-	<% 
-}else{
-%>
-
-
-<% 
-Iterator<UserStore> iterator;
-
-
-iterator = friends.iterator();     
-if(!iterator.hasNext())
-{ %>
-	<center>
-	<p class="blueFont" style="margin-top:30%;">Could not find any of your friends</p>
-	</center>
-<%
-}
-while (iterator.hasNext()){
-	UserStore us = (UserStore)iterator.next();
-
-	%>
-	<div class="event"  style="margin-top:2%;margin-bottom:2%;">
-		<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=us.getUsername()%>"><img src="<%= us.getPhoto() %>" height="130px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
-		
-		<form action="${pageContent.request.contextPath}/EventMate/Messages" method="get">
-				<input type="hidden" name="name" value="<%= us.getName() %>">
-				<button type="submit" value="<%= us.getUsername() %>" name="username" style="float:right;margin-top:2%;padding: 0;border: none;background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/ic_chat_simple.png"  width="60px" height="60px"></button>
-		</form>
-		
-		<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=us.getUsername()%>" class="blueFont3" style="margin-left:2%;"><%= us.getName() %></a><br>
-		<span class="blackFont" style="margin-left:2%;"><%= us.getBio() %></span><br>
-		<span class="blueFont2" style="margin-left:2%;">Age: <span class="blackFont" ><%= us.getAge() %></span></span><br>
-		<span class="blueFont2" style="margin-left:2%;">Location: <span class="blackFont" ><%= us.getLocation() %></span></span><br>
-		<span class="blueFont2" style="margin-left:2%;">Interests: <span class="blackFont" ><%=  us.getInterests() %></span></span><br>
-		<span class="blueFont2" style="margin-left:2%;">Events wanting to attend: <span class="blackFont" >
-		<% ArrayList<String> list = new ArrayList<String>(); 
-		list = us.getEventList(); 
-		if(list.isEmpty())
-		{
-		
-		}
-		else
-		{
-			for(int i= 0;i < list.size();i++)
-			{
-			%>
-				<%= list.get(i) %>,
 			<%
+			System.out.println("In render");
+			List<UserStore> friends = (List<UserStore>)request.getAttribute("Friends");
+			if (friends==null){
+			 %>
+				<p class="blueFont" style="margin-top:30%">Could not find any of your friends</p>
+				<% 
 			}
-		}
-		%>
-		</span>
-		</span>
-		<br>
-
-	</div>
-
-
-<%
-
-}
-}
-%>
-</div>
+			else
+			{
+		
+				Iterator<UserStore> iterator;
+				
+				
+				iterator = friends.iterator();     
+				if(!iterator.hasNext())
+				{ %>
+					<center>
+					<p class="blueFont" style="margin-top:30%;">Could not find any of your friends</p>
+					</center>
+				<%
+				}
+				while (iterator.hasNext()){
+					UserStore us = (UserStore)iterator.next();
+				
+					%>
+					<!--  Displays list of friends -->
+					<div class="event"  style="margin-top:2%;margin-bottom:2%;">
+						
+						<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=us.getUsername()%>"><img src="<%= us.getPhoto() %>" height="130px" style="float:left;margin-top:1%;" class="userimgBorder"></a>
+						
+						<form action="${pageContent.request.contextPath}/EventMate/Messages" method="get">
+								<input type="hidden" name="name" value="<%= us.getName() %>">
+								<button type="submit" value="<%= us.getUsername() %>" name="username" style="float:right;margin-top:2%;padding: 0;border: none;background: none;"><img src="${pageContent.request.contextPath}/EventMate/images/ic_chat_simple.png"  width="60px" height="60px"></button>
+						</form>
+						
+						<a href="${pageContent.request.contextPath}/EventMate/Profile/<%=us.getUsername()%>" class="blueFont3" style="margin-left:2%;"><%= us.getName() %></a><br>
+						<span class="blackFont" style="margin-left:2%;"><%= us.getBio() %></span><br>
+						<span class="blueFont2" style="margin-left:2%;">Age: <span class="blackFont" ><%= us.getAge() %></span></span><br>
+						<span class="blueFont2" style="margin-left:2%;">Location: <span class="blackFont" ><%= us.getLocation() %></span></span><br>
+						<span class="blueFont2" style="margin-left:2%;">Interests: <span class="blackFont" ><%=  us.getInterests() %></span></span><br>
+						<span class="blueFont2" style="margin-left:2%;">Events wanting to attend: <span class="blackFont" >
+						<% ArrayList<String> list = new ArrayList<String>(); 
+						list = us.getEventList(); 
+						if(list.isEmpty())
+						{
+						
+						}
+						else
+						{
+							for(int i= 0;i < list.size();i++)
+							{
+							%>
+								<%= list.get(i) %>,
+							<%
+							}
+						}
+						%>
+						</span>
+						</span>
+						<br>
+				
+					</div>
+				
+				
+					<%
+					
+					}
+					}
+					%>
+				</div>
 	
 </div>
 

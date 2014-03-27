@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<link href="${pageContent.request.contextPath}/EventMate/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur'
 	rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo'
@@ -18,7 +18,12 @@
 <title>Event-Mate</title>
 </head>
 <body>
-	<jsp:include page="Searchbar.jsp" />
+	
+	<ul class="header2">
+<center>
+	<span class="eventMate">Event-Mate</span><img src="images/martini2.jpg" width="40px" height="50px" >
+</center>
+</ul>
 	
 	<div class="divMain2" style="min-height: 100%;">
 	
@@ -26,6 +31,8 @@
 		<br> <br> <br> <span class="blueFont" >Please Enter Your Bio Information</span> <br></div>
 		<br>
 		<div c align="center">
+		
+		<!-- Displays interests,sports and music checkboxes -->
 		<span class="fontCheck">Interests: </span><br><br>
 			<form action="${pageContent.request.contextPath}/EventMate/Interests"
 				method="post">
