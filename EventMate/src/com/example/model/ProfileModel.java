@@ -106,12 +106,18 @@ public class ProfileModel {
 						Calendar events = Calendar.getInstance();  
 						events.setTime(eventDate);  
 						FriendModel fm = new FriendModel();
+						EventModel em = new EventModel();
 						fm.setCluster(cluster);
 				        boolean sameDayOrGreater = fm.sameDayOrGreater(events);
+				        boolean pastEvent = em.getEventPassed(events);
 						if(sameDayOrGreater == true)
 						{
 							p.setEventList(row4.getString("name"));
 						}
+				        if(pastEvent == true)
+				        {
+				        	p.setPastEventList(row4.getString("name"));
+				        }
 
 					}
 				}

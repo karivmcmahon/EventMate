@@ -23,10 +23,10 @@
 	<div class="divMain2" style="min-height: 100%;">
 	
 		<div align="center">
-		<br> <br> <br> <span class="blueFont" ><b>Please Enter Your Bio Information</b></span> <br></div>
+		<br> <br> <br> <span class="blueFont" >Please Enter Your Bio Information</span> <br></div>
 		<br>
 		<div c align="center">
-		<span class="fontCheck"><b>Interests: (Pick Up to 5)</b></span><br><br>
+		<span class="fontCheck">Interests: </span><br><br>
 			<form action="${pageContent.request.contextPath}/EventMate/Interests"
 				method="post">
 				<span class="fontCheck"><input type="checkbox" name="interest" value="Reading">Reading</span> 
@@ -38,7 +38,7 @@
 				<span class="fontCheck"><input type="checkbox" name="interest" value="Watching TV">Watching TV</span><br><br>
 
 			<br><br>
-			<span class="fontCheck"><b>Sports: (Pick Up to 5)</b></span><br><br>
+			<span class="fontCheck">Sports:</span><br><br>
 
 				<span class="fontCheck"><input type="checkbox" name="sport" value="Running">Running</span> 
 				<span class="fontCheck"><input type="checkbox" name="sport" value="Cycling">Cycling</span>
@@ -49,7 +49,7 @@
 				<span class="fontCheck"><input type="checkbox" name="sport" value="Ultimate">Ultimate Frisbee</span><br><br>
 			<br><br>
 
-			<span class="fontCheck"><b>Music: (Pick Up to 5)</b></span><br><br>
+			<span class="fontCheck">Music:</span><br><br>
 
 				<span class="fontCheck"><input type="checkbox" name="music" value="Pop">Pop</span> 
 				<span class="fontCheck"><input type="checkbox" name="music" value="Rock">Rock</span>

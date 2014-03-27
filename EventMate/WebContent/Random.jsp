@@ -30,7 +30,7 @@ System.out.println("In render");
 eventStore lTweet = (eventStore)request.getAttribute("Event");
 if (lTweet==null){
  %>
-	<p class="blueFont">No event's found</p>
+	<p class="blueFont" style="margin-top:30%">No event's currently available</p>
 	<% 
 }else{
 %>

@@ -73,7 +73,7 @@ public class UserModel {
 				user.setInterestedIn(row.getString("interestedIn"));
 				user.setSports(row.getSet("sports", String.class));
 				user.setMusic(row.getSet("music", String.class));
-				//user.setPhoto(row.getString("photo"));
+				user.setPhoto(row.getString("photo"));
 				Date dob = row.getDate("dob");
 				user.setDateJoined(row.getDate("dateJoined"));
 				FriendModel f = new FriendModel();

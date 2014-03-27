@@ -101,7 +101,11 @@
 				</span> <span class="blackFont"><%=ts.getSports() %> </span>
 			</div>
 			<div class="profileEvents">
-				<span class="blueFont2"> Past Events: </span> <span class="blackFont"><%=ts.getEventList() %> </span>
+				<span class="blueFont2"> Events wanting to attend : </span> <span class="blackFont"><%=ts.getEventList() %> </span>
+			</div>
+			<br>
+			<div class="profileEvents">
+				<span class="blueFont2"> Past events : </span> <span class="blackFont"><%=ts.getPastEventList() %> </span>
 			</div>
 		</div>
 		<%

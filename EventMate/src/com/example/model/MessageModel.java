@@ -189,6 +189,7 @@ public class MessageModel {
 							{
 								 m.setName(row3.getString("name"));
 								 m.setPhoto(row3.getString("photo"));
+								 System.out.println("M Photo" + row3.getString("photo") );
 							}
 						}
 					}
@@ -214,6 +215,7 @@ public class MessageModel {
 							{
 								 m.setName(row3.getString("name"));
 								 m.setPhoto(row3.getString("photo"));
+								 System.out.println("M Photo" + row3.getString("photo") );
 							}
 						}
 					}
@@ -259,6 +261,7 @@ public class MessageModel {
 								{
 									 m2.setName(row5.getString("name"));
 									 m2.setPhoto(row5.getString("photo"));
+									 System.out.println("M2 Photo" + row5.getString("photo") );
 								}
 							}
 						}
@@ -281,6 +284,7 @@ public class MessageModel {
 								{
 									 m2.setName(row5.getString("name"));
 									 m2.setPhoto(row5.getString("photo"));
+									 System.out.println("M2 Photo" + row5.getString("photo") );
 								}
 							}
 							

@@ -32,6 +32,7 @@
 
 <jsp:include page="Searchbar.jsp" />
 
+
 <div class="divMain2" style="min-height:100%;">
 	<jsp:include page="Header.jsp" />
 	
@@ -201,6 +202,7 @@ while (iterator.hasNext()){
 
 }
 }
+
 %>
 		
 	

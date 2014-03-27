@@ -25,6 +25,7 @@ public class ProfileStore {
 	Set<String> sports;
 	String interestedIn;
 	ArrayList<String> eventList = new ArrayList<String>();
+	ArrayList<String> pastEventList = new ArrayList<String>();
 	boolean userFriends = false;
 	String photo;
 	public ProfileStore()
@@ -211,6 +212,19 @@ public class ProfileStore {
 	{
 		System.out.println("Event list size " + eventList.size());
 		return eventList;
+
+	}
+	
+	public void setPastEventList(String even)
+	{
+		pastEventList.add(even);
+		System.out.println("Event list size " + eventList.size());
+	}
+
+	public ArrayList<String> getPastEventList()
+	{
+		System.out.println("Event list size " + pastEventList.size());
+		return pastEventList;
 
 	}
 

@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<link href="${pageContent.request.contextPath}/css/stylesheet.css"
+		<link href="${pageContent.request.contextPath}/EventMate/css/stylesheet.css"
 			rel="Stylesheet" type="text/css"></link>
 		<link href='http://fonts.googleapis.com/css?family=Vibur'
 			rel='stylesheet' type='text/css'>
@@ -23,7 +23,12 @@
 		<title>Event-Mate</title>
 	</head>
 <body>
-	<jsp:include page="Searchbar.jsp" />
+	<ul class="header2">
+<center>
+	<span class="eventMate">Event-Mate</span><img src="images/martini2.jpg" width="40px" height="50px" >
+</center>
+</ul>
+
 	
 	<div class="divMain2" style="min-height:100%;">
 		
@@ -99,8 +104,9 @@
 					(No Spaces)
 				</span>
 				
+				<div>
 				<span class="font" style="color:red;">${invalidPostcode}</span>
-			
+				</div>
 				 <br> <br> 
 				 
 				 <span class="font">Distance Willing to
@@ -149,7 +155,7 @@
 				
 				 <br>
 				
-				<span class="font" style="color:red;"><${invalidPhoto}</span>
+				<span class="font" style="color:red;">${invalidPhoto}</span>
 				
 				<br>
 				

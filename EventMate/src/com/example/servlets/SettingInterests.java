@@ -90,7 +90,7 @@ public class SettingInterests extends HttpServlet {
 		try
 		{
 			um.editUser(us);
-			response.sendRedirect("Homepage.jsp");
+			response.sendRedirect("/EventMate/Event");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
