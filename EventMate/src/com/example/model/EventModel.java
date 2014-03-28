@@ -153,6 +153,7 @@ public class EventModel {
 						//Check if the user is attending or not attending event
 						boolean attending1 = getAttending(us.getUsername(), name);
 						boolean attending2 = getNotAttending(us.getUsername(), name);
+						ts.setCorrectDistance(true);
 						//If they are not
 						if (attending1 == false && attending2 == false) 
 						{
