@@ -467,28 +467,31 @@ public void getAttending(UserStore us,String event)
 						
 				
 					}
-					//Iterate through map
-					Iterator entries = map.entrySet().iterator();
-					while (entries.hasNext()) {
-						if(counter > 5)
-						{
-							break;
-						}
-						else
-						{
-						//Add the top 3 users in the map to the logged in users friend list
-					    Map.Entry entry = (Map.Entry) entries.next();
-					    String key = (String)entry.getKey();
-					    Integer value = (Integer)entry.getValue();
-					    System.out.println("Key = " + key + ", Value = " + value);
-					    PreparedStatement statement4 = session.prepare("INSERT INTO userfriends(usersname,friendsname) VALUES(?,?);");
-					    BoundStatement boundStatement4 = new BoundStatement(statement4);
-					    ResultSet rs4 = session.execute(boundStatement4.bind(us.getUsername(),key));
-					    counter++;
-						}
+					
 					}
 					}
 				}
+		System.out.println("Map size " + map.size());
+		//Iterate through map
+		Iterator entries = map.entrySet().iterator();
+		while (entries.hasNext()) {
+			if(counter > 2)
+			{
+				break;
+			}
+			else
+			{
+			//Add the top 3 users in the map to the logged in users friend list
+		    Map.Entry entry = (Map.Entry) entries.next();
+		    String key = (String)entry.getKey();
+		    Integer value = (Integer)entry.getValue();
+		    System.out.println("Key = " + key + ", Value = " + value);
+		    PreparedStatement statement4 = session.prepare("INSERT INTO userfriends(usersname,friendsname) VALUES(?,?);");
+		    BoundStatement boundStatement4 = new BoundStatement(statement4);
+		    ResultSet rs4 = session.execute(boundStatement4.bind(us.getUsername(),key));
+		    System.out.println("Counter " + counter);
+		    counter++;
+			}
 				
 			}
 			
