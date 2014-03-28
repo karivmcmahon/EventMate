@@ -63,6 +63,86 @@ VALUES('jadeewoodward','green','Jade Woodward','2014-03-26 14:16','1993-01-19','
 
 INSERT INTO eventmate3.users(username,password,name,"dateJoined",dob,"relationshipStatus",location,postcode,bio,email,"ageMinRange","ageMaxRange","genderPref","distanceAmount",gender,sports,music,interests,photo)
 VALUES('kirstywoodward','twin','Kirsty Woodward','2014-03-26 14:19','1993-01-19','Single','Dundee','DD37AL','I LOOOOVE working at West Park so much','kirstywoodward@gmail.com',20,27,'male',1000,'female',{'Swimming'},{'Pop','Indie','Rock'},{'Watching TV','Outdoors'},'http://graph.facebook.com/kirsty.woodward2/picture?type=large');
+
+CREATE TABLE eventmate3.events
+(
+	name varchar,
+	attendeeamount int,
+	description varchar,
+	eventdate timestamp, 
+	insertiontime timestamp, 
+	location varchar,
+	country varchar,
+	postcode varchar,
+	"eventRequirements" varchar,
+	venue varchar,
+	category varchar,
+	PRIMARY KEY(name,eventdate)
+) WITH CLUSTERING ORDER BY (eventdate ASC);
+
+CREATE INDEX ON eventmate3.events(category);
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Beyonce - Mrs Carter World Tour',30000,'Beyonces back on her Mrs Carter World Tour','2014-03-11 21:00','2013-03-15 13:12','Glasgow','UK','G38YW','Over 14s','The Hydro','Concert');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('One Direction',15000,'Midnight Memories Tour','2014-06-01 20:00','2013-03-15 13:26','Edinburgh','UK','EH125PJ','Under 16s accompanied by adult','Murrayfield','Concert');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Katy Perry',10000,'Prism World Tour','2014-08-21 21:00','2013-03-15 13:49','Glasgow','UK','G38YW','Over 14s','The Hydro','Concert');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Vampire Weekend',2000,'Intimate gig','2014-07-22 22:00','2013-03-15 14:17','London','UK','NW18EH','Over 18s','Roundhouse','Concert');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('McBusted',20000,'McBusted - World Tour','2014-05-04 21:00','2013-03-24 15:54','Glasgow','UK','G38YW','Over 14s','The Hydro','Concert');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Knitters uKNITe',30,'A fun night of knitter from beginners to experts','2014-04-11 18:00','2013-03-24 15:12','Edinburgh','UK','EH38DN','All welcome','The Playhouse','Hobbies');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Innocent Smoothie Hat Knitting',50,'Want to know how to make the cute hats for the top of the Innocent bottles? Then this is the place to be','2014-07-11 18:00','2013-03-24 16:05','London','UK','W1C1DD','All welcome','Topshop','Hobbies');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Dr Suess Poetry Reading',10,'Come along to hear all your favourite poets from Dr Suess!','2014-07-11 18:00','2013-03-24 16:05','London','UK','W1C1DD', 'All Welcome','Outside on Oxford Street','Hobbies');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Cassandra Meetup',100,'Straight from San Francisco, we will have Patrick McFadin sharing with us his experience with Cassandra! - Free pizza and beer!','2014-03-28 18:30','2013-03-25 11:17','Dundee','UK','DD14HN', 'All Welcome','Queen Mother Building, Dundee University','Tech');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Fault in Our Stars Book Club',15,'Come along to a great discussion of the about-to-be film, The Fault in Our Stars and hear about peoples opinion.','2014-04-28 18:30','2013-03-25 11:24','Manchester','UK','M607RA', 'All who've read the book','Picadilly Station, Manchester','Hobbies');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('D-Con',300,'Dundee's very own Anime Convention','2014-04-19 10:00','2013-03-25 11:30','Dundee','UK','DD14HN', 'Anime Lovers','Dundee University Student Union,'Community');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Breast Cancer Awareness Run',1000,'Run to show your support for Breast Cancer','2014-08-05 12:00','2013-03-25 11:37','Edinburgh','UK','EH436DB', 'All Welcome','Start at Royal Mile','Outdoors');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Afternoon Tea',30,'A small event to show appreciation for afternoon tea','2014-05-05 14:00','2013-03-25 11:48','Kirkcaldy','UK','KY26NW', 'Tea Lovers all round','The Tea Room','Social');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('T in the Park',50000,'Scottish Music Festival','2014-07-04 18:00','2013-03-25 11:52','Kinross','UK','KY139JR', 'Under 16s Accompanied by Adult','Balado Airfield','Concert');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Glastonbury',50000,'Music Festival','2014-08-04 18:00','2013-03-25 12:00','Pilton','UK','BA44BY', 'Under 16s Accompanied by Adult','Worthy Farm','Concert');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Rockness',50000,'Rock Music Festival','2014-07-29 18:00','2013-03-25 12:05','Iverness','UK','IV19TQ', 'Under 16s Accompanied by Adult','Somewhere in Inverness','Concert');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('TT',500,'TT racing','2014-09-01 11:00','2013-03-25 12:19','Isle of Man','UK','IM14AJ', 'All Welcome','Douglas','Sports & Fitness');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Art Exhibition',100,'Picasso Art Exhibit','2014-11-01 12:00','2013-03-25 12:31','Manchester','UK','M347HX', 'All Welcome','Manchester Art Gallery','Arts');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Nando's lovers dinner',10,'Hardcore Nando's fans come along to this dinner where we share our love for chicken','2014-04-01 17:00','2013-03-25 13:28','London','UK','EC1N8XA', 'Nando Fanatics Only','Nando's in London','Food & Drink');
+
+INSERT INTO eventmate3.events(name,attendeeamount,description,eventdate,insertiontime,location,country,postcode,"eventRequirements",venue,category)
+VALUES('Midnight Mass',300,'Christmas Midnight Mass','2014-12-24 00:00','2013-03-25 13:33','Glasgow','UK','G320DG', 'All Welcome','Church on Hill Road','Religion');
+
+
 CREATE TABLE eventmate3.userattending
 (
 	username varchar,
