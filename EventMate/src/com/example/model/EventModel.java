@@ -10,6 +10,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -45,8 +46,7 @@ public class EventModel {
 	int count;
 	int attendingCount;
 	int randomCounter;
-	//Stores events to track which ones we have seen in the random method
-	Set<String> events = new HashSet<String>();
+
 	//Database name
 	String eventmate = "eventmate3";
 
@@ -290,7 +290,7 @@ public class EventModel {
 	 * @param us
 	 * @return eventstore
 	 */
-	public eventStore count(UserStore us) {
+	/**public eventStore count(UserStore us) {
 		count = 0;
 		attendingCount = 0;
 		//Create new event
@@ -311,17 +311,11 @@ public class EventModel {
 		{
 			for (Row row : rs) 
 			{
-				//Gets postcode
-				String postcode = row.getString("postcode");
-				///Gets distance for the google api
-				int distance = parseURL(postcode, us.getPostcode()) / 1000;
-				//If distance less than the users pref
-				if (distance <= us.getDistance())
-				{
+				
 				   //Add to event count
 				   count++;
 			
-				}
+				
 				
 			}
 			//If count is 0 
@@ -342,27 +336,79 @@ public class EventModel {
 
 		session.shutdown();
 		return event;
-	}
+	}**/
 	
 	/**
 	 * This method gets an event that is not within the users distance prefs and they are not attending
 	 * @param us
 	 * @return
 	 */
-	public eventStore getRandomEvent(UserStore us)
+	public eventStore count(UserStore us)
 	{
 		//Create a new event store set up equal to null
 		eventStore event = new eventStore();
 		event = null;
-		
+		ArrayList<String> events = new ArrayList<String>();
 	    //Set count2 to 0 this will count the number of events in the loop
 		int count2 = 0;
-		
+		int count3 = 0;
 	    //Get all events
 		Session session = cluster.connect(eventmate);
-		PreparedStatement statement2 = session.prepare("SELECT * from events;");
+		PreparedStatement statement = session.prepare("SELECT * from events;");
+		BoundStatement boundStatement = new BoundStatement(statement);
+		ResultSet rs = session.execute(boundStatement);
+		for(Row row : rs)
+		{
+			String name = row.getString("name");
+			System.out.println("Event name ssss  " + name);
+			Calendar c2 =  Calendar.getInstance();
+			//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
+			c2.setTime(row.getDate("eventdate"));
+			//Create a new date format
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+			//Formats the calendar time into a date format
+			String date = dateFormat.format(c2.getTime());
+			 	boolean eventPassed = getEventPassed(c2);
+			    String postcode = row.getString("postcode");
+			    int distance = parseURL(postcode,us.getPostcode()) / 1000;
+				
+				if(eventPassed == false && distance <= us.getDistance())
+				{
+
+					boolean getAttending = getAttending(us.getUsername(),name);
+					boolean getNotAttending = getNotAttending(us.getUsername(),name);
+			
+						if(getAttending == false && getNotAttending == false )
+						{
+							System.out.println("NAME" + name);
+							
+							events.add(name);
+							
+						
+						}
+				}
+		}
+		System.out.println("Event list " + events.size());
+		if(events.size() == 0)
+		{
+			return null;
+		}
+		Random rand = new Random();
+		int randomNum = rand.nextInt(events.size());
+		String eventname = "";
+		for(int i = 0;i<= events.size();i++)
+		{
+			if(randomNum == i)
+			{
+				eventname = events.get(i);
+				System.out.println("Event name " + eventname);
+				break;
+			}
+		}
+		
+		PreparedStatement statement2 = session.prepare("SELECT * from events WHERE name=?;");
 		BoundStatement boundStatement2 = new BoundStatement(statement2);
-		ResultSet rs2 = session.execute(boundStatement2);
+		ResultSet rs2 = session.execute(boundStatement2.bind(eventname));
 		for(Row row2 : rs2)
 		{
 				
@@ -390,112 +436,12 @@ public class EventModel {
 						ts.setLocation(row2.getString("location"));
 						ts.setVenue(row2.getString("venue")); 
 						ts.setCategory(row2.getString("category"));
-						//If event has passed - 
-						if(eventPassed == true)
-						{
-							//if already in event list do nothing
-							if(events.contains(name))
-							{
-								
-							}
-							else
-							{
-								//Take one off count and add to list
-								count--;
-								events.add(name);
-								
-							}
-							
-			
-						}
-						//If event has passed and is within users distance preferences
-						if(eventPassed == false && distance <= us.getDistance())
-						{
-							ts.setCorrectDistance(true);
-							boolean getAttending = getAttending(us.getUsername(),name);
-							boolean getNotAttending = getNotAttending(us.getUsername(),name);
-								//If attending count equals count return null
-								if(attendingCount == count)
-								{
-									event = null;
-									return event;
-								}
-								if(getAttending == false && getNotAttending == false )
-								{
-									if(events.contains(name))
-									{
-										
-									}
-									else
-									{
-										//Add event to list if not already on it
-										events.add(name);
-									}
-								    //Set event to ts and return it
-									event = ts;
-									return event;
-									
-								}
-								else
-								{
-										if(getAttending == true)
-										{
-											if(events.contains(name))
-											{
-												
-											}
-											else
-											{
-												//If not already on list add to list and increment attending counter
-												events.add(name);
-												attendingCount++;
-											
-											}
-											
-										}
-										//If attending count equals count return null
-										if(attendingCount == count)
-										{
-											event = null;
-											return event;
-										}
-										if(getNotAttending == true)
-										{
-											if(events.contains(name))
-											{
-												
-											}
-											else
-											{
-												//If not already on list add to list and increment attending counter
-												events.add(name);
-												attendingCount++;
-											
-											}
-										}
-										//If attending count equals count return null
-										if(attendingCount == count)
-										{
-											
-											event = null;
-											return event;
-										}
-		
-								}
-						}
-				
-		//Increment count2
-		count2++;
-			
-		}
-		//If attending is not equal call the method again 
-		if(attendingCount != count)
-		{
-			getRandomEvent(us);
+						ts.setCorrectDistance(true);
+						return ts;
 		}
 		//return event
 	    session.shutdown();
-		return event;
+		return null;
 		
 	}
 	
