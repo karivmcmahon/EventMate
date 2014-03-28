@@ -88,22 +88,7 @@
 						<span class="blueFont2" style="margin-left:2%;">Location: <span class="blackFont" ><%= us.getLocation() %></span></span><br>
 						<span class="blueFont2" style="margin-left:2%;">Interests: <span class="blackFont" ><%=  us.getInterests() %></span></span><br>
 						<span class="blueFont2" style="margin-left:2%;">Events wanting to attend: <span class="blackFont" >
-						<% ArrayList<String> list = new ArrayList<String>(); 
-						list = us.getEventList(); 
-						if(list.isEmpty())
-						{
-						
-						}
-						else
-						{
-							for(int i= 0;i < list.size();i++)
-							{
-							%>
-								<%= list.get(i) %>,
-							<%
-							}
-						}
-						%>
+						<%= us.getEventList() %>
 						</span>
 						</span>
 						<br>

@@ -72,11 +72,47 @@ public class FriendModel {
 			Set<String> intersection = new HashSet<String>(us.getInterests()); // use the copy constructor
 			intersection.retainAll(fus.getInterests());
 			//call user attending with this fus
-			fus = userAttending(friend,fus);
+			PreparedStatement statement3 = session.prepare("SELECT * from userattending WHERE username=?;");
+			BoundStatement boundStatement3 = new BoundStatement(statement3);
+			ResultSet rs3 = session.execute(boundStatement3.bind(friend));
+			if(rs3.isExhausted())
+			{
+				return fus;
+			}
+			for(Row row3 : rs3)
+			{
+				//Get the eventname then select all events
+				String event = row3.getString("eventname");
+				PreparedStatement statement4 = session.prepare("SELECT * from events WHERE name= ?;");
+				BoundStatement boundStatement4 = new BoundStatement(statement4);
+				ResultSet rs4 = session.execute(boundStatement4.bind(event));
+				
+				for(Row row4 : rs4)
+				{
+					//Get event date  and if todays date or greater then add to list of events friends wants to goto
+					Date eventDate = row4.getDate("eventdate");
+					Calendar events = Calendar.getInstance();  
+					events.setTime(eventDate);  
+			        boolean sameDayOrGreater = sameDayOrGreater(events);
+					if(sameDayOrGreater == true)
+					{
+					
+						
+						fus.setEventList(row4.getString("name"));
+					
+						
+						
+					
+					}
+			
+				}
+	
+		}
 			return fus;
 		}
 		session.shutdown();
 		return null;
+	
 	}
 	
 	/**
