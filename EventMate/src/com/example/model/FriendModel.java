@@ -72,47 +72,12 @@ public class FriendModel {
 			Set<String> intersection = new HashSet<String>(us.getInterests()); // use the copy constructor
 			intersection.retainAll(fus.getInterests());
 			//call user attending with this fus
-			PreparedStatement statement3 = session.prepare("SELECT * from userattending WHERE username=?;");
-			BoundStatement boundStatement3 = new BoundStatement(statement3);
-			ResultSet rs3 = session.execute(boundStatement3.bind(friend));
-			if(rs3.isExhausted())
-			{
-				return fus;
-			}
-			for(Row row3 : rs3)
-			{
-				//Get the eventname then select all events
-				String event = row3.getString("eventname");
-				PreparedStatement statement4 = session.prepare("SELECT * from events WHERE name= ?;");
-				BoundStatement boundStatement4 = new BoundStatement(statement4);
-				ResultSet rs4 = session.execute(boundStatement4.bind(event));
-				
-				for(Row row4 : rs4)
-				{
-					//Get event date  and if todays date or greater then add to list of events friends wants to goto
-					Date eventDate = row4.getDate("eventdate");
-					Calendar events = Calendar.getInstance();  
-					events.setTime(eventDate);  
-			        boolean sameDayOrGreater = sameDayOrGreater(events);
-					if(sameDayOrGreater == true)
-					{
-					
-						
-						fus.setEventList(row4.getString("name"));
-					
-						
-						
-					
-					}
-			
-				}
-	
-		}
+			fus = userAttending(friend,fus);
+			//Return user
 			return fus;
 		}
 		session.shutdown();
 		return null;
-	
 	}
 	
 	/**
@@ -134,13 +99,13 @@ public class FriendModel {
 		}
 		for(Row row3 : rs3)
 		{
-			//Get the eventname then select all events
+			//Get the eventname then select all events to get info about event
 			String event = row3.getString("eventname");
 			fus = selectEvents(event,fus);
-			return fus;
+			
 		}
 		session.shutdown();
-		return null;
+		return fus;
 	}
 	
 	/**
@@ -163,20 +128,18 @@ public class FriendModel {
 			Calendar events = Calendar.getInstance();  
 			events.setTime(eventDate);  
 	        boolean sameDayOrGreater = sameDayOrGreater(events);
+	        //If event hasn't passed add to list to display
 			if(sameDayOrGreater == true)
 			{
-			
-				
 				fus.setEventList(row4.getString("name"));
 			
 				
-				
-			
 			}
-			return fus;
+		
 		}
+
 		session.shutdown();
-		return null;
+		return fus;
 	}
 	
 	/**
@@ -194,7 +157,7 @@ public class FriendModel {
 		ResultSet rs = session.execute(boundStatement.bind(us.getUsername()));
 		if (rs.isExhausted()) 
 		{
-			
+			//Do nothing
 	
 		} 
 		else 
@@ -216,14 +179,14 @@ public class FriendModel {
 		ResultSet rs2 = session.execute(boundStatement2.bind(us.getUsername()));
 		if (rs2.isExhausted()) 
 		{
-			
+			//Do notjing
 	
 		} 
 		else 
 		{
 			for (Row row2 : rs2) 
 			{
-			   //Then once we have friends name get more info about them
+			   //Then once we have friends name get more info about them and then get this information and add to linkeed list
 				UserStore fus = new UserStore();
 				String friend = row2.getString("usersname");
 				fus.setUsername(friend);
@@ -237,7 +200,7 @@ public class FriendModel {
 	}
 	
 	/**
-	 * Gets whether  event is today or greater
+	 * Gets whether  event is today or greater - so we know its in the future
 	 * @param events
 	 * @return
 	 */
@@ -250,7 +213,7 @@ public class FriendModel {
 	
 	
 	/**
-	 * Method gets friends info by there username
+	 * Method gets friends info by there username for RESTFUL
 	 * @param us
 	 * @param username
 	 * @return
@@ -309,7 +272,7 @@ public class FriendModel {
 	}
 	
 	/**
-	 * This method gets users by name 
+	 * This method gets users by name for RESTFUL and search bar 
 	 * @param us
 	 * @param username
 	 * @return
@@ -325,7 +288,7 @@ public class FriendModel {
 		ResultSet rs = session.execute(boundStatement.bind(username));
 		if (rs.isExhausted()) 
 		{
-			
+			//do nothing
 	
 		} 
 		else 
@@ -347,10 +310,11 @@ public class FriendModel {
 					Set<String> intersection = new HashSet<String>(us.getInterests()); // use the copy constructor
 					intersection.retainAll(fus.getInterests());
 					fus = userAttending(theUsersname,fus);
+					//check if they are friends with user
 					boolean friends = getUsersFriends(us.getUsername(),theUsersname);
 					boolean friends2 = getUsersFriends(theUsersname,us.getUsername());
 					
-					//Then sets whether they are friends or not
+					//Then sets whether they are friends or not for displaying on page
 					if(friends == false && friends2 == false)
 					{
 						fus.setUserFriends(false);
@@ -415,7 +379,7 @@ public void getAttending(UserStore us,String event)
 	ResultSet rs = session.execute(boundStatement.bind(event));
 	if (rs.isExhausted()) 
 	{
-	
+
 		System.out.println("Empty");
 	} 
 	else 
@@ -444,7 +408,7 @@ public void getAttending(UserStore us,String event)
 						//Check if they match each users preference e.g they have the same gender pref and age pref
 						if((us.getGenderPref().equals("both") || us.getGenderPref().equals(row2.getString("gender")))  && (age >= us.getAgeMin() && age <= us.getAgeMax())  && (us.getAge() >= row2.getInt("ageMinRange")  && us.getAge() <= row2.getInt("ageMaxRange")))
 						{
-							
+
 							//Get there interests and see how many they have in common
 							Set<String> interests = new HashSet<String>(us.getInterests());
 							Set<String> sportsInterests = new HashSet<String>(us.getSports());
@@ -459,15 +423,15 @@ public void getAttending(UserStore us,String event)
 						 // Add total common interests to map and sort by value
 							map.put(name,totalCommonInterests);
 							map = MapUtil.sortByValue(map);
-							
-						
-						
-						
+
+
+
+
 						}
-						
-				
+
+
 					}
-					
+
 					}
 					}
 				}
@@ -492,13 +456,14 @@ public void getAttending(UserStore us,String event)
 		    System.out.println("Counter " + counter);
 		    counter++;
 			}
-				
+
 			}
-			
+
 		}
 	session.shutdown();
 	}
-	
+
+
 
 
 /**
@@ -524,3 +489,4 @@ public int getDate(Date dateOfBirth)
 
 
 }
+

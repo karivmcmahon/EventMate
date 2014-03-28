@@ -85,7 +85,8 @@ public class ProfileModel {
 				p.setInterestedIn(row.getString("interestedIn"));
 				p.setPhoto(row.getString("photo"));
 				Date dob = row.getDate("dob");
-				int age = getDate(dob);
+				FriendModel fms = new FriendModel();
+				int age = fms.getDate(dob);
 				p.setAge(age);
 			
 				//Gets if they are attending events
@@ -154,27 +155,7 @@ public class ProfileModel {
 	}
 	
 
-	/**
-	 * Method calculates age from the date of birth given
-	 * @param dateOfBirth
-	 * @return
-	 */
-	public int getDate(Date dateOfBirth)
-	{
-		Calendar dob = Calendar.getInstance(); 
-		dob.setTime(dateOfBirth); 
-		Calendar today = Calendar.getInstance(); 
-		int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR); 
-		if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH))
-		{
-			age--; 
-		} 
-		else if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH) && today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH))
-		{
-			age--; 
-		}
-	return age;
-	}
+	
 
 	
 	

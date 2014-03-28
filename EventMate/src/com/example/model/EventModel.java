@@ -64,7 +64,8 @@ public class EventModel {
 		this.cluster = cluster;
 	}
 
-	public void selectEvents() {
+	public void selectEvents() 
+	{
 
 	}
 
@@ -344,7 +345,7 @@ public class EventModel {
 	}
 	
 	/**
-	 * This method gets an event randomly that the user is not attending and is within there distance prefs
+	 * This method gets an event that is not within the users distance prefs and they are not attending
 	 * @param us
 	 * @return
 	 */

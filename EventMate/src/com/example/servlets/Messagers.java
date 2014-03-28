@@ -53,7 +53,7 @@ public class Messagers extends HttpServlet {
 			//Display all the users the logged in user has messages from
 			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 			fm.setCluster(cluster);
-			LinkedList<MessagerStore> messageList = fm.messagerList(us);
+			LinkedList<MessagerStore> messageList = fm.messagerList(us,1,"");
 			request.setAttribute("Message", messageList); //Set a bean with the list in it
 			RequestDispatcher rd = request.getRequestDispatcher("/Messages.jsp"); 
 			rd.forward(request, response);
@@ -66,7 +66,7 @@ public class Messagers extends HttpServlet {
 			String usernames = endOfUrl.toString();
 			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 			fm.setCluster(cluster);
-			LinkedList<MessagerStore> messageList = fm.messagerListByUsername(us,usernames);
+			LinkedList<MessagerStore> messageList = fm.messagerList(us,2,usernames);
 			request.setAttribute("Message", messageList); //Set a bean with the list in it
 			RequestDispatcher rd = request.getRequestDispatcher("/Messages.jsp"); 
 			rd.forward(request, response);
