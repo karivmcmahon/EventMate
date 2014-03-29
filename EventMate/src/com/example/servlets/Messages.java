@@ -83,6 +83,7 @@ public class Messages extends HttpServlet {
 		UserStore us = new UserStore();
 		UserStore friendMessaged = new UserStore();
 		MessageModel mm = new MessageModel();
+		LinkedList<MessageStore> messageList = null;
 		//Gets message info
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		friendMessaged.setUsername(request.getParameter("sendingTo"));
@@ -91,9 +92,21 @@ public class Messages extends HttpServlet {
 		String message = request.getParameter("postMessage");
 		mm.setCluster(cluster);
 		//Attempts to insert message into database
-		mm.insertMessage(us, friendMessaged, message);
-		//Retrieve messages from database and redirect to message page
-		LinkedList<MessageStore> messageList = mm.getMessages(us,friendMessaged);
+		try
+		{
+			mm.insertMessage(us, friendMessaged, message);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		try
+		{
+			//Retrieve messages from database and redirect to message page
+			messageList = mm.getMessages(us,friendMessaged);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		request.setAttribute("Messages", messageList); //Set a bean with the list in it
 		request.setAttribute("Friend",friendMessaged);
 		RequestDispatcher rd = request.getRequestDispatcher("/Message.jsp"); 

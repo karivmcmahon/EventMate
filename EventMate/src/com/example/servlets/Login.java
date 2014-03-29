@@ -40,6 +40,7 @@ public class Login extends HttpServlet {
 	}
 
 	/**
+	 * Gets user info and checks if it is valid and if it is direct to front page and if not direct home
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -51,11 +52,13 @@ public class Login extends HttpServlet {
 		um.setCluster(cluster);
 		us = (UserStore) request.getSession().getAttribute("possibleUser");
 		try {
+			//Gets user info
 			us = um.getUser(us);
 		} catch (Exception e) {
 
 		}
 
+		//Checks if user is valid and logs them in if it is
 		if (us.getValid()) {
 			us.setLoggedIn(true);
 			HttpSession session = request.getSession(true);
@@ -63,6 +66,7 @@ public class Login extends HttpServlet {
 			// Direct to home.jsp once session true
 			response.sendRedirect("/EventMate/Event");
 		} else {
+			//If not valid redirects them to sign up page
 			System.out.println("not valid");
 			us.setLoggedIn(false);
 			RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
@@ -71,6 +75,7 @@ public class Login extends HttpServlet {
 	}
 
 	/**
+	 * Attempts to log user in
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -85,18 +90,23 @@ public class Login extends HttpServlet {
 		String password = "?btY?N1&zt" + request.getParameter("password") + "4IoIS^NY!r";
 		String pw = "";
 		try {
+			//Encrypt password
 			pw = encrypt(password);
-		} catch (NoSuchAlgorithmException e1) {
+		} 
+		catch (NoSuchAlgorithmException e1) 
+		{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		//Set password to encrypted
 		us.setPassword(pw);
 		try {
+			//Gets user
 			us = um.getUser(us);
 		} catch (Exception e) {
 
 		}
-
+		//Checks if user is valid and if they are direct to Event page else direct to home.jsp
 		if (us.getValid()) {
 			us.setLoggedIn(true);
 			HttpSession session = request.getSession(true);
@@ -114,7 +124,7 @@ public class Login extends HttpServlet {
 	}
 
 	/**
-	 * Password encryption
+	 * Password encryption - MD5
 	 * @param pass
 	 * @return
 	 * @throws NoSuchAlgorithmException
@@ -155,9 +165,7 @@ public class Login extends HttpServlet {
 			hashedpasswd.append(hx);
 		}
 
-		// Print out the string hex version of the md5 hash
-		System.out.println("MD5 version is: " + hashedpasswd.toString()
-				+ "<br>");
+	
 		return hashedpasswd.toString();
 
 	}

@@ -15,7 +15,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		
-		<!-- Ajax script to refresh tweet timeline every 15 mins, fade out is fast to show refresh occuring -->
+		<!-- Ajax script to refresh  every 15 mins, fade out is fast to show refresh occuring -->
 		<script>
 		var auto_refresh = setInterval(
 		function()

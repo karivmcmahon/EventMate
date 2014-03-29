@@ -55,8 +55,17 @@ public class Attending2 extends HttpServlet {
 	    //Gets event name
 	    String event = request.getParameter("tick");
 	    em.setCluster(cluster);
-	    //Inserts attending event
-	    em.setAttending(us,event);
+	    try
+	    {
+	    	//Insert event user wants to attend
+	    	em.setAttending(us,event);
+	    }
+	    catch(Exception e)
+	    {
+	    	//Prints error if occurs
+	    	e.printStackTrace();
+	    	System.out.println("Error attending2 at setAttending()");
+	    }
 	    //Redirect to RandomEvent servlet
 	    response.sendRedirect("/EventMate/RandomEvent");
 	}

@@ -1,6 +1,7 @@
 package com.example.model;
 
 import java.sql.Timestamp;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,6 +16,12 @@ import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import com.example.stores.UserStore;
 import com.example.stores.eventStore;
+
+/**
+ * Class deals with all the user information
+ * @author Kari
+ *
+ */
 
 public class UserModel {
 

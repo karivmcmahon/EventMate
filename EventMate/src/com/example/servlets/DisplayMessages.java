@@ -41,6 +41,7 @@ public class DisplayMessages extends HttpServlet {
 
 	/**
 	 * If this servlet is called it just redirects to page not found
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -63,6 +64,7 @@ public class DisplayMessages extends HttpServlet {
 		UserStore us = new UserStore();
 		UserStore friendMessaged = new UserStore();
 		MessageModel mm = new MessageModel();
+		LinkedList<MessageStore> messageList = null;
 		//If the url equals display messages
 		if(request.getRequestURI().equals(request.getContextPath() + "/DisplayMessages"))
 		{
@@ -71,8 +73,24 @@ public class DisplayMessages extends HttpServlet {
 			friendMessaged.setUsername(request.getParameter("username"));
 			friendMessaged.setName(request.getParameter("name"));
 			mm.setCluster(cluster);
-			friendMessaged.setPhoto(mm.getMessagePhotos(us, friendMessaged));
-			LinkedList<MessageStore> messageList = mm.getMessages(us,friendMessaged);
+			try
+			{
+				//Attempts to set photo
+				friendMessaged.setPhoto(mm.getMessagePhotos(us, friendMessaged));
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			try
+			{
+				//Attempts to get messages between user and friend
+				messageList = mm.getMessages(us,friendMessaged);
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+	
 			request.setAttribute("Messages", messageList); //Set a bean with the list in it
 			request.setAttribute("Friend",friendMessaged);
 			//Redirect to message.jsp

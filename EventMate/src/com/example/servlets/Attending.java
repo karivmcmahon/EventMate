@@ -44,6 +44,7 @@ public class Attending extends HttpServlet {
 
 	/**
 	 * Sets that user is attending event sent in from jsp file
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,7 +57,16 @@ public class Attending extends HttpServlet {
 	    String event = request.getParameter("tick");
 	    //Set attending
 	    em.setCluster(cluster);
-	    em.setAttending(us,event);
+	    try
+	    {
+	    	//Insert event user wants to attend
+	    	em.setAttending(us,event);
+	    }
+	    catch(Exception e)
+	    {
+	    	e.printStackTrace();
+	    	System.out.println("Error setting attending at setAttending()");
+	    }
 	    //Redirect to event servlet
 	    response.sendRedirect("/EventMate/Event");
 

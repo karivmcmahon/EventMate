@@ -27,7 +27,14 @@ import com.datastax.driver.core.Session;
 import com.example.stores.UserStore;
 import com.example.stores.eventStore;
 
+/**
+ * This class deals with the information to do with the users friends list
+ * @author Kari
+ *
+ */
 public class FriendModel {
+	
+	
 	
 	Cluster cluster;
 	//Stores database name
@@ -363,7 +370,7 @@ public boolean getUsersFriends(String theUsersname,String username)
 }
 
 /**
- * This method is for getting users news friends - adding friends
+ * This method is for adding friends when the user clicks to add friends
  * @param us
  * @param event
  */
@@ -435,7 +442,6 @@ public void getAttending(UserStore us,String event)
 					}
 					}
 				}
-		System.out.println("Map size " + map.size());
 		//Iterate through map
 		Iterator entries = map.entrySet().iterator();
 		while (entries.hasNext()) {

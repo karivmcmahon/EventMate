@@ -39,9 +39,11 @@ public class ProfileModel {
 	}
 	
 	/**
-	 * Gets profile of userws
+	 * Gets profile of users
+	 * if num 1 gets users own profile
+	 * if num 2 gets other users profile
 	 * @param us
-	 * @param num
+	 * @param num 
 	 * @param username
 	 * @return
 	 */

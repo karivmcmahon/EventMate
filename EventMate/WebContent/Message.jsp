@@ -15,7 +15,7 @@
 		        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		
 		<title>Event-Mate</title>
-		<!-- Ajax script to refresh tweet timeline every 15 mins, fade out is fast to show refresh occuring -->
+		<!-- Ajax script to refresh  every 15 mins, fade out is fast to show refresh occuring -->
 	
 		<script>
 		var auto_refresh = setInterval(

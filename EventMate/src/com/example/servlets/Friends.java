@@ -25,6 +25,7 @@ import com.example.stores.eventStore;
 public class Friends extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Cluster cluster;
+	LinkedList<UserStore> friendList;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -48,13 +49,20 @@ public class Friends extends HttpServlet {
 		// TODO Auto-generated method stub
 		UserStore us = new UserStore();
 		FriendModel fm= new FriendModel();
+		LinkedList<UserStore> friendList = null;
 		//If request path friends get friend list and display on Friends.jsp
 		if(request.getRequestURI().equals(request.getContextPath() + "/Friends"))
 		{
 			//Get session for user currently logged in
 			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 			fm.setCluster(cluster);
-			LinkedList<UserStore> friendList = fm.displayFriends(us);
+			try
+			{
+			 friendList = fm.displayFriends(us);
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 			request.setAttribute("Friends", friendList); //Set a bean with the list in it
 			RequestDispatcher rd = request.getRequestDispatcher("/Friends.jsp"); 
 	
@@ -68,7 +76,13 @@ public class Friends extends HttpServlet {
 			String usernames = endOfUrl.toString();
 			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 			fm.setCluster(cluster);
-			LinkedList<UserStore> friendList = fm.displayFriendsByUsername(us,usernames);
+			try 
+			{
+			 friendList = fm.displayFriendsByUsername(us,usernames);
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 			request.setAttribute("Friends", friendList); //Set a bean with the list in it
 			RequestDispatcher rd = request.getRequestDispatcher("/Friends.jsp"); 
 

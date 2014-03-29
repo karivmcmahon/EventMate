@@ -42,6 +42,7 @@ public class Bio extends HttpServlet {
 
 	/**
 	 * Redirects to bioInfo.jsp
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -56,6 +57,7 @@ public class Bio extends HttpServlet {
 
 	/**
 	 * Servlet gets information from jsp and set it to a session variable and redirects to interests.jsp
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

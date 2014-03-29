@@ -26,6 +26,7 @@ import com.example.stores.eventStore;
 public class Profile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Cluster cluster;
+	LinkedList<ProfileStore> profileList;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -51,13 +52,20 @@ public class Profile extends HttpServlet {
 				ProfileModel pm = new ProfileModel();
 				//Get session for user currently logged in
 				us = (UserStore) request.getSession().getAttribute("currentSeshUser");
+				LinkedList<ProfileStore> profileList = null;
 				//If Url just /Profile get the users Profile and send to Profile.jsp
 				if(request.getRequestURI().equals(request.getContextPath() + "/Profile"))
 				{
 
 					pm.setCluster(cluster);
 					//Attempt to get profile
-					LinkedList<ProfileStore> profileList = pm.getProfile(us,1,"");
+					try
+					{
+					 profileList = pm.getProfile(us,1,"");
+					}catch(Exception e)
+					{
+						e.printStackTrace();
+					}
 					request.setAttribute("Profile", profileList); //Set a bean with the list in it
 					RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp"); 
 	
@@ -72,7 +80,13 @@ public class Profile extends HttpServlet {
 					us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 					pm.setCluster(cluster);
 					//Attempt to get profile
-					LinkedList<ProfileStore> profileList = pm.getProfile(us,2,usernames);
+					try
+					{
+						profileList = pm.getProfile(us,2,usernames);
+					}catch(Exception e)
+					{
+						e.printStackTrace();
+					}
 					request.setAttribute("Profile", profileList); //Set a bean with the list in it
 					RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp"); 
 

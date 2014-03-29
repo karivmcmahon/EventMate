@@ -283,63 +283,9 @@ public class EventModel {
 		}
 
 	}
-
-
-	/**
-	 * This method counts the amount of events and then starts the random method for the random page
-	 * @param us
-	 * @return eventstore
-	 */
-	/**public eventStore count(UserStore us) {
-		count = 0;
-		attendingCount = 0;
-		//Create new event
-		eventStore event = new eventStore();
-		Session session = cluster.connect(eventmate);
-		//Select all events 
-		PreparedStatement statement = session.prepare("SELECT * from events;");
-		BoundStatement boundStatement = new BoundStatement(statement);
-		ResultSet rs = session.execute(boundStatement);
-		//Clear event list before starting
-		events.clear();
-		if (rs.isExhausted()) 
-		{
-
-			System.out.println("No events returned");
-		} 
-		else 
-		{
-			for (Row row : rs) 
-			{
-				
-				   //Add to event count
-				   count++;
-			
-				
-				
-			}
-			//If count is 0 
-			if(count == 0)
-			{
-				//just make event null
-				event = null;
-			}
-			else
-			{
-				//Set randomCounter to count
-				randomCounter = count;
-				//Get random event
-				event = getRandomEvent(us);
-			}
-
-		}
-
-		session.shutdown();
-		return event;
-	}**/
 	
 	/**
-	 * This method gets an event that is not within the users distance prefs and they are not attending
+	 * This method gets a random event to display on the random page
 	 * @param us
 	 * @return
 	 */
@@ -360,7 +306,6 @@ public class EventModel {
 		for(Row row : rs)
 		{
 			String name = row.getString("name");
-			System.out.println("Event name ssss  " + name);
 			Calendar c2 =  Calendar.getInstance();
 			//long timestamp = TimeUUIDUtils.getTimeFromUUID(row.getString("eventdate"));
 			c2.setTime(row.getDate("eventdate"));
@@ -371,7 +316,7 @@ public class EventModel {
 			 	boolean eventPassed = getEventPassed(c2);
 			    String postcode = row.getString("postcode");
 			    int distance = parseURL(postcode,us.getPostcode()) / 1000;
-				
+				//Gets all events in users distance that has not passed and they are not attending and add to array list
 				if(eventPassed == false && distance <= us.getDistance())
 				{
 
@@ -380,7 +325,6 @@ public class EventModel {
 			
 						if(getAttending == false && getNotAttending == false )
 						{
-							System.out.println("NAME" + name);
 							
 							events.add(name);
 							
@@ -388,11 +332,14 @@ public class EventModel {
 						}
 				}
 		}
+		
 		System.out.println("Event list " + events.size());
 		if(events.size() == 0)
 		{
+			//Return null if theres no events
 			return null;
 		}
+		//Get random num from list and when random num matches item in list get it's name
 		Random rand = new Random();
 		int randomNum = rand.nextInt(events.size());
 		String eventname = "";
@@ -405,7 +352,7 @@ public class EventModel {
 				break;
 			}
 		}
-		
+		//Then retrieve the information about the event just selected
 		PreparedStatement statement2 = session.prepare("SELECT * from events WHERE name=?;");
 		BoundStatement boundStatement2 = new BoundStatement(statement2);
 		ResultSet rs2 = session.execute(boundStatement2.bind(eventname));

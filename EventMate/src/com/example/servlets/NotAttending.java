@@ -53,7 +53,14 @@ public class NotAttending extends HttpServlet {
 			    us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 			    String event = request.getParameter("cross");
 			    em.setCluster(cluster);
-			    em.setNotAttending(us,event);
+			    //Attempts to insert into database that user does not want to attend event
+			    try
+			    {
+			    	em.setNotAttending(us,event);
+			    }catch(Exception e)
+			    {
+			    	e.printStackTrace();
+			    }
 			    
 			    response.sendRedirect("/EventMate/Event");
 	}

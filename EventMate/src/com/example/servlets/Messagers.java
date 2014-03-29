@@ -47,13 +47,21 @@ public class Messagers extends HttpServlet {
 		// TODO Auto-generated method stub
 		UserStore us = new UserStore();
 		MessageModel fm= new MessageModel();
+		LinkedList<MessagerStore> messageList = null;
 		//If the url request is /Messagers
 		if(request.getRequestURI().equals(request.getContextPath() + "/Messagers"))
 		{
 			//Display all the users the logged in user has messages from
 			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 			fm.setCluster(cluster);
-			LinkedList<MessagerStore> messageList = fm.messagerList(us,1,"");
+			try
+			{
+			//Attempts to get list of people the user has messager from
+			 messageList = fm.messagerList(us,1,"");
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 			request.setAttribute("Message", messageList); //Set a bean with the list in it
 			RequestDispatcher rd = request.getRequestDispatcher("/Messages.jsp"); 
 			rd.forward(request, response);
@@ -66,7 +74,13 @@ public class Messagers extends HttpServlet {
 			String usernames = endOfUrl.toString();
 			us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 			fm.setCluster(cluster);
-			LinkedList<MessagerStore> messageList = fm.messagerList(us,2,usernames);
+			try
+			{
+			 messageList = fm.messagerList(us,2,usernames);
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 			request.setAttribute("Message", messageList); //Set a bean with the list in it
 			RequestDispatcher rd = request.getRequestDispatcher("/Messages.jsp"); 
 			rd.forward(request, response);

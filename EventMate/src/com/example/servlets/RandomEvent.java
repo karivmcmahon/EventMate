@@ -48,11 +48,18 @@ public class RandomEvent extends HttpServlet {
 		//Gets random event and displays it on random page
 		UserStore us = new UserStore();
 		EventModel tm= new EventModel();
+		eventStore event = null;
 		//Get session for user currently logged in
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		tm.setCluster(cluster);
 		//Get random event
-		eventStore event = tm.count(us);
+		try
+		{
+			event = tm.count(us);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		request.setAttribute("Event", event); //Set a bean with the list in it
 		//Redirect to Random.jsp
 		RequestDispatcher rd = request.getRequestDispatcher("/Random.jsp"); 

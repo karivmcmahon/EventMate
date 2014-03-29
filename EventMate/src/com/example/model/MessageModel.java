@@ -40,7 +40,7 @@ public class MessageModel {
 	}
 	
 	/**
-	 * Gets users messages from friend
+	 * Gets users messages from friends
 	 * @param us
 	 * @param friendMessaged
 	 * @return
@@ -78,6 +78,7 @@ public class MessageModel {
 				//If userto is friend messaged or logged in user or userfrom is friend messaged or logged in user - then add to message list else ignore it
 				if((userto.equals(us.getUsername()) || userto.equals(friendMessaged.getUsername())) && userfrom.equals(us.getUsername()) || userfrom.equals(friendMessaged.getUsername()))
 				{
+					//add m to messager list
 					messageList.add(m);
 				}
 			}
@@ -162,7 +163,7 @@ public class MessageModel {
 	}
 	
 	/**
-	 * Gets users who have sent the logged in user messages - so we can display it on the messages list
+	 * Gets users who have sent the logged in user messages - so we can display it on the users in messager list
 	 * @param friendName
 	 * @param us
 	 * @param messagerList
@@ -228,6 +229,8 @@ public class MessageModel {
 	
 	/**
 	 * Gets and returns the list of people that have messaged the user
+	 * if num 1 - gets all user in messager list
+	 * if num 2 - attempts get specific user in messager list
 	 * @param us
 	 * @param num
 	 * @param name

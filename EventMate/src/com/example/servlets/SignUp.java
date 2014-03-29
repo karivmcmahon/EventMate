@@ -63,48 +63,63 @@ public class SignUp extends HttpServlet {
 		um.setCluster(cluster);
 		UserStore us = new UserStore();
 		UserStore user = new UserStore();
-		if (request.getParameter("usernameSignUp").equals("")
-				|| request.getParameter("passwordSignUp").equals("")
-				|| request.getParameter("emailSignUp").equals("")) {
+		//If username,email or password null return error message
+		if (request.getParameter("usernameSignUp").equals("")|| request.getParameter("passwordSignUp").equals("")|| request.getParameter("emailSignUp").equals("")) 
+		{
 			RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
 			request.setAttribute("invalidSignUp", "Invalid");
 			rd.forward(request, response);
-		} else {
+		} 
+		else
+		{
+			//Get username
 			us.setUsername(request.getParameter("usernameSignUp"));
+			//Encrypt passweod
 			String password = "?btY?N1&zt" + request.getParameter("passwordSignUp") + "4IoIS^NY!r";
 			System.out.println("password" + password);
 
 			String pw = "";
-			try {
+			try
+			{
 				pw = encrypt(password);
-			} catch (NoSuchAlgorithmException e) {
+			} catch (NoSuchAlgorithmException e)
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			us.setPassword(pw);
 			us.setEmail(request.getParameter("emailSignUp"));
-			if (um.checkUsername(us) != "") {
-				RequestDispatcher rd = request
-						.getRequestDispatcher("/Home.jsp");
-				request.setAttribute("invalidSignUp",
-						"Username already in use!");
+			//If something is returned from checkUsername() - meaning username is already in use
+			if (um.checkUsername(us) != "") 
+			{
+				RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
+				request.setAttribute("invalidSignUp","Username already in use!");
 				rd.forward(request, response);
-			} else if (um.checkEmail(us) != "") {
-				RequestDispatcher rd = request
-						.getRequestDispatcher("/Home.jsp");
+			} 
+			//If something is returned from checkEmail() - meaning it is already in use
+			else if (um.checkEmail(us) != "")
+			{
+				RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
 				request.setAttribute("invalidSignUp", "Email already in use!");
 				rd.forward(request, response);
-			} else {
+			} else 
+			{
+				//Store info in possibleUser session before we validate and insert as real user
 				HttpSession session = request.getSession(true);
 				session.setAttribute("possibleUser", us);
-				us = (UserStore) request.getSession().getAttribute(
-						"possibleUser");
+				us = (UserStore) request.getSession().getAttribute("possibleUser");
 				// Direct to home.jsp once session true
 				response.sendRedirect("/EventMate/Bio");
 			}
 		}
 	}
 
+	/**
+	 * Encrypt password using MD5
+	 * @param pass
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 */
 	public String encrypt(String pass) throws NoSuchAlgorithmException {
 		// Set password string, and print it out
 		String passwd = pass;

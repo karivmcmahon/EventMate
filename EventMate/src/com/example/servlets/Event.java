@@ -124,13 +124,31 @@ public class Event extends HttpServlet {
 		UserStore us = new UserStore();
 		EventModel tm= new EventModel();
 		FriendModel fm = new FriendModel();
+		LinkedList<eventStore> eventList = null;
+		LinkedList<UserStore> friendList = null;
 		us = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		String eventname = request.getParameter("q");
 		tm.setCluster(cluster);
 		fm.setCluster(cluster);
-		LinkedList<eventStore> eventList = tm.getEvents(us,2,eventname);
+		try
+		{
+			//Attempts to get events
+		   eventList = tm.getEvents(us,2,eventname);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		request.setAttribute("Events", eventList); //Set a bean with the list in it
-		LinkedList<UserStore> friendList = fm.displayUserssByName(us, eventname);
+		try
+		{
+			//Attempts to get users by na,e
+			friendList = fm.displayUserssByName(us, eventname);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		request.setAttribute("Friends", friendList);
 		RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp"); 
 		rd.forward(request, response);
